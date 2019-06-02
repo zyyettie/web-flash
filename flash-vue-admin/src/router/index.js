@@ -53,10 +53,6 @@ export default new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
-
-
-
-
 export const asyncRouterMap = [
   {
     path: '/system',
@@ -90,7 +86,7 @@ export const asyncRouterMap = [
         path: 'mgr',
         name: 'Account',
         component: () => import('@/views/system/user/index'),
-        meta: {title: 'userMgr' }
+        meta: { title: 'userMgr' }
       },
       {
         path: 'role',
@@ -102,7 +98,7 @@ export const asyncRouterMap = [
         path: 'task',
         name: 'Task',
         component: () => import('@/views/system/task/index'),
-        meta: { title: 'taskMgr' },
+        meta: { title: 'taskMgr' }
       },
       {
         path: 'taskLog',
@@ -180,19 +176,39 @@ export const asyncRouterMap = [
       {
         path: 'contacts',
         name: 'Contacts',
-        component:() => import('@/views/cms/contacts/index'),
+        component: () => import('@/views/cms/contacts/index'),
         meta: { title: 'contactsMgr' }
       },
       {
         path: 'file',
         name: 'File',
-        component:  () => import('@/views/cms/file/index'),
+        component: () => import('@/views/cms/file/index'),
         meta: {
           title: 'fileMgr'
         }
       }
     ]
   },
-  {path: '/404', component: () => import('@/views/404'), hidden: true}
-];
+  {
+    path: '/business',
+    component: Layout,
+    redicrect: '#',
+    name: 'Business',
+    alwaysShow: true,
+    meta: {
+      roles: ['administrator', 'developer'],
+      title: 'businessMgr',
+      icon: 'documentation'
+    },
+    children: [
+      {
+        path: 'tender',
+        name: 'Tender',
+        component: () => import('@/views/business/tender/index'),
+        meta: { title: 'tenderMgr' }
+      }
+    ]
+  },
+  { path: '/404', component: () => import('@/views/404'), hidden: true }
+]
 

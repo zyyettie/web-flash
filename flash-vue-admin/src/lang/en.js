@@ -15,11 +15,11 @@ export default {
     configMgr: 'Config',
     cmsMgr: 'Cms',
     bannerMgr: 'Banner',
-    articleMgr:'Article',
-    editArticle:'Edit Article',
-    fileMgr:'File',
-    contactsMgr:'Contacts',
-    channelMgr:'Channel',
+    articleMgr: 'Article',
+    editArticle: 'Edit Article',
+    fileMgr: 'File',
+    contactsMgr: 'Contacts',
+    channelMgr: 'Channel'
   },
   navbar: {
     logOut: 'Log Out',
