@@ -5,6 +5,7 @@ import cn.enilu.flash.bean.dictmap.base.AbstractDictMap;
 public class TenderDict extends AbstractDictMap {
     @Override
     public void init(){
+        put("no","编号");
         put("name","名称");
         put("type","类型");
         put("quantity","数量");

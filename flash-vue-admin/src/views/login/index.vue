@@ -42,7 +42,7 @@
         <div class="tips">
           <span>{{ $t('login.tip') }}</span>
           <div>
-          <a href="/register">{{ $t('login.register') }}</a>
+          <a href="#/register">{{ $t('login.register') }}</a>
           </div>
         </div>
       </div>

@@ -1,8 +1,19 @@
+import { isvalidUsername } from '@/utils/validate'
 export default{
   data() {
+    const validateName = (rule, value, callback) => {
+      if (!isvalidUsername(value)) {
+        callback(new Error('Please enter the correct name'))
+      } else {
+        callback()
+      }
+    }
     return {
-      form: {
+      registerForm: {
         name: ''
+      },
+      registerRules: {
+        name: [{ required: true, trigger: 'blur', validator: validateName }]
       }
     }
   },
@@ -10,5 +21,9 @@ export default{
 
   },
   methods: {
+    submitForm() {
+    },
+    resetForm() {
+    }
   }
 }

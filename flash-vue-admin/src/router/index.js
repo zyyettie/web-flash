@@ -207,6 +207,12 @@ export const asyncRouterMap = [
         name: 'Tender',
         component: () => import('@/views/business/tender/index'),
         meta: { title: 'tenderMgr' }
+      },
+      {
+        path: 'supplier',
+        name: 'Supplier',
+        component: () => import('@/views/business/supplier/index'),
+        meta: { title: 'supplierMgr' }
       }
     ]
   },
