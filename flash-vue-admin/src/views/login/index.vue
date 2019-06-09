@@ -36,17 +36,14 @@
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
-
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">{{ $t('login.logIn') }}</el-button>
 
       <div style="position:relative">
         <div class="tips">
-          <span>{{ $t('login.username') }} : admin</span>
-          <span>{{ $t('login.password') }} : admin</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">{{ $t('login.username') }} : developer</span>
-          <span>{{ $t('login.password') }} : 123456</span>
+          <span>{{ $t('login.tip') }}</span>
+          <div>
+          <a href="/register">{{ $t('login.register') }}</a>
+          </div>
         </div>
       </div>
     </el-form>

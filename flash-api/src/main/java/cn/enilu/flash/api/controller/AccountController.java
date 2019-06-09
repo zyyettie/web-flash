@@ -62,7 +62,7 @@ public class AccountController extends BaseController{
     public Object login(@RequestParam("username") String userName,
                         @RequestParam("password") String password){
         try {
-            logger.info("用户登录:" + userName + ",密码:" + password);
+            logger.info("用户登录:" + userName + ",密码:******");
             //1,
             User user = userRepository.findByAccount(userName);
             if (user == null) {

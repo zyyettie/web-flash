@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Cookies from 'js-cookie'
 import ECharts from 'vue-echarts/components/ECharts.vue'
+
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import ElementUI from 'element-ui'
@@ -17,12 +18,14 @@ import i18n from './lang' // Internationalization
 import '@/icons' // icon
 // permission control
 import './permission'
+import { link } from 'element-ui'
 
 Vue.use(ElementUI, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
   i18n: (key, value) => i18n.t(key, value)
 })
 Vue.component('v-chart', ECharts)
+Vue.component('el-link', link)
 Vue.config.productionTip = false
 
 new Vue({

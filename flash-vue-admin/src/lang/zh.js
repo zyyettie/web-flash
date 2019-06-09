@@ -31,10 +31,12 @@ export default {
     size: '布局大小'
   },
   login: {
-    title: 'web-flash',
+    title: '供应商投标系统',
     logIn: '登录',
     username: '账号',
-    password: '密码'
+    password: '密码',
+    register: '注册',
+    tip: '没有帐号?'
   },
 
   button: {

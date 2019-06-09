@@ -31,10 +31,12 @@ export default {
     size: 'Global Size'
   },
   login: {
-    title: 'web-flash',
+    title: 'Tender System',
     logIn: 'Log in',
     username: 'Username',
-    password: 'Password'
+    password: 'Password',
+    register: 'Register',
+    tip: 'No account?'
   },
   button: {
     add: 'Add',
@@ -91,5 +93,8 @@ export default {
     nameInput: 'Input config name',
     valueInput: 'Input config value',
     lengthValidation: ' must be between 2 and 20 characters'
+  },
+  register: {
+    register: 'Register'
   }
 }

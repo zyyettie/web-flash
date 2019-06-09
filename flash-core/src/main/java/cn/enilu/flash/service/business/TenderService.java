@@ -1,6 +1,7 @@
 package cn.enilu.flash.service.business;
 
 import cn.enilu.flash.bean.entity.business.Tender;
+import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.dao.business.TenderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +16,17 @@ public class TenderService {
     @Autowired
     private TenderRepository tenderRepository;
 
-    public List<Tender> queryAll() {
+    public Object queryAll() {
         List<Tender> list = (List<Tender>) tenderRepository.findAll();
         return list;
+    }
+
+    public void save(Tender tender) {
+        tenderRepository.save(tender);
+    }
+
+    public void delete(Long id){
+        tenderRepository.deleteById(id);
     }
 }
 
