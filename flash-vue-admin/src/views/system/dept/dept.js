@@ -1,5 +1,5 @@
 import treeTable from '@/components/TreeTable'
-import { list, save, del } from '@/api/system/dept'
+import { list, saveDept, del } from '@/api/system/dept'
 
 export default {
   name: 'customTreeTableDemo',
@@ -81,7 +81,7 @@ export default {
           console.log('form', self.form)
           const menuData = self.form
           menuData.parent = null
-          save(menuData).then(response => {
+          saveDept(menuData).then(response => {
             console.log(response)
             this.$message({
               message: '提交成功',

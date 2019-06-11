@@ -10,11 +10,11 @@ export function tree() {
 export function list() {
   return request({
     url: '/dept/list',
-    method: 'get',
+    method: 'get'
   })
 }
 
-export function save(params) {
+export function saveDept(params) {
   return request({
     url: '/dept',
     method: 'post',

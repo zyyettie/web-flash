@@ -31,7 +31,7 @@ export default {
     size: 'Global Size'
   },
   login: {
-    title: 'Tender System',
+    title: 'Web-Flash',
     logIn: 'Log in',
     username: 'Username',
     password: 'Password',

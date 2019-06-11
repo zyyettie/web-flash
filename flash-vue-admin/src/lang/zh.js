@@ -31,7 +31,7 @@ export default {
     size: '布局大小'
   },
   login: {
-    title: '供应商投标系统',
+    title: 'Web-Flash',
     logIn: '登录',
     username: '账号',
     password: '密码',
