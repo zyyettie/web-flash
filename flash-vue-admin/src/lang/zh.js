@@ -19,7 +19,11 @@ export default {
     dictMgr: '字典管理',
     loginLog: '登录日志',
     bussinessLog: '业务日志',
-    configMgr: '参数管理'
+    configMgr: '参数管理',
+    businessMgr: '业务管理',
+    tenderMgr: '发标',
+    supplierMgr: '供应商',
+    bidMgr: '投标'
   },
   navbar: {
     logOut: '退出登录',
@@ -92,6 +96,12 @@ export default {
     nameInput: '请输入参数名',
     valueInput: '请输入参数值',
     lengthValidation: '长度在 2 到 20 个字符'
+  },
+  register: {
+    register: '注册'
+  },
+  business: {
+    bid: '投标'
   }
 }
 

@@ -79,7 +79,14 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           console.log('form', self.form)
-          const menuData = self.form
+          const menuData = {
+            id: self.form.id,
+            simplename: self.form.simplename,
+            fullname: self.form.fullname,
+            pid: self.form.pid,
+            num: self.form.num,
+            tips: self.form.tips
+          }
           menuData.parent = null
           saveDept(menuData).then(response => {
             console.log(response)

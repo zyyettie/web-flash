@@ -213,6 +213,12 @@ export const asyncRouterMap = [
         name: 'Supplier',
         component: () => import('@/views/business/supplier/index'),
         meta: { title: 'supplierMgr' }
+      },
+      {
+        path: 'bid',
+        name: 'Bid',
+        component: () => import('@/views/business/bid/index'),
+        meta: { title: 'bidMgr' }
       }
     ]
   },

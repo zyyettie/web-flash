@@ -33,7 +33,7 @@ CREATE TABLE `b_tender` (
   `status` varchar(255) DEFAULT NULL COMMENT '状态',
   `is_delete` tinyint DEFAULT '0' COMMENT '是否删除(0：正常；1：已删)',
   `due_date` datetime DEFAULT NULL COMMENT '到期时间,',
-   `contact` varchar(255) DEFAULT NULL COMMENT '联系人',
+  `contact` varchar(255) DEFAULT NULL COMMENT '联系人',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='发标';
 
@@ -76,7 +76,8 @@ CREATE TABLE `b_bid` (
   `quantity` int(20) DEFAULT NULL COMMENT '数量',
   `unit` varchar(255) DEFAULT NULL COMMENT '单位',
   `contact` varchar(255) DEFAULT NULL COMMENT '联系人',
+  `is_approved` tinyint DEFAULT '0' COMMENT '是否批准(0：未批准；1：已批准)',
   `tender_id` bigint(20) NOT NULL COMMENT '发标ID',
   PRIMARY KEY (`id`),
-  CONSTRAINT `FK_ID` FOREIGN KEY (`tender_id`) REFERENCES `b_tender` (`id`) ON DELETE SET NULL
+  CONSTRAINT `fk_tender_id` FOREIGN KEY (`tender_id`) REFERENCES `b_tender` (`id`) ON DELETE RESTRICT ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='投标';

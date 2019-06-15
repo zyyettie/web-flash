@@ -1,5 +1,4 @@
-import { delTender, getTenderList, saveTender } from '@/api/business/tender'
-import { saveBid } from '@/api/business/bid'
+import { delBid, getBidList, saveBid } from '@/api/business/bid'
 
 export default {
   data() {
@@ -8,30 +7,11 @@ export default {
       formTitle: this.$t('config.add'),
       isAdd: true,
       form: {
-        no: '',
-        name: '',
-        type: '',
         quantity: '',
         unit: '',
-        status: '',
-        isDelete: '',
-        dueDate: '',
-        contact: ''
-      },
-      bidFormVisible: false,
-      bidFormTitle: this.$t('config.add'),
-      bidForm: {
-        no: '',
-        name: '',
-        type: '',
-        quantity: '',
-        unit: '',
-        status: '',
-        dueDate: '',
         contact: '',
-        bidQuantity: '',
-        bidUnit: '',
-        bidContact: ''
+        isApproved: '',
+        tenderNo: ''
       },
       listQuery: {
         page: 1,
@@ -78,7 +58,7 @@ export default {
     },
     fetchData() {
       this.listLoading = true
-      getTenderList(this.listQuery).then(response => {
+      getBidList(this.listQuery).then(response => {
         this.list = response.data
         this.listLoading = false
         this.total = response.data.total
@@ -120,15 +100,11 @@ export default {
     },
     resetForm() {
       this.form = {
-        no: '',
-        name: '',
-        type: '',
         quantity: '',
         unit: '',
-        status: '',
-        isDelete: '',
-        dueDate: '',
-        contact: ''
+        contact: '',
+        isApproved: '',
+        tenderNo: ''
       }
     },
     add() {
@@ -140,16 +116,12 @@ export default {
     save() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          saveTender({
+          saveBid({
             no: this.form.no,
             name: this.form.name,
-            type: this.form.type,
-            quantity: this.form.quantity,
-            unit: this.form.unit,
-            status: this.form.status,
-            dueDate: this.form.dueDate,
-            isDelete: this.form.isDelete,
-            contact: this.form.contact
+            email: this.form.email,
+            telephone: this.form.telephone,
+            isDelete: this.form.isDelete
           }).then(response => {
             this.$message({
               message: this.$t('common.optionSuccess'),
@@ -189,7 +161,7 @@ export default {
           cancelButtonText: this.$t('button.cancel'),
           type: 'warning'
         }).then(() => {
-          delTender(id).then(response => {
+          delBid(id).then(response => {
             this.$message({
               message: this.$t('common.optionSuccess'),
               type: 'success'
@@ -199,27 +171,6 @@ export default {
         }).catch(() => {
         })
       }
-    },
-    addBid(row) {
-      this.bidForm.tenderId = row.id
-      this.bidForm = this.selRow
-      this.bidFormVisible = true
-    },
-    saveBid() {
-      saveBid({
-        quantity: this.bidForm.bidQuantity,
-        unit: this.bidForm.bidUnit,
-        contact: this.bidForm.bidContact,
-        tenderId: this.bidForm.id,
-        tenderNo: this.bidForm.no
-      }).then(response => {
-        this.$message({
-          message: this.$t('common.optionSuccess'),
-          type: 'success'
-        })
-        this.fetchData()
-        this.formVisible = false
-      })
     }
 
   }

@@ -1,24 +1,24 @@
 import request from '@/utils/request'
 
-export function getTenderList(params) {
+export function getBidList(params) {
   return request({
-    url: '/tender/list',
+    url: '/bid/list',
     method: 'get',
     params
   })
 }
 
-export function saveTender(params) {
+export function saveBid(params) {
   return request({
-    url: '/tender',
+    url: '/bid',
     method: 'post',
     params: params
   })
 }
 
-export function delTender(id) {
+export function delBid(id) {
   return request({
-    url: '/tender',
+    url: '/bid',
     method: 'delete',
     params: {
       id: id

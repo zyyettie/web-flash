@@ -18,7 +18,7 @@ export function saveSupplier(params) {
 
 export function delSupplier(id) {
   return request({
-    url: 'supplier',
+    url: '/supplier',
     method: 'delete',
     params: {
       id: id

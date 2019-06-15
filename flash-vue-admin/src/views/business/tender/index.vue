@@ -15,7 +15,6 @@
       <el-row>
         <el-col :span="24">
           <el-button type="success" icon="el-icon-plus" @click.native="add">{{ $t('button.add') }}</el-button>
-          <el-button type="primary" icon="el-icon-edit" @click.native="edit">{{ $t('button.edit') }}</el-button>
           <el-button type="danger" icon="el-icon-delete" @click.native="remove">{{ $t('button.delete') }}</el-button>
         </el-col>
       </el-row>
@@ -62,6 +61,11 @@
       <el-table-column label="联系人">
         <template slot-scope="scope">
           {{scope.row.contact}}
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" >
+        <template slot-scope="scope">
+          <el-button type="button" @click="addBid(scope.row)">{{$t('business.bid')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -131,6 +135,73 @@
         <el-form-item>
           <el-button type="primary" @click="save">{{ $t('button.submit') }}</el-button>
           <el-button @click.native="formVisible = false">{{ $t('button.cancel') }}</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
+    <el-dialog
+      :title="bidFormTitle"
+      :visible.sync="bidFormVisible"
+      width="70%">
+      <el-form ref="bidForm" :model="bidForm" :rules="rules" label-width="80px">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="编号" prop="no">
+              <el-input v-model="bidForm.no" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="名称" prop="name">
+              <el-input v-model="bidForm.name" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="类型" prop="type">
+              <el-input v-model="bidForm.type" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="数量" prop="quantity">
+              <el-input v-model="bidForm.quantity" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="状态" prop="status">
+              <el-input v-model="bidForm.status" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="结束日期" prop="dueDate">
+              <el-input v-model="bidForm.dueDate" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="联系人" prop="contact">
+              <el-input v-model="bidForm.contact" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- bid信息 -->
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="数量" prop="bidQuantity">
+              <el-input v-model="bidForm.bidQuantity" ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="单位" prop="bidUnit">
+              <el-input v-model="bidForm.bidUnit" ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="投标联系人" prop="bidContact">
+              <el-input v-model="bidForm.bidContact" ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item>
+          <el-button type="primary" @click="saveBid">{{ $t('button.submit') }}</el-button>
+          <el-button @click.native="bidFormVisible = false">{{ $t('button.cancel') }}</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>

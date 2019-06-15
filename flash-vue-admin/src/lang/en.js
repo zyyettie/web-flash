@@ -19,7 +19,11 @@ export default {
     editArticle: 'Edit Article',
     fileMgr: 'File',
     contactsMgr: 'Contacts',
-    channelMgr: 'Channel'
+    channelMgr: 'Channel',
+    businessMgr: 'Business',
+    tenderMgr: 'Tender',
+    supplierMgr: 'Supplier',
+    bidMgr: 'Bid'
   },
   navbar: {
     logOut: 'Log Out',
@@ -96,5 +100,8 @@ export default {
   },
   register: {
     register: 'Register'
+  },
+  business: {
+    bid: 'Bid'
   }
 }
