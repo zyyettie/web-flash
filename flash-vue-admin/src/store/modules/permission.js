@@ -1,7 +1,6 @@
 
 import { asyncRouterMap, constantRouterMap } from '@/router'
 
-
 /**
  * 通过route.path判断用户是否有对改菜单的操作权限
  * @param roles
@@ -9,7 +8,7 @@ import { asyncRouterMap, constantRouterMap } from '@/router'
  */
 function hasMenu(menus, route) {
   if (route.path) {
-    return menus.some(menu => (menu[4].indexOf(route.path) >= 0) )
+    return menus.some(menu => (menu[4].indexOf(route.path) >= 0))
   } else {
     return true
   }
@@ -64,7 +63,6 @@ function filterAsyncRouter(asyncRouterMap, roles) {
   })
   return accessedRouters
 }
-
 
 const permission = {
   state: {

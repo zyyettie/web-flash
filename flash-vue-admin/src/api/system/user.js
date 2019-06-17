@@ -33,3 +33,11 @@ export function setRole(params) {
     params
   })
 }
+
+export function userRegister(params) {
+  return request({
+    url: '/user/register',
+    method: 'post',
+    params
+  })
+}

@@ -98,6 +98,7 @@ export default {
     lengthValidation: '长度在 2 到 20 个字符'
   },
   register: {
+    title: '注册',
     register: '注册'
   },
   business: {

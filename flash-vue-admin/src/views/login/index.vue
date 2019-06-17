@@ -41,9 +41,11 @@
       <div style="position:relative">
         <div class="tips">
           <span>{{ $t('login.tip') }}</span>
-          <div>
-          <a text-decorationhref="#/register">{{ $t('login.register') }}</a>
-          </div>
+          <router-link to="/register">
+            <div class="underline">
+              {{ $t('login.register') }}
+            </div>
+          </router-link>
         </div>
       </div>
     </el-form>

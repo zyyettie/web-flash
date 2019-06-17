@@ -102,4 +102,12 @@ public class RoleService {
         }
         return null;
     }
+
+    public Role findRolebyName(String roleName) {
+        Role role = roleRepository.findRoleByName(roleName);
+        if (role != null) {
+            return role;
+        }
+        return null;
+    }
 }

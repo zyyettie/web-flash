@@ -22,4 +22,6 @@ public interface RoleRepository extends PagingAndSortingRepository<Role,Long>, J
     List roleTreeListByRoleId(Long[] ids);
 
     List findByName(String roleName);
+
+    Role findRoleByName(String roleName);
 }

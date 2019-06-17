@@ -7,12 +7,16 @@ import cn.enilu.flash.bean.constant.factory.PageFactory;
 import cn.enilu.flash.bean.constant.state.ManagerStatus;
 import cn.enilu.flash.bean.dictmap.UserDict;
 import cn.enilu.flash.bean.dto.UserDto;
+import cn.enilu.flash.bean.entity.system.Dept;
+import cn.enilu.flash.bean.entity.system.Role;
 import cn.enilu.flash.bean.entity.system.User;
 import cn.enilu.flash.bean.enumeration.BizExceptionEnum;
 import cn.enilu.flash.bean.exception.GunsException;
 import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.dao.system.UserRepository;
 import cn.enilu.flash.factory.UserFactory;
+import cn.enilu.flash.service.system.DeptService;
+import cn.enilu.flash.service.system.RoleService;
 import cn.enilu.flash.service.system.UserService;
 import cn.enilu.flash.utils.BeanUtil;
 import cn.enilu.flash.utils.MD5;
@@ -46,6 +50,10 @@ public class UserController extends BaseController {
     private Logger logger = LoggerFactory.getLogger(MenuController.class);
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private DeptService deptService;
+    @Autowired
+    private RoleService roleService;
     @Autowired
     private UserService userService;
     @RequestMapping(value = "/list",method = RequestMethod.GET)
@@ -112,4 +120,33 @@ public class UserController extends BaseController {
         return Rets.success();
     }
 
+    @RequestMapping(value = "register", method = RequestMethod.POST)
+    @BussinessLog(value = "注册用户", key = "name", dict = UserDict.class)
+    public Object register( @Valid UserDto user,BindingResult result){
+        logger.info(JSON.toJSONString(user));
+
+
+        if(user.getId()==null) {
+            // 判断账号是否重复
+            User theUser = userRepository.findByAccount(user.getAccount());
+            if (theUser != null) {
+                throw new GunsException(BizExceptionEnum.USER_ALREADY_REG);
+            }
+            // 完善账号信息
+            user.setSalt(ToolUtil.getRandomString(5));
+            user.setPassword(MD5.md5(user.getPassword(), user.getSalt()));
+            user.setStatus(ManagerStatus.OK.getCode());
+            // 设置用户部门为vendor department
+            Dept dept = deptService.getDeptByFullName("vendor department");
+            user.setDeptid(dept.getId());
+            Role role = roleService.findRolebyName("vendor");
+            user.setRoleid(role.getId().toString());
+            user.setStatus(0);
+            userRepository.save(UserFactory.createUser(user, new User()));
+        }else{
+            User oldUser = userService.get(user.getId());
+            userRepository.save(UserFactory.updateUser(user,oldUser));
+        }
+        return Rets.success();
+    }
 }

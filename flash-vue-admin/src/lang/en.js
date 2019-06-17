@@ -99,6 +99,7 @@ export default {
     lengthValidation: ' must be between 2 and 20 characters'
   },
   register: {
+    title: 'Register',
     register: 'Register'
   },
   business: {

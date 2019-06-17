@@ -102,10 +102,7 @@ public class DeptService {
             }
         }
         return result;
-
-
     }
-
 
     public Dept get(Long id) {
         Optional<Dept> optiona = deptRepository.findById(id);
@@ -114,5 +111,12 @@ public class DeptService {
         }
         return null;
     }
+
+    public Dept getDeptByFullName(String fullName) {
+        Dept dept = deptRepository.findDeptByFullName(fullName);
+        if (dept != null) {
+            return dept;
+        }
+        return null;    }
 
 }

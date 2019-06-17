@@ -18,4 +18,7 @@ public interface DeptRepository extends PagingAndSortingRepository<Dept,Long> {
     List tree();
 
     List<Dept> findBySimplenameLikeOrFullnameLike(String name,String name2);
+
+    @Query(nativeQuery = true,value = "SELECT * FROM t_sys_dept where fullname=?1")
+    Dept findDeptByFullName(String fullName);
 }

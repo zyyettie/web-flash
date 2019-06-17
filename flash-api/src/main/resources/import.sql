@@ -63,6 +63,7 @@ INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, 
 INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('25', '2', '24', '[0],[24],', '开发部', '开发部', '', null, null, null, null, null);
 INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('26', '3', '24', '[0],[24],', '运营部', '运营部', '', null, null, null, null, null);
 INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('27', '4', '24', '[0],[24],', '战略部', '战略部', '', null, null, null, null, null);
+INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('28', '5', '24', '[0],[24],', 'vendor dept', 'vendor department', '', null, null, null, null, null);
 
 -- ----------------------------
 -- Records of t_sys_dict
@@ -334,6 +335,7 @@ INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('612', '215', '1
 INSERT INTO `t_sys_role` (`id`, `num`, `pid`, `name`, `deptid`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('1', '1', '0', '超级管理员', '24', 'administrator', '1', null, null, null, null);
 INSERT INTO `t_sys_role` (`id`, `num`, `pid`, `name`, `deptid`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('2', '1', '1', '开发人员', '25', 'developer', null, null, null, null, null);
 INSERT INTO `t_sys_role` (`id`, `num`, `pid`, `name`, `deptid`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('3', '3', '0', 'test', '24', '测试', null, null, null, null, null);
+INSERT INTO `t_sys_role` (`id`, `num`, `pid`, `name`, `deptid`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('4', '4', '0', 'vendor', '28', 'vendor', null, null, null, null, null);
 
 -- ----------------------------
 -- Records of t_sys_task
