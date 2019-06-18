@@ -21,6 +21,7 @@ export default{
       if (!value) {
         return callback(new Error('用户名不能为空'))
       }
+      callback()
     }
     var validatePass = (rule, value, callback) => {
       if (value === '') {
@@ -43,6 +44,7 @@ export default{
     }
     return {
       registerForm: {
+        id: '',
         account: '',
         password: '',
         checkPass: '',
@@ -68,6 +70,7 @@ export default{
       this.$refs.registerForm.validate((valid) => {
         if (valid) {
           userRegister({
+            id: this.registerForm.id,
             account: this.registerForm.account,
             password: this.registerForm.password,
             name: this.registerForm.name,
@@ -75,11 +78,11 @@ export default{
             phone: this.registerForm.phone
           }).then(response => {
             this.$message({
-              message: this.$t('common.optionSuccess'),
+              message: this.$t('register.successMsg'),
               type: 'success'
             })
-            this.fetchData()
-            this.formVisible = false
+          }).catch(error => {
+            this.errors.push(error.response.data.errors)
           })
         } else {
           return false
@@ -98,6 +101,9 @@ export default{
     // },
     resetForm(formName) {
       this.$refs.registerForm.resetFields()
+    },
+    returnLogin() {
+      this.$router.push('/login')
     }
   }
 }

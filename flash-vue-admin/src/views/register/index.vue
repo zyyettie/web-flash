@@ -29,8 +29,9 @@
       </el-form-item>
       <-->
       <el-form-item>
-        <el-button type="primary" @click="submitForm('registerForm')">提交</el-button>
-        <el-button @click="resetForm('registerForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('registerForm')">{{$t('button.submit')}}</el-button>
+        <el-button @click="resetForm('registerForm')">{{$t('button.reset')}}</el-button>
+        <el-button @click="returnLogin()">{{$t('register.returnLogin')}}</el-button>
       </el-form-item>
     </el-form>
   </div>

@@ -38,18 +38,9 @@ CREATE TABLE `b_tender` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='发标';
 
 -- ----------------------------
--- Records of b_tender
--- ----------------------------
-INSERT INTO `b_tender` VALUES ('5', '1', '2019-06-02 16:24:58', null, null, '招标1', 'typeA', '100', 'box', 'box', '0','2019-07-02 16:24:58','张三');
-INSERT INTO `b_tender` VALUES ('6', '1', '2019-06-02 16:24:58', null, null, '招标2', 'typeA', '200', 'box', 'box', '0','2019-07-02 16:24:58','张三');
-INSERT INTO `b_tender` VALUES ('7', '1', '2019-06-02 16:24:58', null, null, '招标3', 'typeA', '300', 'box', 'box', '0','2019-07-02 16:24:58','张三');
-INSERT INTO `b_tender` VALUES ('8', '1', '2019-06-02 16:24:58', null, null, '招标4', 'typeA', '400', 'box', 'box', '0','2019-07-02 16:24:58','张三');
-INSERT INTO `b_tender` VALUES ('9', '1', '2019-06-02 16:24:58', null, null, '招标5', 'typeA', '500', 'box', 'box', '0','2019-07-02 16:24:58','张三');
-
--- ----------------------------
 -- Table structure for `b_supplier`
 -- ----------------------------
-CREATE TABLE IF EXISTS `b_supplier`;
+DROP TABLE IF EXISTS `b_supplier`;
 CREATE TABLE `b_supplier` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `create_by` bigint(20) DEFAULT NULL COMMENT '创建者',

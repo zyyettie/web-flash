@@ -100,7 +100,10 @@ export default {
   },
   register: {
     title: 'Register',
-    register: 'Register'
+    register: 'Register',
+    returnLogin: 'Retrun to Login',
+    successMsg: 'Register successfully, please contact Administrator to activate your account.',
+    failMsg: 'Register failed, please try again.'
   },
   business: {
     bid: 'Bid'

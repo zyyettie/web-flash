@@ -24,6 +24,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
             "/validate/*",//验证码地址
             "/account/register", "/account/login",//用户注册和登陆
             "/error",//错误资源
+            "/user/register",//注册请求
             "/swagger-resources","/v2/api-docs","/swagger-ui.html","/webjars/**"//swagger在线api文档资源
     };
 

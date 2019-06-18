@@ -99,7 +99,10 @@ export default {
   },
   register: {
     title: '注册',
-    register: '注册'
+    register: '注册',
+    returnLogin: '返回登录',
+    successMsg: '注册成功，请联系管理员激活您的账号。',
+    failMsg: '注册失败，请您再试一次。如果继续失败，请联系管理员寻求帮助。'
   },
   business: {
     bid: '投标'
