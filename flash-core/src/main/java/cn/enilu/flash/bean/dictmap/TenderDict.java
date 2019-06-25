@@ -7,13 +7,17 @@ public class TenderDict extends AbstractDictMap {
     public void init(){
         put("no","编号");
         put("name","名称");
-        put("type","类型");
+        put("shape","形状");
+        put("dimension","尺寸");
+        put("color","颜色");
+        put("purity","净度");
         put("quantity","数量");
         put("unit","单位");
-        put("status","状态");
-        put("isDelete","是否删除");
+        put("heated","处理方式");
+        put("status","发标状态");
         put("dueDate","到期日期");
-        put("contact","联系人");
+        put("count","已投标数");
+        put("isDelete","是否删除");
     }
 
     @Override

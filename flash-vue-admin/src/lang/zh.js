@@ -35,7 +35,7 @@ export default {
     size: '布局大小'
   },
   login: {
-    title: 'Web-Flash',
+    title: '原料采购招标管理系统',
     logIn: '登录',
     username: '账号',
     password: '密码',

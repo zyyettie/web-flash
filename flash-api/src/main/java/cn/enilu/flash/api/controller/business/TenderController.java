@@ -16,6 +16,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -33,9 +37,16 @@ public class TenderController extends BaseController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    @BussinessLog(value = "编辑投标", key = "name", dict = TenderDict.class)
+    @BussinessLog(value = "新增投标", key = "name", dict = TenderDict.class)
     public Object save(@ModelAttribute Tender tender){
         logger.info(JSON.toJSONString(tender));
+        String dateStr = new SimpleDateFormat("yyMMdd").format(new Date());
+        Long maxId = tenderService.findMaxId();//1
+        Long noPlusOne = maxId+1;
+        String no = dateStr + String.format("%04d", noPlusOne);
+        tender.setNo(no);
+        tender.setCount(0);
+        tender.setStatus(1);
         if (ToolUtil.isOneEmpty(tender, tender.getName())){
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
         }

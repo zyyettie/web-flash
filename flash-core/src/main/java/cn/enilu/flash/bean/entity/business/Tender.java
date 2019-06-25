@@ -13,8 +13,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-@Entity(name = "b_tender")
-@Table(appliesTo = "b_tender",comment = "投标")
+@Entity(name = "t_biz_tender")
+@Table(appliesTo = "t_biz_tender",comment = "投标")
 @Data
 @EntityListeners(AuditingEntityListener.class)
 public class Tender extends BaseEntity {
@@ -23,18 +23,26 @@ public class Tender extends BaseEntity {
     @Column
     private String name;
     @Column
-    private String type;
+    private String shape;
     @Column
-    private int quantity;
+    private Integer dimension;
+    @Column
+    private String color;
+    @Column
+    private String purity;
+    @Column
+    private Integer quantity;
     @Column
     private String unit;
     @Column
-    private String status;
+    private String heated;
     @Column
-    private boolean isDelete;
+    private Integer status;
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dueDate;
     @Column
-    private String contact;
+    private Integer count;
+    @Column
+    private Integer isDelete;
 }

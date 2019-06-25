@@ -8,30 +8,34 @@ export default {
       formTitle: this.$t('config.add'),
       isAdd: true,
       form: {
-        no: '',
         name: '',
-        type: '',
+        shape: '',
+        dimension: '',
+        color: '',
+        purity: '',
         quantity: '',
         unit: '',
-        status: '',
-        isDelete: '',
-        dueDate: '',
-        contact: ''
+        heated: '',
+        dueDate: ''
       },
       bidFormVisible: false,
       bidFormTitle: this.$t('config.add'),
       bidForm: {
         no: '',
         name: '',
-        type: '',
+        shape: '',
+        dimension: '',
+        color: '',
+        purity: '',
         quantity: '',
         unit: '',
+        heated: '',
         status: '',
         dueDate: '',
-        contact: '',
+        count: '',
         bidQuantity: '',
         bidUnit: '',
-        bidContact: ''
+        bidPrice: ''
       },
       listQuery: {
         page: 1,
@@ -42,7 +46,32 @@ export default {
       total: 0,
       list: null,
       listLoading: true,
-      selRow: {}
+      selRow: {},
+      nameOptions: [
+        { value: 'BS', label: 'BS-BLUE SAPPHIRE' },
+        { value: 'PS', label: 'PS-PINK SAPPHIRE' },
+        { value: 'RB', label: 'RB-RUBY' },
+        { value: 'TS', label: 'TS-TSAVORITE' },
+        { value: 'WS', label: 'WS-WHITE SAPPHIRE' }
+      ],
+      shapeOptions: [
+        { value: 'c', label: 'c' },
+        { value: 'q', label: 'q' },
+        { value: 'b', label: 'b' },
+        { value: 'g', label: 'g' }],
+      purityOptions: [
+        { value: 'lc', label: 'lc' },
+        { value: 'ec', label: 'ec' },
+        { value: 'cq', label: 'cq' },
+        { value: 'ct', label: 'ct' }],
+      unitOptions: [
+        { value: 'carat', label: 'carat' },
+        { value: 'piece', label: 'piece' }
+      ],
+      heatedOptions: [
+        { value: 'unheated', label: 'unheated' },
+        { value: 'heated', label: 'heated' }
+      ]
     }
   },
   filters: {
@@ -59,12 +88,28 @@ export default {
     rules() {
       return {
         name: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' },
-          { min: 3, max: 2000, message: this.$t('config.name') + this.$t('config.lengthValidation'), trigger: 'blur' }
+          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
         ],
-        type: [
-          { required: true, message: this.$t('config.value') + this.$t('common.isRequired'), trigger: 'blur' },
-          { min: 2, max: 2000, message: this.$t('config.value') + this.$t('config.lengthValidation'), trigger: 'blur' }
+        shape: [
+          { required: true, message: this.$t('config.value') + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
+        dimension: [
+          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
+        purity: [
+          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
+        quantity: [
+          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
+        unit: [
+          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
+        heated: [
+          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
+        dueDate: [
+          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
         ]
       }
     }
@@ -120,15 +165,15 @@ export default {
     },
     resetForm() {
       this.form = {
-        no: '',
         name: '',
-        type: '',
+        shape: '',
+        dimension: '',
+        color: '',
+        purity: '',
         quantity: '',
         unit: '',
-        status: '',
-        isDelete: '',
-        dueDate: '',
-        contact: ''
+        heated: '',
+        dueDate: ''
       }
     },
     add() {
@@ -141,15 +186,15 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           saveTender({
-            no: this.form.no,
             name: this.form.name,
-            type: this.form.type,
+            shape: this.form.shape,
+            dimension: this.form.dimension,
+            color: this.form.color,
+            purity: this.form.purity,
             quantity: this.form.quantity,
             unit: this.form.unit,
-            status: this.form.status,
-            dueDate: this.form.dueDate,
-            isDelete: this.form.isDelete,
-            contact: this.form.contact
+            heated: this.form.heated,
+            dueDate: this.form.dueDate
           }).then(response => {
             this.$message({
               message: this.$t('common.optionSuccess'),

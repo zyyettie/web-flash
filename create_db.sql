@@ -1,1 +1,1 @@
-CREATE DATABASE IF NOT EXISTS `web-flash` DEFAULT charset utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS `ztb` DEFAULT charset utf8 COLLATE utf8_general_ci;

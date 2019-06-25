@@ -9,8 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 
-@Entity(name = "b_supplier")
-@Table(appliesTo = "b_supplier",comment = "供应商")
+@Entity(name = "t_biz_supplier")
+@Table(appliesTo = "t_biz_supplier",comment = "供应商")
 @Data
 @EntityListeners(AuditingEntityListener.class)
 public class Supplier extends BaseEntity {

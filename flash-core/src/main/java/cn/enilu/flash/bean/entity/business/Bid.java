@@ -9,21 +9,21 @@ import lombok.Data;
 import org.hibernate.annotations.Table;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Entity(name="b_bid")
-@Table(appliesTo = "b_bid",comment = "投标")
+@Entity(name="t_biz_bid")
+@Table(appliesTo = "t_biz_bid",comment = "投标")
 @Data
 @EntityListeners(AuditingEntityListener.class)
 public class Bid extends BaseEntity {
     @Column
+    private String no;
+    @Column
     private String quantity;
     @Column
-    private String unit;
+    private int price;
     @Column
-    private String contact;
+    private String unit;
     @Column
     private boolean isApproved;
     @Column
     private Integer tenderId;
-    @Column
-    private String tenderNo;
 }

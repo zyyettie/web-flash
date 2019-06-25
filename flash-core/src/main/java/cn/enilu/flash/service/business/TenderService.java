@@ -28,5 +28,13 @@ public class TenderService {
     public void delete(Long id){
         tenderRepository.deleteById(id);
     }
+
+    public Long findMaxId() {
+        Tender tender = tenderRepository.findFirstByOrderByIdDesc();
+        if(tender == null){
+            return new Long(0);
+        }
+        return tender.getId();
+    }
 }
 

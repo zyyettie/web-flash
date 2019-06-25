@@ -33,9 +33,24 @@
           {{scope.row.name}}
         </template>
       </el-table-column>
-      <el-table-column label="类型">
+      <el-table-column label="形状">
         <template slot-scope="scope">
-          {{scope.row.type}}
+          {{scope.row.shape}}
+        </template>
+      </el-table-column>
+      <el-table-column label="尺寸">
+        <template slot-scope="scope">
+          {{scope.row.dimension}}
+        </template>
+      </el-table-column>
+      <el-table-column label="颜色">
+        <template slot-scope="scope">
+          {{scope.row.color}}
+        </template>
+      </el-table-column>
+      <el-table-column label="净度">
+        <template slot-scope="scope">
+          {{scope.row.purity}}
         </template>
       </el-table-column>
       <el-table-column label="数量">
@@ -43,14 +58,19 @@
           {{scope.row.quantity}}
         </template>
       </el-table-column>
+      <el-table-column label="单位">
+        <template slot-scope="scope">
+          {{scope.row.unit}}
+        </template>
+      </el-table-column>
+      <el-table-column label="处理方式">
+        <template slot-scope="scope">
+          {{scope.row.heated}}
+        </template>
+      </el-table-column>
       <el-table-column label="状态">
         <template slot-scope="scope">
           {{scope.row.status}}
-        </template>
-      </el-table-column>
-      <el-table-column label="是否删除">
-        <template slot-scope="scope">
-          {{scope.row.isDelete}}
         </template>
       </el-table-column>
       <el-table-column label="到期日期">
@@ -58,9 +78,9 @@
           {{scope.row.dueDate}}
         </template>
       </el-table-column>
-      <el-table-column label="联系人">
+      <el-table-column label="已投标数">
         <template slot-scope="scope">
-          {{scope.row.contact}}
+          {{scope.row.count}}
         </template>
       </el-table-column>
       <el-table-column label="操作" >
@@ -90,12 +110,48 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="名称" prop="name">
-              <el-input v-model="form.name" minlength=1></el-input>
+              <el-select v-model="form.name" placeholder="请选择">
+                <el-option
+                  v-for="item in nameOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="类型" prop="type">
-              <el-input v-model="form.type"  minlength=1></el-input>
+            <el-form-item label="形状" prop="shape">
+              <el-select v-model="form.shape" placeholder="请选择">
+                <el-option
+                  v-for="item in shapeOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="尺寸" prop="dimension">
+              <el-input v-model="form.dimension"  minlength=1></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="颜色" prop="color">
+              <el-input v-model="form.color"  minlength=1></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="净度" prop="purity">
+              <el-select v-model="form.purity" placeholder="请选择">
+                <el-option
+                  v-for="item in purityOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -103,25 +159,28 @@
               <el-input v-model="form.quantity"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12" v-show="isAdd">
+          <el-col :span="12">
             <el-form-item label="单位" prop="unit">
-              <el-input v-model="form.unit"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" v-show="isAdd">
-            <el-form-item label="状态" prop="status">
-              <el-input v-model="form.status"></el-input>
+              <el-select v-model="form.unit" placeholder="请选择">
+                <el-option
+                  v-for="item in unitOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="联系人" prop="contact">
-              <el-input v-model="form.contact"></el-input>
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12">
-            <el-form-item label="是否删除" prop="isDelete">
-              <el-switch v-model="form.isDelete"></el-switch>
+            <el-form-item label="处理方式" prop="heated">
+              <el-select v-model="form.heated" placeholder="请选择">
+                <el-option
+                  v-for="item in heatedOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">

@@ -35,7 +35,7 @@ export default {
     size: 'Global Size'
   },
   login: {
-    title: 'Web-Flash',
+    title: 'Bid Management System',
     logIn: 'Log in',
     username: 'Username',
     password: 'Password',
