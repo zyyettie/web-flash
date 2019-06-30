@@ -23,7 +23,8 @@ export default {
     businessMgr: 'Business',
     tenderMgr: 'Tender',
     supplierMgr: 'Supplier',
-    bidMgr: 'Bid'
+    bidMgr: 'My Bid',
+    tenderBidMgr: 'Bid'
   },
   navbar: {
     logOut: 'Log Out',

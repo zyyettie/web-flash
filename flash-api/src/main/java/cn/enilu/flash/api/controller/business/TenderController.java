@@ -40,7 +40,8 @@ public class TenderController extends BaseController {
     @BussinessLog(value = "新增投标", key = "name", dict = TenderDict.class)
     public Object save(@ModelAttribute Tender tender){
         logger.info(JSON.toJSONString(tender));
-        String dateStr = new SimpleDateFormat("yyMMdd").format(new Date());
+        //根据tender id的最大号码加1生成编号
+       String dateStr = new SimpleDateFormat("yyMMdd").format(new Date());
         Long maxId = tenderService.findMaxId();//1
         Long noPlusOne = maxId+1;
         String no = dateStr + String.format("%04d", noPlusOne);
@@ -62,5 +63,12 @@ public class TenderController extends BaseController {
         }
         tenderService.delete(id);
         return Rets.success();
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    @BussinessLog(value = "查看投标", key = "id", dict = TenderDict.class)
+    public Object getDetails(@RequestParam Long tenderId) {
+        Tender tender = tenderService.get(tenderId);
+        return tender;
     }
 }

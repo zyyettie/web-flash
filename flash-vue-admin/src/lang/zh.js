@@ -23,7 +23,8 @@ export default {
     businessMgr: '业务管理',
     tenderMgr: '发标',
     supplierMgr: '供应商',
-    bidMgr: '投标'
+    bidMgr: '我的投标',
+    tenderbidMgr: '投标'
   },
   navbar: {
     logOut: '退出登录',

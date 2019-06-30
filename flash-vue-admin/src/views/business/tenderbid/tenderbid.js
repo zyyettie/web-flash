@@ -1,4 +1,6 @@
-import { delTender, getTenderList, saveTender } from '@/api/business/tender'
+import { delTenderBid, saveTenderBid } from '@/api/business/tenderbid'
+import { getTenderList } from '@/api/business/tender'
+import { saveBid } from '@/api/business/bid'
 
 export default {
   data() {
@@ -6,7 +8,10 @@ export default {
       formVisible: false,
       formTitle: this.$t('config.add'),
       isAdd: true,
-      form: {
+      bidFormVisible: false,
+      bidFormTitle: this.$t('config.add'),
+      bidForm: {
+        no: '',
         name: '',
         shape: '',
         dimension: '',
@@ -15,7 +20,12 @@ export default {
         quantity: '',
         unit: '',
         heated: '',
-        dueDate: ''
+        status: '',
+        dueDate: '',
+        count: '',
+        bidQuantity: '',
+        bidUnit: '',
+        bidPrice: ''
       },
       listQuery: {
         page: 1,
@@ -27,30 +37,9 @@ export default {
       list: null,
       listLoading: true,
       selRow: {},
-      nameOptions: [
-        { value: 'BS', label: 'BS-BLUE SAPPHIRE' },
-        { value: 'PS', label: 'PS-PINK SAPPHIRE' },
-        { value: 'RB', label: 'RB-RUBY' },
-        { value: 'TS', label: 'TS-TSAVORITE' },
-        { value: 'WS', label: 'WS-WHITE SAPPHIRE' }
-      ],
-      shapeOptions: [
-        { value: 'c', label: 'c' },
-        { value: 'q', label: 'q' },
-        { value: 'b', label: 'b' },
-        { value: 'g', label: 'g' }],
-      purityOptions: [
-        { value: 'lc', label: 'lc' },
-        { value: 'ec', label: 'ec' },
-        { value: 'cq', label: 'cq' },
-        { value: 'ct', label: 'ct' }],
       unitOptions: [
         { value: 'carat', label: 'carat' },
         { value: 'piece', label: 'piece' }
-      ],
-      heatedOptions: [
-        { value: 'unheated', label: 'unheated' },
-        { value: 'heated', label: 'heated' }
       ]
     }
   },
@@ -143,19 +132,7 @@ export default {
     handleCurrentChange(currentRow, oldCurrentRow) {
       this.selRow = currentRow
     },
-    resetForm() {
-      this.form = {
-        name: '',
-        shape: '',
-        dimension: '',
-        color: '',
-        purity: '',
-        quantity: '',
-        unit: '',
-        heated: '',
-        dueDate: ''
-      }
-    },
+
     add() {
       this.resetForm()
       this.formTitle = this.$t('config.add')
@@ -163,25 +140,20 @@ export default {
       this.isAdd = true
     },
     save() {
-      this.$refs['form'].validate((valid) => {
+      this.$refs['bidForm'].validate((valid) => {
         if (valid) {
-          saveTender({
-            name: this.form.name,
-            shape: this.form.shape,
-            dimension: this.form.dimension,
-            color: this.form.color,
-            purity: this.form.purity,
-            quantity: this.form.quantity,
-            unit: this.form.unit,
-            heated: this.form.heated,
-            dueDate: this.form.dueDate
+          saveTenderBid({
+            quantity: this.bidForm.bidQuantity,
+            unit: this.bidForm.bidUnit,
+            price: this.bidForm.bidPrice,
+            tenderId: this.bidForm.id
           }).then(response => {
             this.$message({
               message: this.$t('common.optionSuccess'),
               type: 'success'
             })
             this.fetchData()
-            this.formVisible = false
+            this.bidFormVisible = false
           })
         } else {
           return false
@@ -198,7 +170,7 @@ export default {
       })
       return false
     },
-    edit(row) {
+    edit() {
       if (this.checkSel()) {
         this.isAdd = false
         this.form = this.selRow
@@ -214,7 +186,7 @@ export default {
           cancelButtonText: this.$t('button.cancel'),
           type: 'warning'
         }).then(() => {
-          delTender(id).then(response => {
+          delTenderBid(id).then(response => {
             this.$message({
               message: this.$t('common.optionSuccess'),
               type: 'success'
@@ -225,24 +197,25 @@ export default {
         })
       }
     },
-    viewTender(rowData) {
-      this.$router.push({
-        path: '/business/tenderDetail',
-        name: 'tenderDetail',
-        params: {
-          tenderId: rowData.id,
-          no: rowData.no,
-          name: rowData.name,
-          shape: rowData.shape,
-          dimension: rowData.dimension,
-          color: rowData.color,
-          purity: rowData.purity,
-          quantity: rowData.quantity,
-          unit: rowData.unit,
-          heated: rowData.heated,
-          dueDate: rowData.dueDate,
-          status: rowData.status
-        }
+    addBid(row) {
+      this.bidForm.tenderId = row.id
+      this.bidForm = this.selRow
+      this.bidFormVisible = true
+    },
+    saveBid() {
+      saveBid({
+        quantity: this.bidForm.bidQuantity,
+        unit: this.bidForm.bidUnit,
+        price: this.bidForm.bidPrice,
+        tenderId: this.bidForm.id,
+        tenderNo: this.bidForm.no
+      }).then(response => {
+        this.$message({
+          message: this.$t('common.optionSuccess'),
+          type: 'success'
+        })
+        this.fetchData()
+        this.formVisible = false
       })
     }
 

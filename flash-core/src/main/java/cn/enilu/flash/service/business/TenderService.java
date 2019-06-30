@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class TenderService {
 
@@ -35,6 +37,14 @@ public class TenderService {
             return new Long(0);
         }
         return tender.getId();
+    }
+
+    public Tender get(Long id){
+        Optional<Tender> optional = tenderRepository.findById(id);
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+        return null;
     }
 }
 

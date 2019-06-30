@@ -25,3 +25,11 @@ export function delBid(id) {
     }
   })
 }
+
+export function getBidByTenderId(params) {
+  return request({
+    url: '/bid/bytender',
+    method: 'get',
+    params
+  })
+}

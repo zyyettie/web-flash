@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BidService {
@@ -26,5 +27,15 @@ public class BidService {
     }
     public void delete(Long id){
         bidRepository.deleteById(id);
+    }
+
+    public Object getBidsByTenderId(Long tenderId){
+        List<Bid> list = bidRepository.findBidsByTenderId(tenderId);
+        return list;
+    }
+
+    public Bid getBidByNo(String no){
+        Bid bid = bidRepository.findBidByNo(no);
+        return bid;
     }
 }

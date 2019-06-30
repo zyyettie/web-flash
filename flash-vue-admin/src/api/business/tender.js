@@ -25,3 +25,11 @@ export function delTender(id) {
     }
   })
 }
+
+export function getTenderDetails(id) {
+  return request({
+    url: '/tender',
+    method: 'get',
+    params: id
+  })
+}

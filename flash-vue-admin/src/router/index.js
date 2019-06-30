@@ -219,6 +219,19 @@ export const asyncRouterMap = [
         name: 'Bid',
         component: () => import('@/views/business/bid/index'),
         meta: { title: 'bidMgr' }
+      },
+      {
+        path: 'tenderbid',
+        name: 'TenderBid',
+        component: () => import('@/views/business/tenderbid/index'),
+        meta: { title: 'tenderbidMgr' }
+      },
+      {
+        path: 'tenderDetail',
+        name: 'tenderDetail',
+        component: () => import('@/views/business/tender/tenderDetail.vue'),
+        hidden: true,
+        meta: { title: 'tenderDetail' }
       }
     ]
   },

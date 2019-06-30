@@ -7,7 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 
+
 import org.hibernate.annotations.Table;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -43,6 +45,9 @@ public class Tender extends BaseEntity {
     private Date dueDate;
     @Column
     private Integer count;
+    @Column
+    @Version
+    private Long version;
     @Column
     private Integer isDelete;
 }

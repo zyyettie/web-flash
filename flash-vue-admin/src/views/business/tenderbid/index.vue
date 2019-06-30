@@ -12,12 +12,6 @@
         </el-col>
       </el-row>
       <br>
-      <el-row>
-        <el-col :span="24">
-          <el-button type="success" icon="el-icon-plus" @click.native="add">{{ $t('button.add') }}</el-button>
-          <el-button type="danger" icon="el-icon-delete" @click.native="remove">{{ $t('button.delete') }}</el-button>
-        </el-col>
-      </el-row>
     </div>
 
     <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
@@ -25,7 +19,7 @@
 
       <el-table-column label="编号">
         <template slot-scope="scope">
-          <el-button type="text" @click.native="viewTender(scope.row)"> {{scope.row.no}}</el-button>
+          {{scope.row.no}}
         </template>
       </el-table-column>
       <el-table-column label="名称">
@@ -83,6 +77,11 @@
           {{scope.row.count}}
         </template>
       </el-table-column>
+      <el-table-column label="操作" >
+        <template slot-scope="scope">
+          <el-button type="button" @click="addBid(scope.row)">{{$t('business.bid')}}</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <el-pagination
@@ -98,65 +97,77 @@
     </el-pagination>
 
     <el-dialog
-      :title="formTitle"
-      :visible.sync="formVisible"
+      :title="bidFormTitle"
+      :visible.sync="bidFormVisible"
       width="70%">
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="bidForm" :model="bidForm" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
+            <el-form-item label="编号" prop="no">
+              <el-input v-model="bidForm.no" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="名称" prop="name">
-              <el-select v-model="form.name" placeholder="请选择">
-                <el-option
-                  v-for="item in nameOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
+              <el-input v-model="bidForm.name" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="形状" prop="shape">
-              <el-select v-model="form.shape" placeholder="请选择">
-                <el-option
-                  v-for="item in shapeOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
+              <el-input v-model="bidForm.shape" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="尺寸" prop="dimension">
-              <el-input v-model="form.dimension"  minlength=1></el-input>
+              <el-input v-model="bidForm.dimension" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="颜色" prop="color">
-              <el-input v-model="form.color"  minlength=1></el-input>
+              <el-input v-model="bidForm.color" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="净度" prop="purity">
-              <el-select v-model="form.purity" placeholder="请选择">
-                <el-option
-                  v-for="item in purityOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
+              <el-input v-model="bidForm.purity" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="数量" prop="quantity">
-              <el-input v-model="form.quantity"></el-input>
+              <el-input v-model="bidForm.quantity" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="单位" prop="unit">
-              <el-select v-model="form.unit" placeholder="请选择">
+              <el-input v-model="bidForm.unit" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="处理方式" prop="heated">
+              <el-input v-model="bidForm.heated" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="状态" prop="status">
+              <el-input v-model="bidForm.status" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="到期日期" prop="dueDate">
+              <el-input v-model="bidForm.dueDate" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- bid信息 -->
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="数量" prop="bidQuantity">
+              <el-input v-model="bidForm.bidQuantity" ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="单位" prop="unit">
+              <el-select v-model="bidForm.bidUnit" placeholder="请选择">
                 <el-option
                   v-for="item in unitOptions"
                   :key="item.value"
@@ -167,35 +178,21 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="处理方式" prop="heated">
-              <el-select v-model="form.heated" placeholder="请选择">
-                <el-option
-                  v-for="item in heatedOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
+            <el-form-item label="价格" prop="bidPrice">
+              <el-input v-model="bidForm.bidPrice" ></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="到期日期">
-              <el-date-picker type="date" placeholder="到期日期" v-model="form.dueDate" style="width: 100%;">
-              </el-date-picker>
-            </el-form-item>
-          </el-col>
-
         </el-row>
         <el-form-item>
           <el-button type="primary" @click="save">{{ $t('button.submit') }}</el-button>
-          <el-button @click.native="formVisible = false">{{ $t('button.cancel') }}</el-button>
+          <el-button @click.native="bidFormVisible = false">{{ $t('button.cancel') }}</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
 </div>
 </template>
 
-<script src="./tender.js"></script>
+<script src="./tenderbid.js"></script>
 <style rel="stylesheet/scss" lang="scss" scoped>
   @import "src/styles/common.scss";
 </style>
