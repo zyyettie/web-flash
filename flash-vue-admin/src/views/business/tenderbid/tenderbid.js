@@ -199,7 +199,7 @@ export default {
     },
     addBid(row) {
       this.bidForm.tenderId = row.id
-      this.bidForm = this.selRow
+      this.bidForm = row
       this.bidFormVisible = true
     },
     saveBid() {
