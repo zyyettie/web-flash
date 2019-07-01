@@ -29,5 +29,8 @@
 }
 
 .el-table__body tr:hover>td {
-  background: #212e3e !important;
+  background: #9FB6CD !important;
+}
+.el-table__body tr.current-row>td {
+  background: #9FB6CD !important;
 }
