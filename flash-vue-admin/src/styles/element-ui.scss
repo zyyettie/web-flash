@@ -27,3 +27,7 @@
     }
   }
 }
+
+.el-table__body tr:hover>td {
+  background: #212e3e !important;
+}
