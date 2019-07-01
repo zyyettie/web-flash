@@ -9,4 +9,6 @@ public interface BidRepository extends PagingAndSortingRepository<Bid, Long> {
     List<Bid> findBidsByTenderId(Long tenderId);
 
     Bid findBidByNo(String no);
+
+    List<Bid> findBidsByCreateBy(Long userId);
 }

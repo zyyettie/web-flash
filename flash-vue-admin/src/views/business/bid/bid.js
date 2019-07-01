@@ -13,6 +13,10 @@ export default {
         isApproved: '',
         tenderNo: ''
       },
+      unitOptions: [
+        { value: 'carat', label: 'carat' },
+        { value: 'piece', label: 'piece' }
+      ],
       listQuery: {
         page: 1,
         limit: 20,
@@ -152,6 +156,11 @@ export default {
         this.formTitle = this.$t('config.edit')
         this.formVisible = true
       }
+    },
+    editBid(row) {
+      this.form.tenderId = row.id
+      this.form = row
+      this.formVisible = true
     },
     remove() {
       if (this.checkSel()) {

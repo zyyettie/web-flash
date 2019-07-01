@@ -8,6 +8,7 @@ import cn.enilu.flash.bean.entity.business.Tender;
 import cn.enilu.flash.bean.entity.system.User;
 import cn.enilu.flash.bean.enumeration.BizExceptionEnum;
 import cn.enilu.flash.bean.exception.GunsException;
+import cn.enilu.flash.bean.vo.business.Bidtender;
 import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.service.business.BidService;
 import cn.enilu.flash.service.business.TenderService;
@@ -20,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -33,15 +36,10 @@ public class BidController extends BaseController{
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public Object List(){
-        List<Bid> list = (List<Bid>)bidService.queryAll();
-        return Rets.success(list);
-    }
-
-//    @RequestMapping(value = "", method = RequestMethod.POST)
-//    public Object addBid(@ModelAttribute Bid bid){
-//
+//    @RequestMapping(value = "/list", method = RequestMethod.GET)
+//    public Object List(){
+//        List<Bid> list = (List<Bid>)bidService.queryAll();
+//        return Rets.success(list);
 //    }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -83,6 +81,49 @@ public class BidController extends BaseController{
     @RequestMapping(value = "/bytender", method = RequestMethod.GET)
     public Object getBidListByTenderId(@Param("tenderId") Long tenderId){
         List<Bid> list = (List<Bid>)bidService.getBidsByTenderId(tenderId);
+        return Rets.success(list);
+    }
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public Object List(HttpServletRequest request){
+        Long idUser;
+        try {
+            idUser = getIdUser(request);
+        }catch (Exception e){
+            return Rets.expire();
+        }
+        List<Bidtender> list = new ArrayList();
+        if(idUser!=null){
+            List<Bid> bidList = (List<Bid>)bidService.getListByUser(idUser);
+            for(Bid bid: bidList){
+                Long tenderId = bid.getTenderId();
+                Tender tender = tenderService.get(tenderId);
+                Bidtender bidtenderVO = new Bidtender();
+                //bid info
+                bidtenderVO.setNo(bid.getNo());
+                bidtenderVO.setQuantity(bid.getQuantity());
+                bidtenderVO.setPrice(bid.getPrice());
+                bidtenderVO.setUnit(bid.getUnit());
+                bidtenderVO.setIsApproved(bid.getIsApproved());
+                bidtenderVO.setTenderId(bid.getTenderId());
+
+                //tender info
+                bidtenderVO.setTenderId(tenderId);
+                bidtenderVO.setTenderNo(tender.getNo());
+                bidtenderVO.setName(tender.getName());
+                bidtenderVO.setShape(tender.getShape());
+                bidtenderVO.setDimension(tender.getDimension());
+                bidtenderVO.setColor(tender.getColor());
+                bidtenderVO.setPurity(tender.getPurity());
+                bidtenderVO.setTenderQuantity(tender.getQuantity());
+                bidtenderVO.setTenderUnit(tender.getUnit());
+                bidtenderVO.setHeated(tender.getHeated());
+                bidtenderVO.setStatus(tender.getStatus());
+                bidtenderVO.setDueDate(tender.getDueDate());
+                bidtenderVO.setCount(tender.getCount());
+                list.add(bidtenderVO);
+            }
+        }
         return Rets.success(list);
     }
 }

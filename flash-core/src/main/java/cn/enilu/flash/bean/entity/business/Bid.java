@@ -25,7 +25,7 @@ public class Bid extends BaseEntity {
     @Column
     private String contact;
     @Column
-    private boolean isApproved;
+    private int isApproved;
     @Column
     private Long tenderId;
 }
