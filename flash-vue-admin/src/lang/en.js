@@ -107,6 +107,8 @@ export default {
     failMsg: 'Register failed, please try again.'
   },
   business: {
-    bid: 'Bid'
+    bid: 'Bid',
+    accept: 'Accept',
+    deny: 'Deny'
   }
 }

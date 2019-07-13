@@ -42,6 +42,11 @@ public class BidController extends BaseController{
 //        return Rets.success(list);
 //    }
 
+    /**
+     *
+     * @param bid
+     * @return
+     */
     @RequestMapping(method = RequestMethod.POST)
     @BussinessLog(value = "编辑投标", key = "name", dict = BidDict.class)
     public Object save(@ModelAttribute Bid bid){
@@ -100,11 +105,13 @@ public class BidController extends BaseController{
                 Tender tender = tenderService.get(tenderId);
                 Bidtender bidtenderVO = new Bidtender();
                 //bid info
+                bidtenderVO.setBidId(bid.getId());
                 bidtenderVO.setNo(bid.getNo());
                 bidtenderVO.setQuantity(bid.getQuantity());
                 bidtenderVO.setPrice(bid.getPrice());
                 bidtenderVO.setUnit(bid.getUnit());
                 bidtenderVO.setIsApproved(bid.getIsApproved());
+                bidtenderVO.setBidStatus(bid.getStatus());
                 bidtenderVO.setTenderId(bid.getTenderId());
 
                 //tender info
@@ -118,12 +125,33 @@ public class BidController extends BaseController{
                 bidtenderVO.setTenderQuantity(tender.getQuantity());
                 bidtenderVO.setTenderUnit(tender.getUnit());
                 bidtenderVO.setHeated(tender.getHeated());
-                bidtenderVO.setStatus(tender.getStatus());
+                bidtenderVO.setTenderStatus(tender.getStatus());
                 bidtenderVO.setDueDate(tender.getDueDate());
                 bidtenderVO.setCount(tender.getCount());
                 list.add(bidtenderVO);
             }
         }
         return Rets.success(list);
+    }
+
+    @RequestMapping(value = "/moveToNextStatus/{id}",method = RequestMethod.GET)
+    @BussinessLog(value = "移到下一步状态", key = "name", dict = BidDict.class)
+    public Object moveToNextStatus(@PathVariable Long id){
+        bidService.moveToNextStatus(id);
+        return Rets.success();
+    }
+
+    @RequestMapping(value = "/approve/{id}", method = RequestMethod.GET)
+    @BussinessLog(value = "接受投标", key = "name", dict = BidDict.class)
+    public Object approve(@PathVariable Long id){
+        bidService.approve(id);
+        return Rets.success();
+    }
+
+    @RequestMapping(value = "/deny/{id}", method = RequestMethod.GET)
+    @BussinessLog(value = "拒绝投标", key = "name", dict = BidDict.class)
+    public Object deny(@PathVariable Long id){
+        bidService.deny(id);
+        return Rets.success();
     }
 }

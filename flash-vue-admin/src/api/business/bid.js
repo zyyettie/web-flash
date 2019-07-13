@@ -33,3 +33,24 @@ export function getBidByTenderId(params) {
     params
   })
 }
+
+export function moveBidToNextStatus(id) {
+  return request({
+    url: '/bid/moveToNextStatus/' + id,
+    method: 'get'
+  })
+}
+
+export function approveBid(id) {
+  return request({
+    url: '/bid/approve/' + id,
+    method: 'get'
+  })
+}
+
+export function denyBid(id) {
+  return request({
+    url: '/bid/deny/' + id,
+    method: 'get'
+  })
+}

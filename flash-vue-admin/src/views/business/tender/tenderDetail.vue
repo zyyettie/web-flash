@@ -11,7 +11,7 @@
     <el-form ref="bidForm" :model="bidForm" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="编号" prop="no">
+            <el-form-item label="发标编号" prop="no">
               <el-input v-model="bidForm.no" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
@@ -67,10 +67,24 @@
           </el-col>
         </el-row>
     </el-form>
+
+    <el-steps :sapce="200" :active=-1 finish-status="success">
+      <el-step title="1. 发标团队选择供应商"></el-step>
+      <el-step title="2. 供应商发货"></el-step>
+      <el-step title="3. 收获并检测"></el-step>
+      <el-step title="4. 发标团队确认购买数量、价格"></el-step>
+      <el-step title="5. 供应商确认,并送达发票"></el-step>
+      <el-step title="6. 收到发票，付款结算"></el-step>
+    </el-steps>
     <!-- 投标列表 -->
     <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
               @current-change="handleCurrentChange">
-      <el-table-column label="编号">
+      <el-table-column label="投标id" v-if=false>
+        <template slot-scope="scope">
+          {{scope.row.id}}
+        </template>
+      </el-table-column>
+      <el-table-column label="投标编号">
         <template slot-scope="scope">
           {{scope.row.no}}
         </template>
@@ -100,6 +114,27 @@
           {{scope.row.isApproved}}
         </template>
       </el-table-column>
+      <el-table-column label="投标状态">
+        <template slot-scope="scope">
+          {{scope.row.status}}
+        </template>
+      </el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <div v-if="scope.row.isApproved === 0">
+          <el-button type="button" @click="approve(scope.row.id)">{{$t('business.accept')}}</el-button>
+          <el-button type="button" @click="deny(scope.row.id)">{{$t('business.deny')}}</el-button>
+          </div>
+          <div v-else>
+            <div v-if="scope.row.status === 1 || scope.row.status === 3 || scope.row.status === 4 || scope.row.status === 6">
+              <el-button type="button" @click="changeStatus(scope.row)">{{$t('business.nextStep')}}</el-button>
+            </div>
+            <div v-else>
+              <el-button type="button" :disabled="true">{{$t('business.nextStep')}}</el-button>
+            </div>
+          </div>
+        </template>
+      </el-table-column>
     </el-table>
 
     <el-pagination
@@ -113,6 +148,54 @@
       @prev-click="fetchPrev"
       @next-click="fetchNext">
     </el-pagination>
+
+    <el-dialog
+          :title="statusFormTitle"
+          :visible.sync="statusFormVisible"
+          width="70%">
+      <el-form ref="statusForm" :model="statusForm" :rules="rules" label-width="80px">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="发标编号" prop="no">
+              <el-input v-model="statusForm.no" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+        <el-steps :sapce="200" :active="statusForm.status" finish-status="success">
+        <el-step title="1. 发标团队选择供应商"></el-step>
+        <el-step title="2. 供应商发货"></el-step>
+        <el-step title="3. 收获并检测"></el-step>
+        <el-step title="4. 发标团队确认购买数量、价格"></el-step>
+        <el-step title="5. 供应商确认,并送达发票"></el-step>
+        <el-step title="6. 收到发票，付款结算"></el-step>
+        </el-steps>
+        </el-row>
+        <br>
+        <el-row>
+        <el-table
+        :data="statusData" style="width: 50%">
+        <el-table-column
+          prop="host"
+          label="发标方"
+          width="300">
+        </el-table-column>
+        <el-table-column
+          prop="vendor"
+          label="供应商"
+          width="300">
+        </el-table-column>
+        </el-table>
+        </el-row>
+        <br>
+        <br>
+        <el-form-item>
+          <el-button type="primary" @click="nextStep(statusForm.id)">{{ $t('button.submit') }}</el-button>
+          <el-button @click.native="statusFormVisible = false">{{ $t('button.cancel') }}</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
 
 </div>
 </template>

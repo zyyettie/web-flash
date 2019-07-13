@@ -14,15 +14,29 @@
       <br>
       <el-row>
         <el-col :span="24">
-          <el-button type="primary" icon="el-icon-edit" @click.native="edit">{{ $t('button.edit') }}</el-button>
+          <!--el-button type="primary" icon="el-icon-edit" @click.native="edit">{{ $t('button.edit') }}</el-button-->
           <el-button type="danger" icon="el-icon-delete" @click.native="remove">{{ $t('button.delete') }}</el-button>
         </el-col>
       </el-row>
     </div>
 
+    <el-steps :sapce="200" :active=-1 finish-status="success">
+      <el-step title="1. 发标团队选择供应商"></el-step>
+      <el-step title="2. 供应商发货"></el-step>
+      <el-step title="3. 收获并检测"></el-step>
+      <el-step title="4. 发标团队确认购买数量、价格"></el-step>
+      <el-step title="5. 供应商确认,并送达发票"></el-step>
+      <el-step title="6. 收到发票，付款结算"></el-step>
+    </el-steps>
+
     <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
               @current-change="handleCurrentChange">
 
+      <el-table-column label="投标ID" v-if="false">
+        <template slot-scope="scope">
+          {{scope.row.bidId}}
+        </template>
+      </el-table-column>
       <el-table-column label="投标编号">
         <template slot-scope="scope">
           {{scope.row.no}}
@@ -83,9 +97,29 @@
           {{scope.row.isApproved}}
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="投标状态">
+        <template slot-scope="scope">
+          {{scope.row.bidStatus}}
+        </template>
+      </el-table-column>
+      <!--el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="button" @click="editBid(scope.row)">{{$t('button.edit')}}</el-button>
+        </template>
+      </el-table-column-->
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <div v-if="scope.row.isApproved === 0">
+            <el-button type="button" @click="editBid(scope.row)">{{$t('button.edit')}}</el-button>
+          </div>
+          <div v-else>
+            <div v-if="scope.row.bidStatus === 2 || scope.row.bidStatus === 5">
+              <el-button type="button" @click="changeVendorStatus(scope.row)">{{$t('business.nextStep')}}</el-button>
+            </div>
+            <div v-else>
+              <el-button type="button" :disabled="true">{{$t('business.nextStep')}}</el-button>
+            </div>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -154,8 +188,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="状态" prop="status">
-              <el-input v-model="form.status" :disabled="true"></el-input>
+            <el-form-item label="状态" prop="tenderStatus">
+              <el-input v-model="form.tenderStatus" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -192,6 +226,53 @@
         <el-form-item>
           <el-button type="primary" @click="save">{{ $t('button.submit') }}</el-button>
           <el-button @click.native="formVisible = false">{{ $t('button.cancel') }}</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+    <!-- 更改状态Dialog -->
+  <el-dialog
+          :title="statusFormTitle"
+          :visible.sync="statusFormVisible"
+          width="70%">
+      <el-form ref="statusForm" :model="statusForm" :rules="rules" label-width="80px">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="发标编号" prop="no">
+              <el-input v-model="statusForm.no" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+        <el-steps :sapce="200" :active="statusForm.bidStatus" finish-status="success">
+        <el-step title="1. 发标团队选择供应商"></el-step>
+        <el-step title="2. 供应商发货"></el-step>
+        <el-step title="3. 收获并检测"></el-step>
+        <el-step title="4. 发标团队确认购买数量、价格"></el-step>
+        <el-step title="5. 供应商确认,并送达发票"></el-step>
+        <el-step title="6. 收到发票，付款结算"></el-step>
+        </el-steps>
+        </el-row>
+        <br>
+        <el-row>
+        <el-table
+        :data="statusData" style="width: 50%">
+        <el-table-column
+          prop="host"
+          label="发标方"
+          width="300">
+        </el-table-column>
+        <el-table-column
+          prop="vendor"
+          label="供应商"
+          width="300">
+        </el-table-column>
+        </el-table>
+        </el-row>
+        <br>
+        <br>
+        <el-form-item>
+          <el-button type="primary" @click="nextStep(statusForm.bidId)">{{ $t('button.submit') }}</el-button>
+          <el-button @click.native="statusFormVisible = false">{{ $t('button.cancel') }}</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>

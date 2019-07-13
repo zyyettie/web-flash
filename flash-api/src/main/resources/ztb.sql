@@ -75,6 +75,7 @@ CREATE TABLE `t_biz_bid` (
   `unit` varchar(255) DEFAULT NULL COMMENT '单位',
   `contact` varchar(255) DEFAULT NULL COMMENT '投标人',
   `is_approved` int(20) DEFAULT '0' COMMENT '是否中标(0：未中标；1：已中标)',
+  `status` int(20) DEFAULT 0 COMMENT '投标状态',
   `tender_id` bigint(20) NOT NULL COMMENT '发标ID',
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_tender_id` FOREIGN KEY (`tender_id`) REFERENCES `t_biz_tender` (`id`) ON DELETE RESTRICT ON UPDATE NO ACTION

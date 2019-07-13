@@ -106,7 +106,11 @@ export default {
     failMsg: '注册失败，请您再试一次。如果继续失败，请联系管理员寻求帮助。'
   },
   business: {
-    bid: '投标'
+    bid: '投标',
+    accept: '接受',
+    deny: '拒绝',
+    nextStep: '更改状态',
+    statusChange: '状态变更'
   }
 }
 

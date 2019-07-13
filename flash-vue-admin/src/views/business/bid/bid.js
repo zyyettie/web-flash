@@ -1,4 +1,4 @@
-import { delBid, getBidList, saveBid } from '@/api/business/bid'
+import { delBid, getBidList, saveBid, moveBidToNextStatus } from '@/api/business/bid'
 
 export default {
   data() {
@@ -26,7 +26,33 @@ export default {
       total: 0,
       list: null,
       listLoading: true,
-      selRow: {}
+      selRow: {},
+      statusForm: {
+        id: '',
+        no: '',
+        status: ''
+      },
+      statusFormTitle: 'business.statusChange',
+      statusFormVisible: false,
+      statusData: [{
+        host: '1. 发标团队选择供应商',
+        vendor: ''
+      }, {
+        host: '',
+        vendor: '2. 供应商发货'
+      }, {
+        host: '3. 收获并检测',
+        vendor: ''
+      }, {
+        host: '4. 发标团队确认购买数量、价格',
+        vendor: ''
+      }, {
+        host: '',
+        vendor: '5. 供应商确认,并送达发票'
+      }, {
+        host: '6. 收到发票，付款结算',
+        vendor: ''
+      }]
     }
   },
   filters: {
@@ -180,7 +206,22 @@ export default {
         }).catch(() => {
         })
       }
+    },
+    changeVendorStatus(row) {
+      this.statusForm = this.selRow
+      this.statusFormTitle = this.$t('business.statusChange')
+      this.statusFormVisible = true
+    },
+    nextStep(id) {
+      moveBidToNextStatus(id).then(response => {
+        console.log(response)
+        this.$message({
+          message: '状态修改成功',
+          type: 'success'
+        })
+        this.fetchData()
+        this.statusFormVisible = false
+      })
     }
-
   }
 }

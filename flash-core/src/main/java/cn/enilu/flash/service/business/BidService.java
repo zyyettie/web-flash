@@ -42,4 +42,16 @@ public class BidService {
         List<Bid> list = bidRepository.findBidsByCreateBy(userId);
         return list;
     }
+
+    public void moveToNextStatus(Long id){
+        bidRepository.moveToNextStatus(id);
+    }
+
+    public void approve(Long id){
+        bidRepository.approve(id);
+    }
+
+    public void deny(Long id){
+        bidRepository.deny(id);
+    }
 }

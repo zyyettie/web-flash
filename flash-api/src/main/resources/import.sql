@@ -489,7 +489,9 @@ INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('617', '217', '1
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('618', '218', '1');
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('619', '219', '1');
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('620', '220', '1');
-
+INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('621', '217', '4');
+INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('622', '218', '4');
+INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('623', '219', '4');
 -- ----------------------------
 -- Table structure for `t_sys_role`
 -- ----------------------------

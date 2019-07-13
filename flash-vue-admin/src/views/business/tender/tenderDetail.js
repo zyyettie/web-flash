@@ -1,11 +1,10 @@
-import { delTenderBid, saveTenderBid } from '@/api/business/tenderbid'
-import { getBidByTenderId } from '@/api/business/bid'
+import { getBidByTenderId, moveBidToNextStatus, approveBid, denyBid } from '@/api/business/bid'
 
 export default {
   data() {
     return {
-      formVisible: false,
-      formTitle: this.$t('config.add'),
+      statusFormTitle: 'business.statusChange',
+      statusFormVisible: false,
       isAdd: true,
       bidFormVisible: false,
       bidFormTitle: this.$t('config.add'),
@@ -35,7 +34,31 @@ export default {
       unitOptions: [
         { value: 'carat', label: 'carat' },
         { value: 'piece', label: 'piece' }
-      ]
+      ],
+      statusForm: {
+        id: '',
+        no: '',
+        status: ''
+      },
+      statusData: [{
+        host: '1. 发标团队选择供应商',
+        vendor: ''
+      }, {
+        host: '',
+        vendor: '2. 供应商发货'
+      }, {
+        host: '3. 收获并检测',
+        vendor: ''
+      }, {
+        host: '4. 发标团队确认购买数量、价格',
+        vendor: ''
+      }, {
+        host: '',
+        vendor: '5. 供应商确认,并送达发票'
+      }, {
+        host: '6. 收到发票，付款结算',
+        vendor: ''
+      }]
     }
   },
   filters: {
@@ -144,27 +167,44 @@ export default {
         this.formVisible = true
       }
     },
-    remove() {
-      if (this.checkSel()) {
-        var id = this.selRow.id
-        this.$confirm(this.$t('common.deleteConfirm'), this.$t('common.tooltip'), {
-          confirmButtonText: this.$t('button.submit'),
-          cancelButtonText: this.$t('button.cancel'),
-          type: 'warning'
-        }).then(() => {
-          delTenderBid(id).then(response => {
-            this.$message({
-              message: this.$t('common.optionSuccess'),
-              type: 'success'
-            })
-            this.fetchData()
-          })
-        }).catch(() => {
-        })
-      }
-    },
     back() {
       this.$router.go(-1)
+    },
+    approve(id) {
+      approveBid(id).then(response => {
+        console.log(response)
+        this.$message({
+          message: '批准投标成功',
+          type: 'success'
+        })
+        this.fetchData()
+      })
+    },
+    deny(id) {
+      denyBid(id).then(response => {
+        console.log(response)
+        this.$message({
+          message: '拒绝投标成功',
+          type: 'success'
+        })
+        this.fetchData()
+      })
+    },
+    changeStatus(row) {
+      this.statusForm = this.selRow
+      this.statusFormTitle = this.$t('business.statusChange')
+      this.statusFormVisible = true
+    },
+    nextStep(id) {
+      moveBidToNextStatus(id).then(response => {
+        console.log(response)
+        this.$message({
+          message: '状态修改成功',
+          type: 'success'
+        })
+        this.fetchData()
+        this.statusFormVisible = false
+      })
     }
 
   },
