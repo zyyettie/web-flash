@@ -191,47 +191,55 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '/business',
+    path: '/tender_mgr',
     component: Layout,
     redicrect: '#',
-    name: 'Business',
+    name: 'tender_mgr',
     alwaysShow: true,
     meta: {
       roles: ['administrator', 'developer'],
-      title: 'businessMgr',
+      title: 'tender_mgr',
       icon: 'documentation'
     },
     children: [
       {
         path: 'tender',
         name: 'Tender',
-        component: () => import('@/views/business/tender/index'),
+        component: () => import('@/views/tender_mgr/tender/index'),
         meta: { title: 'tenderMgr' }
       },
       {
-        path: 'supplier',
-        name: 'Supplier',
-        component: () => import('@/views/business/supplier/index'),
-        meta: { title: 'supplierMgr' }
-      },
+        path: 'tenderDetail',
+        name: 'tenderDetail',
+        component: () => import('@/views/tender_mgr/tender/tenderDetail.vue'),
+        hidden: true,
+        meta: { title: 'tenderDetail' }
+      }
+    ]
+  },
+  {
+    path: '/bid_mgr',
+    component: Layout,
+    redicrect: '#',
+    name: 'bid_mgr',
+    alwaysShow: true,
+    meta: {
+      roles: ['administrator', 'developer'],
+      title: 'bid_mgr',
+      icon: 'documentation'
+    },
+    children: [
       {
         path: 'bid',
         name: 'Bid',
-        component: () => import('@/views/business/bid/index'),
+        component: () => import('@/views/bid_mgr/bid/index'),
         meta: { title: 'bidMgr' }
       },
       {
         path: 'tenderbid',
         name: 'TenderBid',
-        component: () => import('@/views/business/tenderbid/index'),
+        component: () => import('@/views/bid_mgr/tenderbid/index'),
         meta: { title: 'tenderbidMgr' }
-      },
-      {
-        path: 'tenderDetail',
-        name: 'tenderDetail',
-        component: () => import('@/views/business/tender/tenderDetail.vue'),
-        hidden: true,
-        meta: { title: 'tenderDetail' }
       }
     ]
   },

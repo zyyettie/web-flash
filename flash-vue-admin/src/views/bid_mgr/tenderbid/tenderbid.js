@@ -1,6 +1,6 @@
 import { delTenderBid, saveTenderBid } from '@/api/business/tenderbid'
 import { getTenderList } from '@/api/business/tender'
-import { saveBid } from '@/api/business/bid'
+import { saveBid, getBidList } from '@/api/business/bid'
 
 export default {
   data() {
@@ -40,7 +40,8 @@ export default {
       unitOptions: [
         { value: 'carat', label: 'carat' },
         { value: 'piece', label: 'piece' }
-      ]
+      ],
+      bidListForCurrentUser: null
     }
   },
   filters: {
@@ -96,6 +97,9 @@ export default {
         this.list = response.data
         this.listLoading = false
         this.total = response.data.total
+      })
+      getBidList(this.listQuery).then(response => {
+        this.bidListForCurrentUser = response.data
       })
     },
     search() {
@@ -217,7 +221,15 @@ export default {
         this.fetchData()
         this.formVisible = false
       })
+    },
+    isBidAlready(row) {
+      let bid
+      for (bid in this.bidListForCurrentUser) {
+        if (row.id === bid.tenderId) {
+          return true
+        }
+      }
+      return false
     }
-
   }
 }

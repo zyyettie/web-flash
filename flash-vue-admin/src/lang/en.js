@@ -21,6 +21,8 @@ export default {
     contactsMgr: 'Contacts',
     channelMgr: 'Channel',
     businessMgr: 'Business',
+    tender_mgr: 'Tender Management',
+    bid_mgr: 'Bid Management',
     tenderMgr: 'Tender',
     supplierMgr: 'Supplier',
     bidMgr: 'My Bid',

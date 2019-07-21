@@ -30,21 +30,21 @@ public class SecurityInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse httpServletResponse, Object o) throws Exception {
         logger.debug("requestURL:{},method:{}" , request.getRequestURL().toString(),request.getMethod());
 
-//        //如果用户是非登录用户，则拒绝用户请求
-//        String method = request.getMethod();
-//        if("OPTIONS".equals(method)){
-//            return true;
-//        }
-//        String token = request.getHeader("Authorization");
-//        if (token == null) {
-//            this.printResponse(httpServletResponse);
-//            return false;
-//        }
-//
-//        if (SpringContextHolder.getBean(TokenCache.class).get(token) == null) {
-//            this.printResponse(httpServletResponse);
-//            return false;
-//        }
+        //如果用户是非登录用户，则拒绝用户请求
+        String method = request.getMethod();
+        if("OPTIONS".equals(method)){
+            return true;
+        }
+        String token = request.getHeader("Authorization");
+        if (token == null) {
+            this.printResponse(httpServletResponse);
+            return false;
+        }
+
+        if (SpringContextHolder.getBean(TokenCache.class).get(token) == null) {
+            this.printResponse(httpServletResponse);
+            return false;
+        }
         return true;
     }
 

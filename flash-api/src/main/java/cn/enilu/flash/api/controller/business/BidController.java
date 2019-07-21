@@ -43,7 +43,7 @@ public class BidController extends BaseController{
 //    }
 
     /**
-     *
+     * 投标
      * @param bid
      * @return
      */
@@ -61,6 +61,7 @@ public class BidController extends BaseController{
         //根据bid id的最大号码加1生成编号
         String bidNo = tender.getNo() + String.format("%04d", tender.getCount()+1);
         bid.setNo(bidNo);
+        bid.setStatus(0);//设置初始投标状态为0
         bidService.save(bid);
 
         //根据createBy获取Account
@@ -89,6 +90,11 @@ public class BidController extends BaseController{
         return Rets.success(list);
     }
 
+    /**
+     * 我的投标
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Object List(HttpServletRequest request){
         Long idUser;

@@ -46,7 +46,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="单位" prop="unit">
+            <el-form-item label="重量" prop="unit">
               <el-input v-model="bidForm.unit" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
@@ -89,7 +89,7 @@
           {{scope.row.no}}
         </template>
       </el-table-column>
-      <el-table-column label="单位">
+      <el-table-column label="重量">
         <template slot-scope="scope">
           {{scope.row.unit}}
         </template>

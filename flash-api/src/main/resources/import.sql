@@ -133,7 +133,8 @@ INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, 
 INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('25', '2', '24', '[0],[24],', '开发部', '开发部', '', null, null, null, null, null);
 INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('26', '3', '24', '[0],[24],', '运营部', '运营部', '', null, null, null, null, null);
 INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('27', '4', '24', '[0],[24],', '战略部', '战略部', '', null, null, null, null, null);
-INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('28', '5', '24', '[0],[24],', 'vendor dept', 'vendor department', '', null, null, null, null, null);
+INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('28', '5', '24', '[0],[24],', 'tender dept', 'tender department', '', null, null, null, null, null);
+INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('29', '6', '24', '[0],[24],', 'vendor dept', 'vendor department', '', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `t_sys_dict`
@@ -295,11 +296,12 @@ INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`
 INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('211', 'fileMgr', 'cms', '[0],[cms],', '文件管理', null, '/fileMgr', '5', '2', '1', null, '1', null, '2019-03-19 10:25:06', '1', '2019-03-19 10:25:06', '1');
 INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('214', 'task_log', 'task', '[0],[system],[task],', '任务日志', null, '/taskLog', '4', '3', '1', null, '1', null, null, null, null, null);
 INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('215', 'editArticle', 'article', '[0],[cms],[article]', '编辑文章', null, '/article/edit', '1', '3', '1', null, '1', null, '2019-03-11 22:30:18', '1', '2019-03-11 22:30:18', '1');
-INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('216', 'tender', 'business', '[0],[business],', '发标', null, '/tender', '101', '2', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
-INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('217', 'business', '0', '[0],', '业务管理', null, '/business', '1001', '1', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
-INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('218', 'bid', 'business', '[0],[business],', '我的投标', null, '/bid', '102', '2', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
-INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('219', 'tenderbid', 'business', '[0],[business],', '投标', null, '/tenderbid', '103', '2', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
-INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('220', 'tenderDetail', 'business', '[0],[business],', '标书详细', null, '/tenderDetail', '104', '2', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
+INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('216', 'tender_mgr', '0', '[0],', '发标管理', null, '/tender_mgr', '1001', '1', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
+INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('217', 'tender', 'tender_mgr', '[0],[tender_mgr],', '发标', null, '/tender', '101', '2', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
+INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('218', 'tenderDetail', 'tender_mgr', '[0],[tender_mgr],', '标书详细', null, '/tenderDetail', '102', '2', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
+INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('219', 'bid_mgr', '0', '[0],', '投标管理', null, '/bid_mgr', '2001', '1', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
+INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('220', 'bid', 'bid_mgr', '[0],[bid_mgr],', '我的投标', null, '/bid', '201', '2', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
+INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('221', 'tenderbid', 'bid_mgr', '[0],[bid_mgr],', '投标', null, '/tenderbid', '202', '2', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
 
 -- ----------------------------
 -- Table structure for `t_sys_notice`
@@ -319,7 +321,7 @@ CREATE TABLE `t_sys_notice` (
 -- ----------------------------
 -- Records of t_sys_notice
 -- ----------------------------
-INSERT INTO `t_sys_notice` (`id`, `title`, `type`, `content`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('1', '世界', '10', '欢迎使用原料采购招标管理系统', '2017-01-11 08:53:20', '1', '2019-01-08 23:30:58', '1');
+INSERT INTO `t_sys_notice` (`id`, `title`, `type`, `content`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('1', '世界', '10', '欢迎使用原料采购招标管理系统', '2019-05-11 08:53:20', '1', '2019-05-12 23:30:58', '1');
 
 -- ----------------------------
 -- Table structure for `t_sys_operation_log`
@@ -484,14 +486,19 @@ INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('609', '210', '1
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('610', '211', '1');
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('611', '214', '1');
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('612', '215', '1');
+
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('616', '216', '1');
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('617', '217', '1');
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('618', '218', '1');
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('619', '219', '1');
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('620', '220', '1');
-INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('621', '217', '4');
-INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('622', '218', '4');
-INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('623', '219', '4');
+INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('621', '221', '1');
+INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('622', '216', '4');
+INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('623', '217', '4');
+INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('624', '218', '4');
+INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('625', '219', '5');
+INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('626', '220', '5');
+INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('627', '221', '5');
 -- ----------------------------
 -- Table structure for `t_sys_role`
 -- ----------------------------
@@ -516,7 +523,8 @@ CREATE TABLE `t_sys_role` (
 INSERT INTO `t_sys_role` (`id`, `num`, `pid`, `name`, `deptid`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('1', '1', '0', '超级管理员', '24', 'administrator', '1', null, null, null, null);
 INSERT INTO `t_sys_role` (`id`, `num`, `pid`, `name`, `deptid`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('2', '1', '1', '开发人员', '25', 'developer', null, null, null, null, null);
 INSERT INTO `t_sys_role` (`id`, `num`, `pid`, `name`, `deptid`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('3', '3', '0', 'test', '24', '测试', null, null, null, null, null);
-INSERT INTO `t_sys_role` (`id`, `num`, `pid`, `name`, `deptid`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('4', '4', '0', 'vendor', '28', 'vendor', null, null, null, null, null);
+INSERT INTO `t_sys_role` (`id`, `num`, `pid`, `name`, `deptid`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('4', '4', '0', 'tender', '28', 'tender', null, null, null, null, null);
+INSERT INTO `t_sys_role` (`id`, `num`, `pid`, `name`, `deptid`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('5', '5', '0', 'vendor', '29', 'vendor', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `t_sys_task`
@@ -593,8 +601,9 @@ CREATE TABLE `t_sys_user` (
 -- ----------------------------
 
 INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`) VALUES ('-1', null, null, null, null, 'system', null, null, null, null, '应用系统', null, null, null, null, null, null, null);
-INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`) VALUES ('1', null, '2016-01-29 08:49:53', '1', '2019-03-20 23:45:24', 'admin', null, '2017-05-05 00:00:00', '27', 'eniluzt@qq.com', '管理员', 'b5a51391f271f062867e5984e2fcffee', null, '1', '8pgby', '2', '1', '25');
+INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`) VALUES ('1', null, '2016-01-29 08:49:53', '1', '2019-03-20 23:45:24', 'admin', null, '2017-05-05 00:00:00', '27', 'purchase@mailchinastone.com', '管理员', 'b5a51391f271f062867e5984e2fcffee', null, '1', '8pgby', '2', '1', '25');
 INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`) VALUES ('45', null, '2017-12-04 22:24:02', '1', '2019-01-09 23:06:09', 'boss', null, '2017-12-04 00:00:00', '24', '', '老板', 'fb43a2366344b29c5487cba15290367d', '', '1,2,', '1f7bf', '1', '1', null);
 INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`) VALUES ('46', null, '2017-12-04 22:24:24', null, null, 'manager', null, '2017-12-04 00:00:00', '24', '', '经理', '06925fac8af87a19019bcd3c4a5d974d', '', '1', 'j3cs9', '1', '1', null);
-INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`) VALUES ('47', null, '2018-09-13 17:21:02', '1', '2019-01-09 23:05:51', 'developer', null, '2017-12-31 00:00:00', '25', 'eniluzt@qq.com', '开发人员', 'fac36d5616fe9ebd460691264b28ee27', '', '2,', 'vscp9', '1', '1', null);
+INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`) VALUES ('47', null, '2018-09-13 17:21:02', '1', '2019-01-09 23:05:51', 'developer', null, '2017-12-31 00:00:00', '25', 'purchase@mailchinastone.com', '开发人员', 'fac36d5616fe9ebd460691264b28ee27', '', '2,', 'vscp9', '1', '1', null);
+INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`) VALUES ('48', null, '2018-09-13 17:21:02', '1', '2019-01-09 23:05:51', 'tenderadmin', null, '2017-12-31 00:00:00', '28', 'purchase@mailchinastone.com', '发标管理员', 'b5a51391f271f062867e5984e2fcffee', '', '4,', '8pgby', '1', '1', null);
 

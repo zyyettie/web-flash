@@ -21,6 +21,8 @@ export default {
     bussinessLog: '业务日志',
     configMgr: '参数管理',
     businessMgr: '业务管理',
+    tender_mgr: '发标管理',
+    bid_mgr: '投标管理',
     tenderMgr: '发标',
     supplierMgr: '供应商',
     bidMgr: '我的投标',

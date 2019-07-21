@@ -135,7 +135,8 @@
       @prev-click="fetchPrev"
       @next-click="fetchNext">
     </el-pagination>
-
+    
+    <!-- 修改投标 -->
     <el-dialog
       :title="formTitle"
       :visible.sync="formVisible"
