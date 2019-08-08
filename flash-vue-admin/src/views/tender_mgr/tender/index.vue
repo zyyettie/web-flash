@@ -23,64 +23,74 @@
     <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
               @current-change="handleCurrentChange">
 
-      <el-table-column label="编号">
+      <el-table-column label="REF.NO.">
         <template slot-scope="scope">
           <el-button type="text" @click.native="viewTender(scope.row)"> {{scope.row.no}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="名称">
+      <el-table-column label="STONE">
         <template slot-scope="scope">
           {{scope.row.name}}
         </template>
       </el-table-column>
-      <el-table-column label="形状">
+      <el-table-column label="SHAPE">
         <template slot-scope="scope">
           {{scope.row.shape}}
         </template>
       </el-table-column>
-      <el-table-column label="尺寸">
+      <el-table-column label="SIZE">
         <template slot-scope="scope">
-          {{scope.row.dimension}}
+          {{scope.row.size}}
         </template>
       </el-table-column>
-      <el-table-column label="颜色">
+      <el-table-column label="COLOR">
         <template slot-scope="scope">
           {{scope.row.color}}
         </template>
       </el-table-column>
-      <el-table-column label="净度">
+      <el-table-column label="CLARITY">
         <template slot-scope="scope">
-          {{scope.row.purity}}
+          {{scope.row.clarity}}
         </template>
       </el-table-column>
-      <el-table-column label="数量">
+      <el-table-column label="QUANTITY">
         <template slot-scope="scope">
           {{scope.row.quantity}}
         </template>
       </el-table-column>
-      <el-table-column label="重量">
+      <el-table-column label="WEIGHT">
         <template slot-scope="scope">
-          {{scope.row.unit}}
+          {{scope.row.weight}}{{scope.row.unitOfWeight}}
         </template>
       </el-table-column>
-      <el-table-column label="处理方式">
+      <el-table-column label="ENHANCE">
         <template slot-scope="scope">
-          {{scope.row.heated}}
+          {{scope.row.enhance}}
         </template>
       </el-table-column>
-      <el-table-column label="状态">
+      <el-table-column label="NOTE">
+        <template slot-scope="scope">
+          {{scope.row.note}}
+        </template>
+      </el-table-column>
+      <el-table-column label="ORDER STATE">
         <template slot-scope="scope">
           {{scope.row.status}}
         </template>
       </el-table-column>
-      <el-table-column label="到期日期">
+      <el-table-column label="DUE DATE">
         <template slot-scope="scope">
           {{scope.row.dueDate}}
         </template>
       </el-table-column>
-      <el-table-column label="已投标数">
+      <el-table-column label="BID">
         <template slot-scope="scope">
           {{scope.row.count}}
+        </template>
+      </el-table-column>
+      <el-table-column label="STONE USE FOR">
+        <template slot-scope="scope">
+          {{scope.row.stoneUseFor}}
         </template>
       </el-table-column>
     </el-table>
@@ -104,8 +114,8 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="名称" prop="name">
-              <el-select v-model="form.name" placeholder="请选择">
+            <el-form-item label="STONE" prop="name">
+              <el-select v-model="form.name" placeholder="please select">
                 <el-option
                   v-for="item in nameOptions"
                   :key="item.value"
@@ -116,8 +126,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="形状" prop="shape">
-              <el-select v-model="form.shape" placeholder="请选择">
+            <el-form-item label="SHAPE" prop="shape">
+              <el-select v-model="form.shape" placeholder="please select">
                 <el-option
                   v-for="item in shapeOptions"
                   :key="item.value"
@@ -128,20 +138,25 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="尺寸" prop="dimension">
-              <el-input v-model="form.dimension"  minlength=1></el-input>
+            <el-form-item label="SIZE" prop="size">
+              <el-col :span="9">
+              <el-input v-model="form.size"  minlength=1></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="颜色" prop="color">
+            <el-form-item label="COLOR" prop="color">
+              <el-color-picker v-model="form.color"></el-color-picker>
+              <el-col :span="9">
               <el-input v-model="form.color"  minlength=1></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="净度" prop="purity">
-              <el-select v-model="form.purity" placeholder="请选择">
+            <el-form-item label="CLARITY" prop="clarity">
+              <el-select v-model="form.clarity" placeholder="please select">
                 <el-option
-                  v-for="item in purityOptions"
+                  v-for="item in clarityOptions"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
@@ -150,15 +165,23 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="数量" prop="quantity">
+            <el-form-item label="QUANTITY" prop="quantity">
+              <el-col :span="9">
               <el-input v-model="form.quantity"></el-input>
+              </el-col>
+              <el-col :span="9">
+                <el-form-item label="Pieces"/>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="重量" prop="unit">
-              <el-select v-model="form.unit" placeholder="请选择">
+            <el-form-item label="WEIGHT" prop="weight">
+              <el-col :span="6">
+              <el-input v-model="form.weight"></el-input>
+              </el-col>
+              <el-select v-model="form.unitOfWeight" placeholder="please select">
                 <el-option
-                  v-for="item in unitOptions"
+                  v-for="item in unitOfWeightOptions"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
@@ -167,10 +190,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="处理方式" prop="heated">
-              <el-select v-model="form.heated" placeholder="请选择">
+            <el-form-item label="ENHANCE" prop="enhance">
+              <el-select v-model="form.enhance" placeholder="please select">
                 <el-option
-                  v-for="item in heatedOptions"
+                  v-for="item in enhanceOptions"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
@@ -179,9 +202,23 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="到期日期">
-              <el-date-picker type="date" placeholder="到期日期" v-model="form.dueDate" style="width: 100%;">
+            <el-form-item label="DUEDATE">
+              <el-col :span="9">
+              <el-date-picker type="date" placeholder="DUE DATE" v-model="form.dueDate" style="width: 100%;">
               </el-date-picker>
+              </el-col>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="NOTE" prop="note">
+              <el-col :span="9">
+              <el-input v-model="form.note"  minlength=1></el-input>
+              </el-col>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="STONE USE FOR" prop="stoneUseFor">
+              <el-input type="textarea" :rows="2" v-model="form.stoneUseFor"  minlength=1></el-input>
             </el-form-item>
           </el-col>
 

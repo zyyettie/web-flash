@@ -1,8 +1,11 @@
 import { delBid, getBidList, saveBid, moveBidToNextStatus } from '@/api/business/bid'
+import { moveBidToNextStatusWithDeliverInfo } from '@/api/business/bid'
+import { getApiUrl } from '@/utils/utils'
 
 export default {
   data() {
     return {
+      uploadUrl: '',
       formVisible: false,
       formTitle: this.$t('config.add'),
       isAdd: true,
@@ -13,6 +16,11 @@ export default {
         isApproved: '',
         tenderNo: ''
       },
+      deliverTypeOptions: [
+        { value: '1', label: 'Sent By Messenger' },
+        { value: '2', label: 'Express' },
+        { value: '3', label: 'Other Way' }
+      ],
       unitOptions: [
         { value: 'carat', label: 'carat' },
         { value: 'piece', label: 'piece' }
@@ -35,22 +43,25 @@ export default {
       statusFormTitle: 'business.statusChange',
       statusFormVisible: false,
       statusData: [{
-        host: '1. 发标团队选择供应商',
+        host: '1. Purchase confirm supplier',
         vendor: ''
       }, {
         host: '',
-        vendor: '2. 供应商发货'
+        vendor: '2. Supplier ship gemstone'
       }, {
-        host: '3. 收获并检测',
+        host: '3. Receipted gemstone and in checking process',
         vendor: ''
       }, {
-        host: '4. 发标团队确认购买数量、价格',
+        host: '4. Confirm final quantity/price and issue purchase bill',
         vendor: ''
       }, {
         host: '',
-        vendor: '5. 供应商确认,并送达发票'
+        vendor: '5. Confirmed by supplier and issue tax invoice'
       }, {
-        host: '6. 收到发票，付款结算',
+        host: '6. Received invoice',
+        vendor: ''
+      }, {
+        host: '7. Due time inform supplier for payment',
         vendor: ''
       }]
     }
@@ -69,12 +80,10 @@ export default {
     rules() {
       return {
         name: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' },
-          { min: 3, max: 2000, message: this.$t('config.name') + this.$t('config.lengthValidation'), trigger: 'blur' }
+          { required: true, message: 'SUPPLIER SUPPLY QUANTITY is required', trigger: 'blur' }
         ],
         type: [
-          { required: true, message: this.$t('config.value') + this.$t('common.isRequired'), trigger: 'blur' },
-          { min: 2, max: 2000, message: this.$t('config.value') + this.$t('config.lengthValidation'), trigger: 'blur' }
+          { required: true, message: 'PRICE is required', trigger: 'blur' }
         ]
       }
     }
@@ -84,6 +93,7 @@ export default {
   },
   methods: {
     init() {
+      this.uploadUrl = getApiUrl() + '/file'
       this.fetchData()
     },
     fetchData() {
@@ -208,20 +218,53 @@ export default {
       }
     },
     changeVendorStatus(row) {
-      this.statusForm = this.selRow
+      this.statusForm = row
       this.statusFormTitle = this.$t('business.statusChange')
       this.statusFormVisible = true
     },
-    nextStep(id) {
-      moveBidToNextStatus(id).then(response => {
-        console.log(response)
-        this.$message({
-          message: '状态修改成功',
-          type: 'success'
+    // nextStep(id) {
+    //   moveBidToNextStatus(id).then(response => {
+    //     console.log(response)
+    //     this.$message({
+    //       message: '状态修改成功',
+    //       type: 'success'
+    //     })
+    //     this.fetchData()
+    //     this.statusFormVisible = false
+    //   })
+    // },
+    nextStepWithAdditionalInfo(id) {
+      if (this.statusForm.bidStatus === 1) {
+        this.$refs['statusForm'].validate((valid) => {
+          if (valid) {
+            moveBidToNextStatusWithDeliverInfo({
+              id: id,
+              deliverType: this.statusForm.deliverType,
+              deliverNo: this.statusForm.deliverNo
+            }).then(response => {
+              this.$message({
+                message: this.$t('common.optionSuccess'),
+                type: 'success'
+              })
+              this.fetchData()
+              this.statusFormVisible = false
+            })
+          } else {
+            return false
+          }
         })
-        this.fetchData()
-        this.statusFormVisible = false
-      })
+      } else {
+        moveBidToNextStatus(id).then(response => {
+          console.log(response)
+          this.$message({
+            message: 'Status modification succeeded',
+            type: 'success'
+          })
+          this.fetchData()
+          this.statusFormVisible = false
+        })
+      }
     }
-  }
+
+  }// close methods():
 }

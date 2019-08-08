@@ -47,6 +47,18 @@ public class BidService {
         bidRepository.moveToNextStatus(id);
     }
 
+    public void moveToNextStatusWithDeliverInfo(Long id, Integer deliverType, String deliverNo){
+        bidRepository.moveToNextStatusWithDeliverInfo(id, deliverType, deliverNo);
+    }
+
+    public void moveToNextStatusWithQuantityPrice(Long id, Integer confirmedQuantity, Integer confirmedPrice){
+        bidRepository.moveToNextStatusWithQuantityPrice(id, confirmedQuantity, confirmedPrice);
+    }
+
+    public void moveToNextStatusWithPayment(Long id, Long idFile){
+        bidRepository.moveToNextStatusWithPayment(id, idFile);
+    }
+
     public void approve(Long id){
         bidRepository.approve(id);
     }

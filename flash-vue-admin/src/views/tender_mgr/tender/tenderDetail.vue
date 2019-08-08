@@ -11,57 +11,62 @@
     <el-form ref="bidForm" :model="bidForm" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="发标编号" prop="no">
+            <el-form-item label="ORDER REF.NO." prop="no">
               <el-input v-model="bidForm.no" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="名称" prop="name">
+            <el-form-item label="STONE" prop="name">
               <el-input v-model="bidForm.name" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="形状" prop="shape">
+            <el-form-item label="SHAPE" prop="shape">
               <el-input v-model="bidForm.shape" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="尺寸" prop="dimension">
-              <el-input v-model="bidForm.dimension" :disabled="true"></el-input>
+            <el-form-item label="SIZE" prop="size">
+              <el-input v-model="bidForm.size" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="颜色" prop="color">
+            <el-form-item label="COLOR" prop="color">
               <el-input v-model="bidForm.color" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="净度" prop="purity">
-              <el-input v-model="bidForm.purity" :disabled="true"></el-input>
+            <el-form-item label="CLARITY" prop="clarity">
+              <el-input v-model="bidForm.clarity" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="数量" prop="quantity">
+            <el-form-item label="QUANTITY" prop="quantity">
               <el-input v-model="bidForm.quantity" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="重量" prop="unit">
-              <el-input v-model="bidForm.unit" :disabled="true"></el-input>
+            <el-form-item label="WEIGHT" prop="weight">
+              <el-col :span="12">
+              <el-input v-model="bidForm.weight" :disabled="true"></el-input>
+              </el-col>
+              <el-col :span="12">
+              <el-input v-model="bidForm.unitOfWeight" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="处理方式" prop="heated">
-              <el-input v-model="bidForm.heated" :disabled="true"></el-input>
+            <el-form-item label="ENHANCE" prop="enhance">
+              <el-input v-model="bidForm.enhance" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="状态" prop="status">
+            <el-form-item label="ORDER STATUS" prop="status">
               <el-input v-model="bidForm.status" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="到期日期" prop="dueDate">
+            <el-form-item label="DUE DATE" prop="dueDate">
               <el-input v-model="bidForm.dueDate" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
@@ -69,68 +74,99 @@
     </el-form>
 
     <el-steps :sapce="200" :active=-1 finish-status="success">
-      <el-step title="1. 发标团队选择供应商"></el-step>
-      <el-step title="2. 供应商发货"></el-step>
-      <el-step title="3. 收获并检测"></el-step>
-      <el-step title="4. 发标团队确认购买数量、价格"></el-step>
-      <el-step title="5. 供应商确认,并送达发票"></el-step>
-      <el-step title="6. 收到发票，付款结算"></el-step>
+      <el-step title="1. Purchase confirm supplier"></el-step>
+      <el-step title="2. Supplier ship gemstone"></el-step>
+      <el-step title="3. Receipted gemstone and in checking process"></el-step>
+      <el-step title="4. Confirm final quantity/price and issue purchase bill"></el-step>
+      <el-step title="5. Confirmed by supplier and issue tax invoice"></el-step>
+      <el-step title="6. Received invoice"></el-step>
+      <el-step title="7. Finished payment"></el-step>
     </el-steps>
     <!-- 投标列表 -->
     <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
               @current-change="handleCurrentChange">
-      <el-table-column label="投标id" v-if=false>
+      <el-table-column label="BID REF.NO." v-if=false>
         <template slot-scope="scope">
           {{scope.row.id}}
         </template>
       </el-table-column>
-      <el-table-column label="投标编号">
+      <el-table-column label="BID REF.NO.">
         <template slot-scope="scope">
           {{scope.row.no}}
         </template>
       </el-table-column>
-      <el-table-column label="重量">
+      <el-table-column label="WEIGHT">
         <template slot-scope="scope">
-          {{scope.row.unit}}
+          {{scope.row.weight}}{{scope.row.unitOfWeight}}
         </template>
       </el-table-column>
-      <el-table-column label="数量">
+      <el-table-column label="QUANTITY">
         <template slot-scope="scope">
           {{scope.row.quantity}}
         </template>
       </el-table-column>
-      <el-table-column label="价格">
+      <el-table-column label="PRICE">
         <template slot-scope="scope">
           {{scope.row.price}}
         </template>
       </el-table-column>
-      <el-table-column label="投标人">
+      <el-table-column label="DELIVER TYPE">
+        <template slot-scope="scope">
+          <p v-if="scope.row.deliverType === 1">Sent By Messenger</p>
+          <p v-else-if="scope.row.deliverType === 2">Express</p>
+          <p v-else-if="scope.row.deliverType === 3">Other Way</p>
+          <p v-else></p>
+        </template>
+      </el-table-column>
+      <el-table-column label="DELIVER NO.">
+        <template slot-scope="scope">
+          {{scope.row.deliverNo}}
+        </template>
+      </el-table-column>
+      <el-table-column label="CONFIRMED QUANTITY">
+        <template slot-scope="scope">
+          {{scope.row.confirmedQuantity}}
+        </template>
+      </el-table-column>
+      <el-table-column label="CONFIRMED PRICE">
+        <template slot-scope="scope">
+          {{scope.row.confirmedPrice}}
+        </template>
+      </el-table-column>
+      <el-table-column label="SUPPLIER">
         <template slot-scope="scope">
           {{scope.row.contact}}
         </template>
       </el-table-column>
-      <el-table-column label="是否中标">
+      <el-table-column label="BID ACCEPT STATE">
         <template slot-scope="scope">
-          {{scope.row.isApproved}}
+          <p v-if="scope.row.isApproved===1">Approved</p>
+          <p v-else-if="scope.row.isApproved===-1">Denied</p>
+          <p v-else>Undecided</p>
         </template>
       </el-table-column>
-      <el-table-column label="投标状态">
+      <el-table-column label="PIC">
+        <template slot-scope="scope">
+          <img :src="scope.row.img" style="width:200px;">
+        </template>
+      </el-table-column>
+      <el-table-column label="BID STATUS">
         <template slot-scope="scope">
           {{scope.row.status}}
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="EDIT">
         <template slot-scope="scope">
           <div v-if="scope.row.isApproved === 0">
           <el-button type="button" @click="approve(scope.row.id)">{{$t('business.accept')}}</el-button>
           <el-button type="button" @click="deny(scope.row.id)">{{$t('business.deny')}}</el-button>
           </div>
           <div v-else>
-            <div v-if="scope.row.status === 1 || scope.row.status === 3 || scope.row.status === 4 || scope.row.status === 6">
-              <el-button type="button" @click="changeStatus(scope.row)">{{$t('business.nextStep')}}</el-button>
+            <div v-if="scope.row.status === 2 || scope.row.status === 3 || scope.row.status === 5 || scope.row.status === 6">
+              <el-button type="button" @click="changeStatus(scope.row)">{{$t('UPDATE STATE')}}</el-button>
             </div>
             <div v-else>
-              <el-button type="button" :disabled="true">{{$t('business.nextStep')}}</el-button>
+              <el-button type="button" :disabled="true">{{$t('UPDATE STATE')}}</el-button>
             </div>
           </div>
         </template>
@@ -148,7 +184,8 @@
       @prev-click="fetchPrev"
       @next-click="fetchNext">
     </el-pagination>
-
+    <!-- =============================================================================================-->
+    <!-- UPDATE STATE 弹出框-->
     <el-dialog
           :title="statusFormTitle"
           :visible.sync="statusFormVisible"
@@ -156,19 +193,20 @@
       <el-form ref="statusForm" :model="statusForm" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="发标编号" prop="no">
+            <el-form-item label="BID REF.NO." prop="no">
               <el-input v-model="statusForm.no" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
         <el-steps :sapce="200" :active="statusForm.status" finish-status="success">
-        <el-step title="1. 发标团队选择供应商"></el-step>
-        <el-step title="2. 供应商发货"></el-step>
-        <el-step title="3. 收获并检测"></el-step>
-        <el-step title="4. 发标团队确认购买数量、价格"></el-step>
-        <el-step title="5. 供应商确认,并送达发票"></el-step>
-        <el-step title="6. 收到发票，付款结算"></el-step>
+          <el-step title="1. Purchase confirm supplier"></el-step>
+          <el-step title="2. Supplier ship gemstone"></el-step>
+          <el-step title="3. Receipted gemstone and in checking process"></el-step>
+          <el-step title="4. Confirm final quantity/price and issue purchase bill"></el-step>
+          <el-step title="5. Confirmed by supplier and issue tax invoice"></el-step>
+          <el-step title="6. Received invoice"></el-step>
+          <el-step title="7. Finished payment"></el-step>
         </el-steps>
         </el-row>
         <br>
@@ -177,20 +215,56 @@
         :data="statusData" style="width: 50%">
         <el-table-column
           prop="host"
-          label="发标方"
+          label="PURCHASE"
           width="300">
         </el-table-column>
         <el-table-column
           prop="vendor"
-          label="供应商"
+          label="SUPPLIER"
           width="300">
         </el-table-column>
         </el-table>
         </el-row>
         <br>
+        <el-row>
+          <!-- 确认数量/价格-->
+          <div v-if="statusForm.status === 3">
+          <el-col :span="12">
+            <el-form-item label="CONFIRMED QUANTITY" prop="confirmedQuantity">
+              <el-input v-model="statusForm.confirmedQuantity" ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="CONFIRMED PRICE" prop="confirmedPrice">
+              <el-input v-model="statusForm.confirmedPrice" ></el-input>
+            </el-form-item>
+          </el-col>
+          </div>
+          <!-- 上传付款凭证-->
+          <div v-else-if="statusForm.status === 6">
+          <el-col :span="12">
+            <el-form-item label="EVIDENCE OF PAYMENT">
+              <el-upload
+                class="upload-demo"
+                drag
+                multiple=false
+                :action="uploadUrl"
+                :headers="uploadHeaders"
+                :before-upload="handleBeforeUpload"
+                :on-success="handleUploadSuccess"
+              >
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">Click to upload</div>
+              </el-upload>
+            </el-form-item>
+          </el-col>
+          </div>
+          <div v-else>
+          </div>
+        </el-row>
         <br>
         <el-form-item>
-          <el-button type="primary" @click="nextStep(statusForm.id)">{{ $t('button.submit') }}</el-button>
+          <el-button type="primary" @click="nextStepWithAdditionalInfo(statusForm.id)">{{ $t('button.submit') }}</el-button>
           <el-button @click.native="statusFormVisible = false">{{ $t('button.cancel') }}</el-button>
         </el-form-item>
       </el-form>

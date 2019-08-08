@@ -115,7 +115,8 @@ public class BidController extends BaseController{
                 bidtenderVO.setNo(bid.getNo());
                 bidtenderVO.setQuantity(bid.getQuantity());
                 bidtenderVO.setPrice(bid.getPrice());
-                bidtenderVO.setUnit(bid.getUnit());
+                bidtenderVO.setWeight(bid.getWeight());
+                bidtenderVO.setUnitOfWeight(bid.getUnitOfWeight());
                 bidtenderVO.setIsApproved(bid.getIsApproved());
                 bidtenderVO.setBidStatus(bid.getStatus());
                 bidtenderVO.setTenderId(bid.getTenderId());
@@ -125,12 +126,13 @@ public class BidController extends BaseController{
                 bidtenderVO.setTenderNo(tender.getNo());
                 bidtenderVO.setName(tender.getName());
                 bidtenderVO.setShape(tender.getShape());
-                bidtenderVO.setDimension(tender.getDimension());
+                bidtenderVO.setSize(tender.getSize());
                 bidtenderVO.setColor(tender.getColor());
-                bidtenderVO.setPurity(tender.getPurity());
+                bidtenderVO.setClarity(tender.getClarity());
                 bidtenderVO.setTenderQuantity(tender.getQuantity());
-                bidtenderVO.setTenderUnit(tender.getUnit());
-                bidtenderVO.setHeated(tender.getHeated());
+                bidtenderVO.setTenderWeight(tender.getWeight());
+                bidtenderVO.setTenderUnitOfWeight(tender.getUnitOfWeight());
+                bidtenderVO.setEnhance(tender.getEnhance());
                 bidtenderVO.setTenderStatus(tender.getStatus());
                 bidtenderVO.setDueDate(tender.getDueDate());
                 bidtenderVO.setCount(tender.getCount());
@@ -144,6 +146,27 @@ public class BidController extends BaseController{
     @BussinessLog(value = "移到下一步状态", key = "name", dict = BidDict.class)
     public Object moveToNextStatus(@PathVariable Long id){
         bidService.moveToNextStatus(id);
+        return Rets.success();
+    }
+
+    @RequestMapping(value = "/moveToNextStatusWithDeliverInfo",method = RequestMethod.POST)
+    @BussinessLog(value = "移到供应商发货状态", key = "name", dict = BidDict.class)
+    public Object moveToNextStatusWithDeliverInfo(@ModelAttribute Bid bid){
+        bidService.moveToNextStatusWithDeliverInfo(bid.getId(), bid.getDeliverType(),bid.getDeliverNo());
+        return Rets.success();
+    }
+
+    @RequestMapping(value = "/moveToNextStatusWithQuantityPrice",method = RequestMethod.POST)
+    @BussinessLog(value = "移到确认数量价格状态", key = "name", dict = BidDict.class)
+    public Object moveToNextStatusWithQuantityPrice(@ModelAttribute Bid bid){
+        bidService.moveToNextStatusWithQuantityPrice(bid.getId(), bid.getConfirmedQuantity(),bid.getConfirmedPrice());
+        return Rets.success();
+    }
+
+    @RequestMapping(value = "/moveToNextStatusWithPayment",method = RequestMethod.POST)
+    @BussinessLog(value = "移到完成付款状态", key = "name", dict = BidDict.class)
+    public Object moveToNextStatusWithPayment(@ModelAttribute Bid bid){
+        bidService.moveToNextStatusWithPayment(bid.getId(), bid.getIdFile());
         return Rets.success();
     }
 

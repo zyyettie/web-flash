@@ -22,67 +22,62 @@
           {{scope.row.id}}
         </template>
       </el-table-column>
-      <el-table-column label="编号">
+      <el-table-column label="ORDER REF.NO.">
         <template slot-scope="scope">
           {{scope.row.no}}
         </template>
       </el-table-column>
-      <el-table-column label="名称">
+      <el-table-column label="STONE">
         <template slot-scope="scope">
           {{scope.row.name}}
         </template>
       </el-table-column>
-      <el-table-column label="形状">
+      <el-table-column label="SHAPE">
         <template slot-scope="scope">
           {{scope.row.shape}}
         </template>
       </el-table-column>
-      <el-table-column label="尺寸">
+      <el-table-column label="SIZE">
         <template slot-scope="scope">
-          {{scope.row.dimension}}
+          {{scope.row.size}}
         </template>
       </el-table-column>
-      <el-table-column label="颜色">
+      <el-table-column label="COLOR">
         <template slot-scope="scope">
           {{scope.row.color}}
         </template>
       </el-table-column>
-      <el-table-column label="净度">
+      <el-table-column label="CLARITY">
         <template slot-scope="scope">
-          {{scope.row.purity}}
+          {{scope.row.clarity}}
         </template>
       </el-table-column>
-      <el-table-column label="数量">
+      <el-table-column label="QUANTITY">
         <template slot-scope="scope">
           {{scope.row.quantity}}
         </template>
       </el-table-column>
-      <el-table-column label="重量">
+      <el-table-column label="WEIGHT">
         <template slot-scope="scope">
-          {{scope.row.unit}}
+          {{scope.row.weight}}{{scope.row.unitOfWeight}}
         </template>
       </el-table-column>
-      <el-table-column label="处理方式">
+      <el-table-column label="ENHANCE">
         <template slot-scope="scope">
-          {{scope.row.heated}}
+          {{scope.row.enhance}}
         </template>
       </el-table-column>
-      <el-table-column label="发标状态">
+      <el-table-column label="ORDER STATE">
         <template slot-scope="scope">
           {{scope.row.status}}
         </template>
       </el-table-column>
-      <el-table-column label="到期日期">
+      <el-table-column label="DUE DATE">
         <template slot-scope="scope">
           {{scope.row.dueDate}}
         </template>
       </el-table-column>
-      <el-table-column label="已投标数">
-        <template slot-scope="scope">
-          {{scope.row.count}}
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" >
+      <el-table-column label="EDIT" >
         <template slot-scope="scope">
           <el-button type="button" @click="addBid(scope.row)" :disabled="isBidAlready(scope.row)">{{$t('business.bid')}}</el-button>
         </template>
@@ -108,82 +103,90 @@
       <el-form ref="bidForm" :model="bidForm" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="编号" prop="no">
+            <el-form-item label="ORDER REF.NO." prop="no">
               <el-input v-model="bidForm.no" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="名称" prop="name">
+            <el-form-item label="STONE" prop="name">
               <el-input v-model="bidForm.name" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="形状" prop="shape">
+            <el-form-item label="SHAPE" prop="shape">
               <el-input v-model="bidForm.shape" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="尺寸" prop="dimension">
-              <el-input v-model="bidForm.dimension" :disabled="true"></el-input>
+            <el-form-item label="SIZE" prop="size">
+              <el-input v-model="bidForm.size" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="颜色" prop="color">
+            <el-form-item label="COLOR" prop="color">
               <el-input v-model="bidForm.color" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="净度" prop="purity">
-              <el-input v-model="bidForm.purity" :disabled="true"></el-input>
+            <el-form-item label="CLARITY" prop="clarity">
+              <el-input v-model="bidForm.clarity" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="数量" prop="quantity">
+            <el-form-item label="QUANTITY" prop="quantity">
               <el-input v-model="bidForm.quantity" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="单位" prop="unit">
-              <el-input v-model="bidForm.unit" :disabled="true"></el-input>
+            <el-form-item label="WEIGHT" prop="weight">
+              <el-col :span="12">
+              <el-input v-model="bidForm.weight" :disabled="true"></el-input>
+              </el-col>
+              <el-col :span="12">
+              <el-input v-model="bidForm.unitOfWeight" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="处理方式" prop="heated">
-              <el-input v-model="bidForm.heated" :disabled="true"></el-input>
+            <el-form-item label="ENHANCE" prop="enhance">
+              <el-input v-model="bidForm.enhance" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="状态" prop="status">
+            <el-form-item label="ORDER STATE" prop="status">
               <el-input v-model="bidForm.status" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="到期日期" prop="dueDate">
+            <el-form-item label="DUE DATE" prop="dueDate">
               <el-input v-model="bidForm.dueDate" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="NOTE" prop="note">
+              <el-input v-model="bidForm.note" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <!-- bid信息 -->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="数量" prop="bidQuantity">
+            <el-form-item label="SUPPLIER SUPPLY QUANTITY" prop="bidQuantity">
               <el-input v-model="bidForm.bidQuantity" ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="单位" prop="unit">
-              <el-select v-model="bidForm.bidUnit" placeholder="请选择">
-                <el-option
-                  v-for="item in unitOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
+            <el-form-item label="SUPPLIER SUPPLY WEIGHT" prop="weight">
+              <el-col :span="12">
+              <el-input v-model="bidForm.weight" :disabled="true"></el-input>
+              </el-col>
+              <el-col :span="12">
+              <el-input v-model="bidForm.unitOfWeight" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="价格" prop="bidPrice">
+            <el-form-item label="PRICE" prop="bidPrice">
               <el-input v-model="bidForm.bidPrice" ></el-input>
             </el-form-item>
           </el-col>

@@ -47,7 +47,7 @@ public class TenderController extends BaseController {
         String no = dateStr + String.format("%04d", noPlusOne);
         tender.setNo(no);
         tender.setCount(0);
-        tender.setStatus(1);
+        tender.setStatus("OPEN");
         if (ToolUtil.isOneEmpty(tender, tender.getName())){
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
         }

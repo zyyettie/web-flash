@@ -19,13 +19,13 @@ export default{
     // }
     var checkAccount = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('用户名不能为空'))
+        return callback(new Error('Email can not be null'))
       }
       callback()
     }
     var validatePass = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入密码'))
+        callback(new Error('Please input password'))
       } else {
         if (this.registerForm.checkPass !== '') {
           this.$refs.registerForm.validateField('checkPass')
@@ -35,9 +35,9 @@ export default{
     }
     var validatePass2 = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请再次输入密码'))
+        callback(new Error('Please input your password again'))
       } else if (value !== this.registerForm.password) {
-        callback(new Error('两次输入密码不一致!'))
+        callback(new Error('Password and confirm password are not consistent!'))
       } else {
         callback()
       }
@@ -50,8 +50,22 @@ export default{
         checkPass: '',
         name: '',
         email: '',
-        phone: ''
+        phone: '',
+        companyName: '',
+        address: '',
+        registrationNo: '',
+        taxNo: '',
+        paymentTerms: '',
+        paymentType: ''
       },
+      paymentTermsOptions: [
+        { value: 'cash', label: 'cash' },
+        { value: '30days', label: '30days' },
+        { value: '60days', label: '60days' },
+        { value: '90days', label: '90days' }],
+      paymentTypeOptions: [
+        { value: 'by cheque', label: 'by cheque' },
+        { value: 'by TT', label: 'by TT' }],
       rules: {
         password: [
           { validator: validatePass, trigger: 'blur' }
@@ -75,7 +89,13 @@ export default{
             password: this.registerForm.password,
             name: this.registerForm.name,
             email: this.registerForm.email,
-            phone: this.registerForm.phone
+            phone: this.registerForm.phone,
+            companyName: this.registerForm.companyName,
+            address: this.registerForm.address,
+            registrationNo: this.registerForm.registrationNo,
+            taxNo: this.registerForm.taxNo,
+            paymentTerms: this.registerForm.paymentTerms,
+            paymentType: this.registerForm.paymentType
           }).then(response => {
             this.$message({
               message: this.$t('register.successMsg'),

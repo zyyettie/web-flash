@@ -21,12 +21,12 @@ export default {
     contactsMgr: 'Contacts',
     channelMgr: 'Channel',
     businessMgr: 'Business',
-    tender_mgr: 'Tender Management',
-    bid_mgr: 'Bid Management',
-    tenderMgr: 'Tender',
+    tender_mgr: 'PURCHASE',
+    bid_mgr: 'SUPPLIER',
+    tenderMgr: 'PURCHASE PART',
     supplierMgr: 'Supplier',
-    bidMgr: 'My Bid',
-    tenderBidMgr: 'Bid'
+    bidMgr: 'ORDER PROCESS',
+    tenderbidMgr: 'SUPPLIER PART'
   },
   navbar: {
     logOut: 'Log Out',
@@ -111,6 +111,9 @@ export default {
   business: {
     bid: 'Bid',
     accept: 'Accept',
-    deny: 'Deny'
+    deny: 'Deny',
+    addTender: 'ORDER INFORMATION',
+    statusChange: 'UPDATE STATE',
+    nextStep: 'UPDATE STATE'
   }
 }

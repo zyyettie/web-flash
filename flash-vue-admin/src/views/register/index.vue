@@ -4,25 +4,79 @@
       <div class="title-container">
         <h3 class="title">{{ $t('register.title') }}</h3>
       </div>
-
-      <el-form-item label="用户名" prop="account">
+    <el-row>
+      <el-col :span="12">
+      <el-form-item label="Email" prop="account">
         <el-input v-model="registerForm.account" auto-complete="off"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input type="password" v-model="registerForm.password" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码" prop="checkPass">
-        <el-input type="password" v-model="registerForm.checkPass" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="姓名" prop="name">
+      </el-col>
+      <el-col :span="12">
+      <el-form-item label="Name" prop="name">
         <el-input v-model="registerForm.name" auto-complete="off"></el-input>
       </el-form-item>
-      <el-form-item label="email" prop="email">
-        <el-input v-model="registerForm.email" auto-complete="off"></el-input>
+      </el-col>
+      <el-col :span="12">
+      <el-form-item label="Password" prop="password">
+        <el-input type="password" v-model="registerForm.password" auto-complete="off"></el-input>
       </el-form-item>
-      <el-form-item label="phone" prop="phone">
+      </el-col>
+      <el-col :span="12">
+      <el-form-item label="Confirm Pwd" prop="checkPass">
+        <el-input type="password" v-model="registerForm.checkPass" auto-complete="off"></el-input>
+      </el-form-item>
+      </el-col>
+      <el-col :span="12">
+      <el-form-item label="Phone" prop="phone">
         <el-input v-model="registerForm.phone" auto-complete="off"></el-input>
       </el-form-item>
+      </el-col>
+      <el-col :span="12">
+      <el-form-item label="Company" prop="companyName">
+        <el-input type="textarea" :rows="1" v-model="registerForm.companyName" auto-complete="off"></el-input>
+      </el-form-item>
+      </el-col>
+      <el-col :span="12">
+      <el-form-item label="Address" prop="address">
+        <el-input type="textarea" :rows="1" v-model="registerForm.address" auto-complete="off"></el-input>
+      </el-form-item>
+      </el-col>
+      <el-col :span="12">
+      <el-form-item label="Reg. No." prop="registrationNo">
+        <el-input v-model="registerForm.registrationNo" auto-complete="off"></el-input>
+      </el-form-item>
+      </el-col>
+      <el-col :span="12">
+      <el-form-item label="Tax No." prop="taxNo">
+        <el-input v-model="registerForm.taxNo" auto-complete="off"></el-input>
+      </el-form-item>
+      </el-col>
+
+      <el-col :span="12">
+        <el-form-item label="Payment Terms" prop="paymentTerms">
+          <el-select v-model="registerForm.paymentTerms" placeholder="please select">
+            <el-option
+              v-for="item in paymentTermsOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item label="Payment" prop="paymentType">
+          <el-select v-model="registerForm.paymentType" placeholder="please select">
+            <el-option
+              v-for="item in paymentTypeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+
+      </el-row>
       <!-- 年龄>
       <el-form-item label="年龄" prop="age">
         <el-input v-model.number="registerForm.age"></el-input>

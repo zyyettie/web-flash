@@ -1,8 +1,17 @@
 import { getBidByTenderId, moveBidToNextStatus, approveBid, denyBid } from '@/api/business/bid'
+import { moveBidToNextStatusWithQuantityPrice, moveBidToNextStatusWithPayment } from '@/api/business/bid'
+import { getToken } from '@/utils/auth'
+import { Loading } from 'element-ui'
+import { getApiUrl } from '@/utils/utils'
 
 export default {
   data() {
     return {
+      uploadUrl: '',
+      uploadFileId: '',
+      uploadHeaders: {
+        'Authorization': ''
+      },
       statusFormTitle: 'business.statusChange',
       statusFormVisible: false,
       isAdd: true,
@@ -12,12 +21,13 @@ export default {
         no: '',
         name: '',
         shape: '',
-        dimension: '',
+        size: '',
         color: '',
-        purity: '',
+        clarity: '',
         quantity: '',
-        unit: '',
-        heated: '',
+        weight: '',
+        unitOfWeight: '',
+        enhance: '',
         status: '',
         dueDate: '',
         count: ''
@@ -31,33 +41,32 @@ export default {
       list: null,
       listLoading: true,
       selRow: {},
-      unitOptions: [
-        { value: 'carat', label: 'carat' },
-        { value: 'piece', label: 'piece' }
-      ],
       statusForm: {
         id: '',
         no: '',
         status: ''
       },
       statusData: [{
-        host: '1. 发标团队选择供应商',
+        host: '1. Purchase confirm supplier',
         vendor: ''
       }, {
         host: '',
-        vendor: '2. 供应商发货'
+        vendor: '2. Supplier ship gemstone'
       }, {
-        host: '3. 收获并检测',
+        host: '3. Receipted gemstone and in checking process',
         vendor: ''
       }, {
-        host: '4. 发标团队确认购买数量、价格',
+        host: '4. Confirm final quantity/price and issue purchase bill',
         vendor: ''
       }, {
         host: '',
-        vendor: '5. 供应商确认,并送达发票'
+        vendor: '5. Confirmed by supplier and issue tax invoice'
       }, {
-        host: '6. 收到发票，付款结算',
+        host: '6. Received invoice',
         vendor: ''
+      }, {
+        host: '7. Finished payment',
+        vender: ''
       }]
     }
   },
@@ -86,6 +95,8 @@ export default {
   },
   methods: {
     init() {
+      this.uploadUrl = getApiUrl() + '/file'
+      this.uploadHeaders['Authorization'] = getToken()
       // this.listQuery.tenderId = this.$route.query.tenderId
       this.listQuery.tenderId = this.$route.params.tenderId
       this.fetchData()
@@ -97,12 +108,13 @@ export default {
       this.bidForm.no = routerParams.no
       this.bidForm.name = routerParams.name
       this.bidForm.shape = routerParams.shape
-      this.bidForm.dimension = routerParams.dimension
+      this.bidForm.size = routerParams.size
       this.bidForm.color = routerParams.color
-      this.bidForm.purity = routerParams.purity
+      this.bidForm.clarity = routerParams.clarity
       this.bidForm.quantity = routerParams.quantity
-      this.bidForm.unit = routerParams.unit
-      this.bidForm.heated = routerParams.heated
+      this.bidForm.weight = routerParams.weight
+      this.bidForm.unitOfWeight = routerParams.unitOfWeight
+      this.bidForm.enhance = routerParams.enhance
       this.bidForm.dueDate = routerParams.dueDate
       this.bidForm.status = routerParams.status
     },
@@ -148,6 +160,9 @@ export default {
     handleCurrentChange(currentRow, oldCurrentRow) {
       this.selRow = currentRow
     },
+    clickCell(row, column, cell, event) {
+      this.selRow = row
+    },
 
     checkSel() {
       if (this.selRow && this.selRow.id) {
@@ -191,20 +206,99 @@ export default {
       })
     },
     changeStatus(row) {
-      this.statusForm = this.selRow
+      //this.statusForm = this.selRow
+      this.statusForm = row
       this.statusFormTitle = this.$t('business.statusChange')
       this.statusFormVisible = true
     },
-    nextStep(id) {
-      moveBidToNextStatus(id).then(response => {
-        console.log(response)
+    handleBeforeUpload() {
+      if (this.uploadFileId !== '') {
         this.$message({
-          message: '状态修改成功',
-          type: 'success'
+          message: this.$t('common.mustSelectOne'),
+          type: 'warning'
         })
-        this.fetchData()
-        this.statusFormVisible = false
+        return false
+      }
+      this.loadingInstance = Loading.service({
+        lock: true,
+        text: this.$t('common.uploading'),
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
       })
+    },
+    handleUploadSuccess(response, raw) {
+      this.loadingInstance.close()
+      if (response.code === 20000) {
+        console.log(response.data)
+        this.uploadFileId = response.data.id
+        this.statusForm.fileName = response.data.originalFileName
+      } else {
+        this.$message({
+          message: this.$t('common.uploadError'),
+          type: 'error'
+        })
+      }
+    },
+    // nextStep(id) {
+    //   moveBidToNextStatus(id).then(response => {
+    //     console.log(response)
+    //     this.$message({
+    //       message: '状态修改成功',
+    //       type: 'success'
+    //     })
+    //     this.fetchData()
+    //     this.statusFormVisible = false
+    //   })
+    // },
+    nextStepWithAdditionalInfo(id) {
+      if (this.statusForm.status === 3) {
+        this.$refs['statusForm'].validate((valid) => {
+          if (valid) {
+            moveBidToNextStatusWithQuantityPrice({
+              id: id,
+              confirmedQuantity: this.statusForm.confirmedQuantity,
+              confirmedPrice: this.statusForm.confirmedPrice
+            }).then(response => {
+              this.$message({
+                message: this.$t('common.optionSuccess'),
+                type: 'success'
+              })
+              this.fetchData()
+              this.statusFormVisible = false
+            })
+          } else {
+            return false
+          }
+        })
+      } else if (this.statusForm.status === 6) {
+        this.$refs['statusForm'].validate((valid) => {
+          if (valid) {
+            moveBidToNextStatusWithPayment({
+              id: id,
+              idFile: this.uploadFileId
+            }).then(response => {
+              this.$message({
+                message: this.$t('common.optionSuccess'),
+                type: 'success'
+              })
+              this.fetchData()
+              this.statusFormVisible = false
+            })
+          } else {
+            return false
+          }
+        })
+      } else {
+        moveBidToNextStatus(id).then(response => {
+          console.log(response)
+          this.$message({
+            message: 'Status modification succeeded',
+            type: 'success'
+          })
+          this.fetchData()
+          this.statusFormVisible = false
+        })
+      }
     }
 
   },

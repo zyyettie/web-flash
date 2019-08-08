@@ -9,22 +9,23 @@ export default {
       formTitle: this.$t('config.add'),
       isAdd: true,
       bidFormVisible: false,
-      bidFormTitle: this.$t('config.add'),
+      bidFormTitle: 'ORDER INFORMATION',
       bidForm: {
         no: '',
         name: '',
         shape: '',
-        dimension: '',
+        size: '',
         color: '',
-        purity: '',
+        clarity: '',
         quantity: '',
-        unit: '',
-        heated: '',
+        weight: '',
+        unitOfWeight: '',
+        enhance: '',
         status: '',
         dueDate: '',
         count: '',
         bidQuantity: '',
-        bidUnit: '',
+        bidWeight: '',
         bidPrice: ''
       },
       listQuery: {
@@ -37,7 +38,7 @@ export default {
       list: null,
       listLoading: true,
       selRow: {},
-      unitOptions: [
+      weightOptions: [
         { value: 'carat', label: 'carat' },
         { value: 'piece', label: 'piece' }
       ],
@@ -57,29 +58,11 @@ export default {
   computed: {
     rules() {
       return {
-        name: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+        bidQuantity: [
+          { required: true, message: 'SUPPLIER SUPPLY QUANTITY is required', trigger: 'blur' }
         ],
-        shape: [
-          { required: true, message: this.$t('config.value') + this.$t('common.isRequired'), trigger: 'blur' }
-        ],
-        dimension: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
-        ],
-        purity: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
-        ],
-        quantity: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
-        ],
-        unit: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
-        ],
-        heated: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
-        ],
-        dueDate: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+        bidPrice: [
+          { required: true, message: 'PRICE is required', trigger: 'blur' }
         ]
       }
     }
@@ -148,7 +131,8 @@ export default {
         if (valid) {
           saveTenderBid({
             quantity: this.bidForm.bidQuantity,
-            unit: this.bidForm.bidUnit,
+            weight: this.bidForm.weight,
+            unitOfWeight: this.bidForm.unitOfWeight,
             price: this.bidForm.bidPrice,
             tenderId: this.bidForm.id
           }).then(response => {
@@ -206,27 +190,13 @@ export default {
       this.bidForm = row
       this.bidFormVisible = true
     },
-    saveBid() {
-      saveBid({
-        quantity: this.bidForm.bidQuantity,
-        unit: this.bidForm.bidUnit,
-        price: this.bidForm.bidPrice,
-        tenderId: this.bidForm.id,
-        tenderNo: this.bidForm.no
-      }).then(response => {
-        this.$message({
-          message: this.$t('common.optionSuccess'),
-          type: 'success'
-        })
-        this.fetchData()
-        this.formVisible = false
-      })
-    },
     isBidAlready(row) {
-      let bid
-      for (bid in this.bidListForCurrentUser) {
-        if (row.id === bid.tenderId) {
-          return true
+      if (this.bidListForCurrentUser) {
+        for (let i = 0; i < this.bidListForCurrentUser.length; i++) {
+          const bid = this.bidListForCurrentUser[i]
+          if (row.id === bid.tenderId) {
+            return true
+          }
         }
       }
       return false

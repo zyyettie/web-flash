@@ -41,6 +41,30 @@ export function moveBidToNextStatus(id) {
   })
 }
 
+export function moveBidToNextStatusWithDeliverInfo(params) {
+  return request({
+    url: '/bid/moveToNextStatusWithDeliverInfo',
+    method: 'post',
+    params
+  })
+}
+
+export function moveBidToNextStatusWithQuantityPrice(params) {
+  return request({
+    url: '/bid/moveToNextStatusWithQuantityPrice',
+    method: 'post',
+    params
+  })
+}
+
+export function moveBidToNextStatusWithPayment(params) {
+  return request({
+    url: '/bid/moveToNextStatusWithPayment',
+    method: 'post',
+    params
+  })
+}
+
 export function approveBid(id) {
   return request({
     url: '/bid/approve/' + id,

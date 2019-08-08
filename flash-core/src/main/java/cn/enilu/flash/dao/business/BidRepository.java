@@ -22,6 +22,21 @@ public interface BidRepository extends PagingAndSortingRepository<Bid, Long> {
 
     @Transactional
     @Modifying
+    @Query(nativeQuery = true, value = "update t_biz_bid set status = status+1, deliver_type=?2, deliver_no=?3 where id=?1")
+    void moveToNextStatusWithDeliverInfo(Long id, Integer deliverType, String deliverNo);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "update t_biz_bid set status = status+1, confirmed_quantity=?2, confirmed_price=?3 where id=?1")
+    void moveToNextStatusWithQuantityPrice(Long id, Integer confirmedQuantity, Integer confirmedPrice);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "update t_biz_bid set status = status+1, id_file=?2 where id=?1")
+    void moveToNextStatusWithPayment(Long id, Long idFile);
+
+    @Transactional
+    @Modifying
     @Query(nativeQuery = true, value = "update t_biz_bid set is_approved = 1, status = 1 where id=?1")
     void approve(Long id);
 

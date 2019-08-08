@@ -21,83 +21,86 @@
     </div>
 
     <el-steps :sapce="200" :active=-1 finish-status="success">
-      <el-step title="1. 发标团队选择供应商"></el-step>
-      <el-step title="2. 供应商发货"></el-step>
-      <el-step title="3. 收获并检测"></el-step>
-      <el-step title="4. 发标团队确认购买数量、价格"></el-step>
-      <el-step title="5. 供应商确认,并送达发票"></el-step>
-      <el-step title="6. 收到发票，付款结算"></el-step>
+      <el-step title="1. Purchase confirm supplier"></el-step>
+      <el-step title="2. Supplier ship gemstone"></el-step>
+      <el-step title="3. Receipted gemstone and in checking process"></el-step>
+      <el-step title="4. Confirm final quantity/price and issue purchase bill"></el-step>
+      <el-step title="5. Confirmed by supplier and issue tax invoice"></el-step>
+      <el-step title="6. Received invoice"></el-step>
+      <el-step title="7. Due time inform supplier for payment"></el-step>
     </el-steps>
 
     <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
               @current-change="handleCurrentChange">
 
-      <el-table-column label="投标ID" v-if="false">
+      <el-table-column label="投标id" v-if="false">
         <template slot-scope="scope">
           {{scope.row.bidId}}
         </template>
       </el-table-column>
-      <el-table-column label="投标编号">
+      <el-table-column label="BID REF.NO.">
         <template slot-scope="scope">
           {{scope.row.no}}
         </template>
       </el-table-column>
-      <el-table-column label="发标编号">
+      <el-table-column label="ORDER REF.NO.">
         <template slot-scope="scope">
           {{scope.row.tenderNo}}
         </template>
       </el-table-column>
-      <el-table-column label="名称">
+      <el-table-column label="STONE">
         <template slot-scope="scope">
           {{scope.row.name}}
         </template>
       </el-table-column>
-      <el-table-column label="形状">
+      <el-table-column label="SHAPE">
         <template slot-scope="scope">
           {{scope.row.shape}}
         </template>
       </el-table-column>
-      <el-table-column label="尺寸">
+      <el-table-column label="SIZE">
         <template slot-scope="scope">
-          {{scope.row.dimension}}
+          {{scope.row.size}}
         </template>
       </el-table-column>
-      <el-table-column label="颜色">
+      <el-table-column label="COLOR">
         <template slot-scope="scope">
           {{scope.row.color}}
         </template>
       </el-table-column>
-      <el-table-column label="净度">
+      <el-table-column label="CLARITY">
         <template slot-scope="scope">
-          {{scope.row.purity}}
+          {{scope.row.clarity}}
         </template>
       </el-table-column>
-      <el-table-column label="处理方式">
+      <el-table-column label="ENHANCE">
         <template slot-scope="scope">
-          {{scope.row.heated}}
+          {{scope.row.enhance}}
         </template>
       </el-table-column>
-      <el-table-column label="投标数量">
+      <el-table-column label="QUANTITY">
         <template slot-scope="scope">
           {{scope.row.quantity}}
         </template>
       </el-table-column>
-      <el-table-column label="投标单位">
+      <el-table-column label="WEIGHT">
         <template slot-scope="scope">
-          {{scope.row.unit}}
+          {{scope.row.weight}}{{scope.row.unitOfWeight}}
         </template>
       </el-table-column>
-      <el-table-column label="投标价格">
+      <el-table-column label="PRICE">
         <template slot-scope="scope">
           {{scope.row.price}}
         </template>
       </el-table-column>
-      <el-table-column label="是否批准">
+      <el-table-column label="BID ACCEPT STATE">
         <template slot-scope="scope">
-          {{scope.row.isApproved}}
+          <p v-if="scope.row.isApproved===1">Approved</p>
+          <p v-else-if="scope.row.isApproved===-1">Denied</p>
+          <p v-else>Undecided</p>
         </template>
       </el-table-column>
-      <el-table-column label="投标状态">
+      <el-table-column label="BID STATE">
         <template slot-scope="scope">
           {{scope.row.bidStatus}}
         </template>
@@ -107,13 +110,13 @@
           <el-button type="button" @click="editBid(scope.row)">{{$t('button.edit')}}</el-button>
         </template>
       </el-table-column-->
-      <el-table-column label="操作">
+      <el-table-column label="EDIT">
         <template slot-scope="scope">
           <div v-if="scope.row.isApproved === 0">
-            <el-button type="button" @click="editBid(scope.row)">{{$t('button.edit')}}</el-button>
+            <el-button type="button" @click="editBid(scope.row)">EDIT</el-button>
           </div>
           <div v-else>
-            <div v-if="scope.row.bidStatus === 2 || scope.row.bidStatus === 5">
+            <div v-if="scope.row.bidStatus === 1 || scope.row.bidStatus === 4">
               <el-button type="button" @click="changeVendorStatus(scope.row)">{{$t('business.nextStep')}}</el-button>
             </div>
             <div v-else>
@@ -135,8 +138,8 @@
       @prev-click="fetchPrev"
       @next-click="fetchNext">
     </el-pagination>
-    
-    <!-- 修改投标 -->
+    <!-- ================================================================================================= -->
+    <!-- 修改投标弹出框 -->
     <el-dialog
       :title="formTitle"
       :visible.sync="formVisible"
@@ -144,57 +147,57 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="编号" prop="no">
+            <el-form-item label="ORDER REF.NO." prop="no">
               <el-input v-model="form.no" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="名称" prop="name">
+            <el-form-item label="STONE" prop="name">
               <el-input v-model="form.name" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="形状" prop="shape">
+            <el-form-item label="SHAPE" prop="shape">
               <el-input v-model="form.shape" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="尺寸" prop="dimension">
-              <el-input v-model="form.dimension" :disabled="true"></el-input>
+            <el-form-item label="SIZE" prop="size">
+              <el-input v-model="form.size" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="颜色" prop="color">
+            <el-form-item label="COLOR" prop="color">
               <el-input v-model="form.color" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="净度" prop="purity">
-              <el-input v-model="form.purity" :disabled="true"></el-input>
+            <el-form-item label="CLARITY" prop="clarity">
+              <el-input v-model="form.clarity" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="数量" prop="quantity">
+            <el-form-item label="QUANTITY" prop="quantity">
               <el-input v-model="form.tenderQuantity" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="单位" prop="unit">
+            <el-form-item label="WEIGHT" prop="weight">
               <el-input v-model="form.tenderUnit" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="处理方式" prop="heated">
-              <el-input v-model="form.heated" :disabled="true"></el-input>
+            <el-form-item label="ENHANCE" prop="enhance">
+              <el-input v-model="form.enhance" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="状态" prop="tenderStatus">
+            <el-form-item label="ORDER STATE" prop="tenderStatus">
               <el-input v-model="form.tenderStatus" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="到期日期" prop="dueDate">
+            <el-form-item label="DUE DATE" prop="dueDate">
               <el-input v-model="form.dueDate" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
@@ -202,24 +205,22 @@
         <!-- bid信息 -->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="数量" prop="bidQuantity">
+            <el-form-item label="SUPPLIER SUPPLY QUANTITY" prop="bidQuantity">
               <el-input v-model="form.quantity" ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="单位" prop="unit">
-              <el-select v-model="form.unit" placeholder="请选择">
-                <el-option
-                  v-for="item in unitOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
+            <el-form-item label="SUPPLIER SUPPLY WEIGHT" prop="weight">
+              <el-col :span="12">
+              <el-input v-model="form.weight" :disabled="true"></el-input>
+              </el-col>
+              <el-col :span="12">
+              <el-input v-model="form.unitOfWeight" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="价格" prop="bidPrice">
+            <el-form-item label="PRICE" prop="bidPrice">
               <el-input v-model="form.price" ></el-input>
             </el-form-item>
           </el-col>
@@ -230,7 +231,8 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-    <!-- 更改状态Dialog -->
+    <!-- ================================================================================================= -->
+    <!-- 更改状态Dialog弹出框 -->
   <el-dialog
           :title="statusFormTitle"
           :visible.sync="statusFormVisible"
@@ -238,19 +240,20 @@
       <el-form ref="statusForm" :model="statusForm" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="发标编号" prop="no">
+            <el-form-item label="ORDER REF.NO." prop="no">
               <el-input v-model="statusForm.no" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
         <el-steps :sapce="200" :active="statusForm.bidStatus" finish-status="success">
-        <el-step title="1. 发标团队选择供应商"></el-step>
-        <el-step title="2. 供应商发货"></el-step>
-        <el-step title="3. 收获并检测"></el-step>
-        <el-step title="4. 发标团队确认购买数量、价格"></el-step>
-        <el-step title="5. 供应商确认,并送达发票"></el-step>
-        <el-step title="6. 收到发票，付款结算"></el-step>
+          <el-step title="1. Purchase confirm supplier"></el-step>
+          <el-step title="2. Supplier ship gemstone"></el-step>
+          <el-step title="3. Receipted gemstone and in checking process"></el-step>
+          <el-step title="4. Confirm final quantity/price and issue purchase bill"></el-step>
+          <el-step title="5. Confirmed by supplier and issue tax invoice"></el-step>
+          <el-step title="6. Received invoice"></el-step>
+          <el-step title="7. Due time inform supplier for payment"></el-step>
         </el-steps>
         </el-row>
         <br>
@@ -259,20 +262,41 @@
         :data="statusData" style="width: 50%">
         <el-table-column
           prop="host"
-          label="发标方"
+          label="PURCHASE"
           width="300">
         </el-table-column>
         <el-table-column
           prop="vendor"
-          label="供应商"
+          label="SUPPLIER"
           width="300">
         </el-table-column>
         </el-table>
         </el-row>
         <br>
-        <br>
+        <el-row>
+          <!-- 确认快递方式-->
+          <div v-if="statusForm.bidStatus === 1">
+          <el-col :span="12">
+            <el-form-item label="DELIVER TYPE" prop="deliverType">
+              <el-select v-model="statusForm.deliverType" placeholder="please select">
+                <el-option
+                  v-for="item in deliverTypeOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="DELIVER NO." prop="deliverNo">
+              <el-input v-model="statusForm.deliverNo" ></el-input>
+            </el-form-item>
+          </el-col>
+          </div>
+        </el-row>
         <el-form-item>
-          <el-button type="primary" @click="nextStep(statusForm.bidId)">{{ $t('button.submit') }}</el-button>
+          <el-button type="primary" @click="nextStepWithAdditionalInfo(statusForm.bidId)">{{ $t('button.submit') }}</el-button>
           <el-button @click.native="statusFormVisible = false">{{ $t('button.cancel') }}</el-button>
         </el-form-item>
       </el-form>

@@ -27,19 +27,21 @@ public class Tender extends BaseEntity {
     @Column
     private String shape;
     @Column
-    private Integer dimension;
+    private Integer size;
     @Column
     private String color;
     @Column
-    private String purity;
+    private String clarity;
     @Column
     private Integer quantity;
     @Column
-    private String unit;
+    private Integer weight;
     @Column
-    private String heated;
+    private String unitOfWeight;
     @Column
-    private Integer status;
+    private String enhance;
+    @Column
+    private String status;
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dueDate;
@@ -50,4 +52,8 @@ public class Tender extends BaseEntity {
     private Long version;
     @Column
     private Integer isDelete;
+    @Column
+    private String stoneUseFor;
+    @Column
+    private String note;
 }

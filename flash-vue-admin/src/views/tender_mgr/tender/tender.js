@@ -4,18 +4,21 @@ export default {
   data() {
     return {
       formVisible: false,
-      formTitle: this.$t('config.add'),
+      formTitle: this.$t('business.addTender'),
       isAdd: true,
       form: {
         name: '',
         shape: '',
-        dimension: '',
-        color: '',
-        purity: '',
+        size: '',
+        color: '#FFFFFF',
+        clarity: '',
         quantity: '',
-        unit: '',
-        heated: '',
-        dueDate: ''
+        weight: '',
+        unitOfWeight: '',
+        enhance: '',
+        dueDate: '',
+        note: '',
+        stoneUseFor: ''
       },
       listQuery: {
         page: 1,
@@ -28,27 +31,75 @@ export default {
       listLoading: true,
       selRow: {},
       nameOptions: [
-        { value: 'BS', label: 'BS-BLUE SAPPHIRE' },
-        { value: 'PS', label: 'PS-PINK SAPPHIRE' },
-        { value: 'RB', label: 'RB-RUBY' },
-        { value: 'TS', label: 'TS-TSAVORITE' },
-        { value: 'WS', label: 'WS-WHITE SAPPHIRE' }
+        { value: 'BS-BLUE SAPPHIRE', label: 'BS-BLUE SAPPHIRE' },
+        { value: 'PS-PINK SAPPHIRE', label: 'PS-PINK SAPPHIRE' },
+        { value: 'RB-RUBY', label: 'RB-RUBY' },
+        { value: 'TS-TSAVORITE', label: 'TS-TSAVORITE' },
+        { value: 'WS-WHITE SAPPHIRE', label: 'WS-WHITE SAPPHIRE' },
+        { value: 'YS-YELLOW SAPPHIRE', label: 'YS-YELLOW SAPPHIRE' },
+        { value: 'GS-GREY SAPPHIRE', label: 'GS-GREY SAPPHIRE' },
+        { value: 'LS-LAVENDER SAPPHIRE', label: 'LS-LAVENDER SAPPHIRE' },
+        { value: 'BM-BLUE SAPPHIRE', label: 'BM-BLUE SAPPHIRE' },
+        { value: 'BC-BLUE SAPPHIRE', label: 'BC-BLUE SAPPHIRE' },
+        { value: 'BK-BLACK SAPPHIRE', label: 'BK-BLACK SAPPHIRE' },
+        { value: 'YB-YELLOW SAPPHIRE', label: 'YB-YELLOW SAPPHIRE' },
+        { value: 'YC-YELLOW SAPPHIRE', label: 'YC-YELLOW SAPPHIRE' },
+        { value: 'YR-YELLOW SAPPHIRE', label: 'YR-YELLOW SAPPHIRE' },
+        { value: 'CT-CHROME TOURMALINE', label: 'CT-CHROME TOURMALINE' },
+        { value: 'SP-PINK SPINEL', label: 'SP-PINK SPINEL' },
+        { value: 'SR-RED SPINEL', label: 'SR-RED SPINEL' },
+        { value: 'BT-SWISS BLUE TOPAZ', label: 'BT-SWISS BLUE TOPAZ' },
+        { value: 'AM-AMETHYST', label: 'AM-AMETHYST' },
+        { value: 'RG-RED GARNET', label: 'RG-RED GARNET' },
+        { value: 'AQ-AQUAMARINE', label: 'AQ-AQUAMARINE' },
+        { value: 'BB-BLUE SAPPHIRE', label: 'BB-BLUE SAPPHIRE' },
+        { value: 'BG-BLUE SAPPHIRE', label: 'BG-BLUE SAPPHIRE' },
+        { value: 'GN-GARNET', label: 'GN-GARNET' },
+        { value: 'PP-PURPLE SAPPHIRE', label: 'PP-PURPLE SAPPHIRE' },
+        { value: 'RD-RHODOLITE', label: 'RD-RHODOLITE' },
+        { value: 'AD-ANDALUSITE', label: 'AD-ANDALUSITE' },
+        { value: 'PT-PINK TOURMALINE', label: 'PT-PINK TOURMALINE' },
+        { value: 'PR-PERIDOT', label: 'PR-PERIDOT' },
+        { value: 'ML-MALAIA GARNET', label: 'ML-MALAIA GARNET' },
+        { value: 'MG-MANDARIN GARNET', label: 'MG-MANDARIN GARNET' },
+        { value: 'LT-LONDON TOPAZ', label: 'LT-LONDON TOPAZ' },
+        { value: 'LP-LAPIS LAZULI', label: 'LP-LAPIS LAZULI' },
+        { value: 'TZ-TANZANITE', label: 'TZ-TANZANITE' },
+        { value: 'SM-SMOCKY QUARTZ', label: 'SM-SMOCKY QUARTZ' },
+        { value: 'CI-CITRINE', label: 'CI-CITRINE' },
+        { value: 'EM-EMERALD', label: 'EM-EMERALD' },
+        { value: 'GR-GREEN SAPPHIRE', label: 'GR-GREEN SAPPHIRE' },
+        { value: 'IO-IOLITE', label: 'IO-IOLITE' },
+        { value: 'AF-AMETHYST FANCY', label: 'AF-AMETHYST FANCY' },
+        { value: 'BF-BLUE SAPPHIRE FANCY', label: 'BF-BLUE SAPPHIRE FANCY' },
+        { value: 'CF-TOURMALINE FANCY', label: 'CF-TOURMALINE FANCY' },
+        { value: 'GF-GREY SAPPHIRE FANCY', label: 'GF-GREY SAPPHIRE FANCY' },
+        { value: 'LF-LAVENDER SAPPHIRE FANCY', label: 'LF-LAVENDER SAPPHIRE FANCY' },
+        { value: 'PF-PINK SAPPHIRE FANCY', label: 'PF-PINK SAPPHIRE FANCY' },
+        { value: 'RF-RUBY FANCY', label: 'RF-RUBY FANCY' },
+        { value: 'SF-SPINEL FANCY', label: 'SF-SPINEL FANCY' },
+        { value: 'TF-TSAVORITE FANCY', label: 'TF-TSAVORITE FANCY' },
+        { value: 'WF-WHITE SAPPHIRE FANCY', label: 'WF-WHITE SAPPHIRE FANCY' },
+        { value: 'YF-YELLOW SAPPHIRE FANCY', label: 'YF-YELLOW SAPPHIRE FANCY' },
+        { value: 'FG-GREEN SAPPHIRE FANCY', label: 'FG-GREEN SAPPHIRE FANCY' },
+        { value: 'FP-PURPLE SAPPHIRE FANCY', label: 'FP-PURPLE SAPPHIRE FANCY' }
       ],
       shapeOptions: [
         { value: 'c', label: 'c' },
         { value: 'q', label: 'q' },
         { value: 'b', label: 'b' },
         { value: 'g', label: 'g' }],
-      purityOptions: [
+      clarityOptions: [
         { value: 'lc', label: 'lc' },
         { value: 'ec', label: 'ec' },
         { value: 'cq', label: 'cq' },
         { value: 'ct', label: 'ct' }],
-      unitOptions: [
-        { value: 'carat', label: 'carat' },
-        { value: 'piece', label: 'piece' }
+      unitOfWeightOptions: [
+        { value: 'ct', label: 'ct' },
+        { value: 'g', label: 'g' },
+        { value: 'kg', label: 'kg' }
       ],
-      heatedOptions: [
+      enhanceOptions: [
         { value: 'unheated', label: 'unheated' },
         { value: 'heated', label: 'heated' }
       ]
@@ -68,28 +119,34 @@ export default {
     rules() {
       return {
         name: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+          { required: true, message: 'STONE' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         shape: [
-          { required: true, message: this.$t('config.value') + this.$t('common.isRequired'), trigger: 'blur' }
+          { required: true, message: 'SHAPE' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
-        dimension: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+        size: [
+          { required: true, message: 'SIZE' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
-        purity: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+        color: [
+          { required: true, message: 'COLOR' + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
+        clarity: [
+          { required: true, message: 'CLARITY' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         quantity: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+          { required: true, message: 'QUANTITY' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
-        unit: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+        weight: [
+          { required: true, message: 'WEIGHT' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
-        heated: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+        enhance: [
+          { required: true, message: 'ENHANCE' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         dueDate: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+          { required: true, message: 'DUEDATE' + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
+        stoneUseFor: [
+          { required: true, message: 'STONEUSEFOR' + this.$t('common.isRequired'), trigger: 'blur' }
         ]
       }
     }
@@ -147,18 +204,21 @@ export default {
       this.form = {
         name: '',
         shape: '',
-        dimension: '',
-        color: '',
-        purity: '',
+        size: '',
+        color: '#BF2929',
+        clarity: '',
         quantity: '',
-        unit: '',
-        heated: '',
-        dueDate: ''
+        weight: '',
+        unitOfWeight: '',
+        enhance: '',
+        dueDate: '',
+        note: '',
+        stoneUseFor: ''
       }
     },
     add() {
       this.resetForm()
-      this.formTitle = this.$t('config.add')
+      this.formTitle = this.$t('business.addTender')
       this.formVisible = true
       this.isAdd = true
     },
@@ -168,13 +228,16 @@ export default {
           saveTender({
             name: this.form.name,
             shape: this.form.shape,
-            dimension: this.form.dimension,
+            size: this.form.size,
             color: this.form.color,
-            purity: this.form.purity,
+            clarity: this.form.clarity,
             quantity: this.form.quantity,
-            unit: this.form.unit,
-            heated: this.form.heated,
-            dueDate: this.form.dueDate
+            weight: this.form.weight,
+            unitOfWeight: this.form.unitOfWeight,
+            enhance: this.form.enhance,
+            dueDate: this.form.dueDate,
+            note: this.form.note,
+            stoneUseFor: this.form.stoneUseFor
           }).then(response => {
             this.$message({
               message: this.$t('common.optionSuccess'),
@@ -234,12 +297,13 @@ export default {
           no: rowData.no,
           name: rowData.name,
           shape: rowData.shape,
-          dimension: rowData.dimension,
+          size: rowData.size,
           color: rowData.color,
-          purity: rowData.purity,
+          clarity: rowData.clarity,
           quantity: rowData.quantity,
-          unit: rowData.unit,
-          heated: rowData.heated,
+          weight: rowData.weight,
+          unitOfWeight: rowData.unitOfWeight,
+          enhance: rowData.enhance,
           dueDate: rowData.dueDate,
           status: rowData.status
         }

@@ -104,7 +104,7 @@ CREATE TABLE `t_sys_cfg` (
 -- ----------------------------
 -- Records of t_sys_cfg
 -- ----------------------------
-INSERT INTO `t_sys_cfg` (`id`, `cfg_name`, `cfg_value`, `cfg_desc`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('1', 'system.app.name', 'tender bid system', '应用名称update by 2019-03-27 11:47:04', null, null, '2019-04-15 21:36:07', '1');
+INSERT INTO `t_sys_cfg` (`id`, `cfg_name`, `cfg_value`, `cfg_desc`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('1', 'system.app.name', 'Bid Management System', '应用名称update by 2019-03-27 11:47:04', null, null, '2019-04-15 21:36:07', '1');
 INSERT INTO `t_sys_cfg` (`id`, `cfg_name`, `cfg_value`, `cfg_desc`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('2', 'system.file.upload.path', 'D:\\data\\tender\\runtime\\upload', '系统默认上传文件路径', null, null, '2019-04-15 21:36:17', '1');
 
 -- ----------------------------
@@ -321,7 +321,7 @@ CREATE TABLE `t_sys_notice` (
 -- ----------------------------
 -- Records of t_sys_notice
 -- ----------------------------
-INSERT INTO `t_sys_notice` (`id`, `title`, `type`, `content`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('1', '世界', '10', '欢迎使用原料采购招标管理系统', '2019-05-11 08:53:20', '1', '2019-05-12 23:30:58', '1');
+INSERT INTO `t_sys_notice` (`id`, `title`, `type`, `content`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('1', '世界', '10', 'Welcome to Bid Management System', '2019-05-11 08:53:20', '1', '2019-05-12 23:30:58', '1');
 
 -- ----------------------------
 -- Table structure for `t_sys_operation_log`
@@ -576,15 +576,15 @@ CREATE TABLE `t_sys_task_log` (
 DROP TABLE IF EXISTS `t_sys_user`;
 
 CREATE TABLE `t_sys_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `avatar` varchar(255) DEFAULT NULL COMMENT '头像',
-  `account` varchar(45) DEFAULT NULL COMMENT '账号',
+  `account` varchar(255) DEFAULT NULL COMMENT '账号',
   `password` varchar(45) DEFAULT NULL COMMENT '密码',
   `salt` varchar(45) DEFAULT NULL COMMENT 'md5密码盐',
-  `name` varchar(45) DEFAULT NULL COMMENT '名字',
+  `name` varchar(255) DEFAULT NULL COMMENT '名字',
   `birthday` datetime DEFAULT NULL COMMENT '生日',
   `sex` int(11) DEFAULT NULL COMMENT '性别（1：男 2：女）',
-  `email` varchar(45) DEFAULT NULL COMMENT '电子邮件',
+  `email` varchar(255) DEFAULT NULL COMMENT '电子邮件',
   `phone` varchar(45) DEFAULT NULL COMMENT '电话',
   `roleid` varchar(255) DEFAULT NULL COMMENT '角色id',
   `deptid` int(11) DEFAULT NULL COMMENT '部门id',
@@ -594,16 +594,28 @@ CREATE TABLE `t_sys_user` (
   `create_by` bigint(20) DEFAULT NULL COMMENT '创建人',
   `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
   `modify_by` bigint(20) DEFAULT NULL COMMENT '最后更新人',
+  `company_name` varchar(255) DEFAULT NULL COMMENT '公司名称',
+  `address` varchar(1000) DEFAULT NULL COMMENT '地址',
+  `registration_no` varchar(255) DEFAULT NULL COMMENT '注册号',
+  `tax_no` varchar(255) DEFAULT NULL COMMENT '税号',
+  `payment_terms` varchar(255) DEFAULT NULL COMMENT '付款时间种类',
+  `payment_type` varchar(255) DEFAULT NULL COMMENT '付款类型',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COMMENT='管理员表';
 -- ----------------------------
 -- Records of t_sys_user
 -- ----------------------------
 
-INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`) VALUES ('-1', null, null, null, null, 'system', null, null, null, null, '应用系统', null, null, null, null, null, null, null);
-INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`) VALUES ('1', null, '2016-01-29 08:49:53', '1', '2019-03-20 23:45:24', 'admin', null, '2017-05-05 00:00:00', '27', 'purchase@mailchinastone.com', '管理员', 'b5a51391f271f062867e5984e2fcffee', null, '1', '8pgby', '2', '1', '25');
-INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`) VALUES ('45', null, '2017-12-04 22:24:02', '1', '2019-01-09 23:06:09', 'boss', null, '2017-12-04 00:00:00', '24', '', '老板', 'fb43a2366344b29c5487cba15290367d', '', '1,2,', '1f7bf', '1', '1', null);
-INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`) VALUES ('46', null, '2017-12-04 22:24:24', null, null, 'manager', null, '2017-12-04 00:00:00', '24', '', '经理', '06925fac8af87a19019bcd3c4a5d974d', '', '1', 'j3cs9', '1', '1', null);
-INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`) VALUES ('47', null, '2018-09-13 17:21:02', '1', '2019-01-09 23:05:51', 'developer', null, '2017-12-31 00:00:00', '25', 'purchase@mailchinastone.com', '开发人员', 'fac36d5616fe9ebd460691264b28ee27', '', '2,', 'vscp9', '1', '1', null);
-INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`) VALUES ('48', null, '2018-09-13 17:21:02', '1', '2019-01-09 23:05:51', 'tenderadmin', null, '2017-12-31 00:00:00', '28', 'purchase@mailchinastone.com', '发标管理员', 'b5a51391f271f062867e5984e2fcffee', '', '4,', '8pgby', '1', '1', null);
+INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`,  `company_name`,  `address`,  `registration_no`,  `tax_no`,  `payment_terms`,  `payment_type`)
+  VALUES ('-1', null, null, null, null, 'system', null, null, null, null, '应用系统', null, null, null, null, null, null, null, 'system', null, null, null, null, null);
+INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`,  `company_name`,  `address`,  `registration_no`,  `tax_no`,  `payment_terms`,  `payment_type`)
+  VALUES ('1', null, '2016-01-29 08:49:53', '1', '2019-03-20 23:45:24', 'admin', null, '2017-05-05 00:00:00', '27', 'purchase@mailchinastone.com', '管理员', 'b5a51391f271f062867e5984e2fcffee', null, '1', '8pgby', '2', '1', '25', null, null, null, null, null, null);
+INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`,  `company_name`,  `address`,  `registration_no`,  `tax_no`,  `payment_terms`,  `payment_type`)
+  VALUES ('45', null, '2017-12-04 22:24:02', '1', '2019-01-09 23:06:09', 'boss', null, '2017-12-04 00:00:00', '24', '', '老板', 'fb43a2366344b29c5487cba15290367d', '', '1,2,', '1f7bf', '1', '1', null, null, null, null, null, null, null);
+INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`,  `company_name`,  `address`,  `registration_no`,  `tax_no`,  `payment_terms`,  `payment_type`)
+  VALUES ('46', null, '2017-12-04 22:24:24', null, null, 'manager', null, '2017-12-04 00:00:00', '24', '', '经理', '06925fac8af87a19019bcd3c4a5d974d', '', '1', 'j3cs9', '1', '1', null, null, null, null, null, null, null);
+INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`,  `company_name`,  `address`,  `registration_no`,  `tax_no`,  `payment_terms`,  `payment_type`)
+  VALUES ('47', null, '2018-09-13 17:21:02', '1', '2019-01-09 23:05:51', 'developer', null, '2017-12-31 00:00:00', '25', 'purchase@mailchinastone.com', '开发人员', 'fac36d5616fe9ebd460691264b28ee27', '', '2,', 'vscp9', '1', '1', null, null, null, null, null, null, null);
+INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`,  `company_name`,  `address`,  `registration_no`,  `tax_no`,  `payment_terms`,  `payment_type`)
+  VALUES ('48', null, '2018-09-13 17:21:02', '1', '2019-01-09 23:05:51', 'tenderadmin', null, '2017-12-31 00:00:00', '28', 'purchase@mailchinastone.com', '发标管理员', 'b5a51391f271f062867e5984e2fcffee', '', '4,', '8pgby', '1', '1', null, null, null, null, null, null, null);
 

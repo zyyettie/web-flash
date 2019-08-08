@@ -19,15 +19,27 @@ public class Bid extends BaseEntity {
     @Column
     private String quantity;
     @Column
-    private int price;
+    private Integer price;
     @Column
-    private String unit;
+    private Integer weight;
+    @Column
+    private String unitOfWeight;
     @Column
     private String contact;
     @Column
-    private int isApproved;
+    private Integer isApproved;
     @Column
     private Integer status;
+    @Column
+    private Integer deliverType;
+    @Column
+    private String deliverNo;
+    @Column
+    private Integer confirmedQuantity;
+    @Column
+    private Integer confirmedPrice;
+    @Column
+    private Long idFile;
     @Column
     private Long tenderId;
 }
