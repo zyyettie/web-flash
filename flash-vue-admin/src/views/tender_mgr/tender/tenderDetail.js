@@ -30,7 +30,9 @@ export default {
         enhance: '',
         status: '',
         dueDate: '',
-        count: ''
+        count: '',
+        img: '',
+        idFile: ''
       },
       listQuery: {
         page: 1,
@@ -122,6 +124,11 @@ export default {
       this.listLoading = true
       getBidByTenderId(this.listQuery).then(response => {
         this.list = response.data
+        for (var index in this.list) {
+          const item = this.list[index]
+          item.img = getApiUrl() + '/file/getImgStream?idFile=' + item.idFile
+          console.log(item)
+        }
         this.listLoading = false
         this.total = response.data.total
       })

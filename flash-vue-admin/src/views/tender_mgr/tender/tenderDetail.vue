@@ -32,7 +32,10 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="COLOR" prop="color">
+              <el-col :span="12">
               <el-input v-model="bidForm.color" :disabled="true"></el-input>
+              </el-col>
+              <el-color-picker v-model="bidForm.color" :disabled="true"></el-color-picker>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -147,7 +150,13 @@
       </el-table-column>
       <el-table-column label="PIC">
         <template slot-scope="scope">
-          <img :src="scope.row.img" style="width:200px;">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="scope.row.img"/>
+            <img slot="reference" :src="scope.row.img" :alt="scope.row.img" style="max-height: 80px;max-width: 80px">
+          </el-popover>
         </template>
       </el-table-column>
       <el-table-column label="BID STATUS">

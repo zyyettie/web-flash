@@ -28,7 +28,7 @@ CREATE TABLE `t_biz_tender` (
   `no` varchar(255) DEFAULT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
   `shape` varchar(255) DEFAULT NULL COMMENT '形状',
-  `size` int(20) DEFAULT 0 COMMENT '尺寸',
+  `size` varchar(255) DEFAULT NULL COMMENT '尺寸',
   `color` varchar(255) DEFAULT NULL COMMENT '颜色',
   `clarity` varchar(255) DEFAULT NULL COMMENT '净度',
   `quantity` int(20) DEFAULT 0 COMMENT '数量',

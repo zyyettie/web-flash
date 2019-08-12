@@ -21,7 +21,7 @@ public class Bidtender {
     private String tenderNo;
     private String name;
     private String shape;
-    private Integer size;
+    private String size;
     private String color;
     private String clarity;
     private Integer tenderQuantity;

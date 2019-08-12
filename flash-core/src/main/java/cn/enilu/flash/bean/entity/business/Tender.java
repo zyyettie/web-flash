@@ -27,7 +27,7 @@ public class Tender extends BaseEntity {
     @Column
     private String shape;
     @Column
-    private Integer size;
+    private String size;
     @Column
     private String color;
     @Column

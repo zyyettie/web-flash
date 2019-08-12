@@ -65,7 +65,7 @@
       </el-table-column>
       <el-table-column label="COLOR">
         <template slot-scope="scope">
-          {{scope.row.color}}
+          {{scope.row.color}} <el-color-picker v-model="scope.row.color" :disabled="true"></el-color-picker>
         </template>
       </el-table-column>
       <el-table-column label="CLARITY">
