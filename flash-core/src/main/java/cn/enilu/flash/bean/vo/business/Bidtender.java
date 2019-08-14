@@ -15,6 +15,10 @@ public class Bidtender {
     private String unitOfWeight;
     private int isApproved;
     private int bidStatus;
+    private int deliverType;
+    private String deliverNo;
+    private int confirmedQuantity;
+    private int confirmedPrice;
     private Long tenderId;
 
     //tender info
@@ -23,6 +27,7 @@ public class Bidtender {
     private String shape;
     private String size;
     private String color;
+    private String colorNote;
     private String clarity;
     private Integer tenderQuantity;
     private Integer tenderWeight;

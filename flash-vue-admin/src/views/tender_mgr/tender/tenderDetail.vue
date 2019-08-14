@@ -33,9 +33,9 @@
           <el-col :span="12">
             <el-form-item label="COLOR" prop="color">
               <el-col :span="12">
-              <el-input v-model="bidForm.color" :disabled="true"></el-input>
+              <el-input v-model="bidForm.colorNote" :disabled="true"></el-input>
               </el-col>
-              <el-color-picker v-model="bidForm.color" :disabled="true"></el-color-picker>
+              <el-tag :color="bidForm.color"></el-tag>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -150,6 +150,7 @@
       </el-table-column>
       <el-table-column label="PIC">
         <template slot-scope="scope">
+        <div v-if="scope.row.idFile!=='' && scope.row.idFile!==null && scope.row.idFile!==undefined">
           <el-popover
             placement="right"
             title=""
@@ -157,6 +158,7 @@
             <img :src="scope.row.img"/>
             <img slot="reference" :src="scope.row.img" :alt="scope.row.img" style="max-height: 80px;max-width: 80px">
           </el-popover>
+        </div>
         </template>
       </el-table-column>
       <el-table-column label="BID STATUS">

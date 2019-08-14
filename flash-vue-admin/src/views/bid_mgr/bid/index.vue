@@ -65,7 +65,7 @@
       </el-table-column>
       <el-table-column label="COLOR">
         <template slot-scope="scope">
-          {{scope.row.color}} <el-color-picker v-model="scope.row.color" :disabled="true"></el-color-picker>
+          <el-tag :color="scope.row.color"></el-tag>{{scope.row.colorNote}}
         </template>
       </el-table-column>
       <el-table-column label="CLARITY">
@@ -91,6 +91,31 @@
       <el-table-column label="PRICE">
         <template slot-scope="scope">
           {{scope.row.price}}
+        </template>
+      </el-table-column>
+      <el-table-column label="DELIVER TYPE">
+        <template slot-scope="scope">
+          <p v-if="scope.row.deliverType === 1">Sent By Messenger</p>
+          <p v-else-if="scope.row.deliverType === 2">Express</p>
+          <p v-else-if="scope.row.deliverType === 3">Other Way</p>
+          <p v-else></p>
+        </template>
+      </el-table-column>
+      <el-table-column label="DELIVER NO.">
+        <template slot-scope="scope">
+          {{scope.row.deliverNo}}
+        </template>
+      </el-table-column>
+      <el-table-column label="CONFIRMED QUANTITY">
+        <template slot-scope="scope">
+          <p v-if="scope.row.confirmedQuantity===0"></p>
+          <p v-else>{{scope.row.confirmedQuantity}}</p>
+        </template>
+      </el-table-column>
+      <el-table-column label="CONFIRMED PRICE">
+        <template slot-scope="scope">
+          <p v-if="scope.row.confirmedPrice===0"></p>
+          <p v-else>{{scope.row.confirmedPrice}}</p>
         </template>
       </el-table-column>
       <el-table-column label="BID ACCEPT STATE">
@@ -168,7 +193,10 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="COLOR" prop="color">
-              <el-input v-model="form.color" :disabled="true"></el-input>
+              <el-tag :color="form.color"></el-tag>
+              <el-col :span="9">
+              <el-input v-model="form.colorNote" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">

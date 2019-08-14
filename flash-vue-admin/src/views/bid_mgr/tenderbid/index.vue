@@ -44,7 +44,7 @@
       </el-table-column>
       <el-table-column label="COLOR">
         <template slot-scope="scope">
-          {{scope.row.color}} <el-color-picker v-model="scope.row.color" :disabled="true"></el-color-picker>
+          <el-tag :color="scope.row.color"></el-tag>{{scope.row.colorNote}}
         </template>
       </el-table-column>
       <el-table-column label="CLARITY">
@@ -124,7 +124,10 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="COLOR" prop="color">
-              <el-input v-model="bidForm.color" :disabled="true"></el-input>
+              <el-tag :color="bidForm.color"></el-tag>
+              <el-col :span="9">
+              <el-input v-model="bidForm.colorNote" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">

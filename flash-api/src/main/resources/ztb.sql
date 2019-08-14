@@ -30,6 +30,7 @@ CREATE TABLE `t_biz_tender` (
   `shape` varchar(255) DEFAULT NULL COMMENT '形状',
   `size` varchar(255) DEFAULT NULL COMMENT '尺寸',
   `color` varchar(255) DEFAULT NULL COMMENT '颜色',
+  `color_note` varchar(255) DEFAULT NULL COMMENT '颜色注释',
   `clarity` varchar(255) DEFAULT NULL COMMENT '净度',
   `quantity` int(20) DEFAULT 0 COMMENT '数量',
   `weight` int(20) DEFAULT 0 COMMENT '重量',

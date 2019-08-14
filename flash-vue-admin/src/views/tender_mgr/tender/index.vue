@@ -45,7 +45,7 @@
       </el-table-column>
       <el-table-column label="COLOR">
         <template slot-scope="scope">
-          {{scope.row.color}} <el-color-picker v-model="scope.row.color" :disabled="true"></el-color-picker>
+          <el-tag :color="scope.row.color"></el-tag>{{scope.row.colorNote}}
         </template>
       </el-table-column>
       <el-table-column label="CLARITY">
@@ -148,7 +148,7 @@
             <el-form-item label="COLOR" prop="color">
               <el-color-picker v-model="form.color"></el-color-picker>
               <el-col :span="9">
-              <el-input v-model="form.color"  minlength=1></el-input>
+              <el-input v-model="form.colorNote"  minlength=1></el-input>
               </el-col>
             </el-form-item>
           </el-col>

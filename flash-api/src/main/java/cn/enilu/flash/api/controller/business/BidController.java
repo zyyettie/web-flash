@@ -119,6 +119,14 @@ public class BidController extends BaseController{
                 bidtenderVO.setUnitOfWeight(bid.getUnitOfWeight());
                 bidtenderVO.setIsApproved(bid.getIsApproved());
                 bidtenderVO.setBidStatus(bid.getStatus());
+                if(bid.getDeliverType()!=null)
+                  bidtenderVO.setDeliverType(bid.getDeliverType());
+                if(bid.getDeliverNo()!=null)
+                  bidtenderVO.setDeliverNo(bid.getDeliverNo());
+                if(bid.getConfirmedQuantity()!=null)
+                  bidtenderVO.setConfirmedQuantity(bid.getConfirmedQuantity());
+                if(bid.getConfirmedPrice()!=null)
+                  bidtenderVO.setConfirmedPrice(bid.getConfirmedPrice());
                 bidtenderVO.setTenderId(bid.getTenderId());
 
                 //tender info
@@ -128,6 +136,7 @@ public class BidController extends BaseController{
                 bidtenderVO.setShape(tender.getShape());
                 bidtenderVO.setSize(tender.getSize());
                 bidtenderVO.setColor(tender.getColor());
+                bidtenderVO.setColorNote(tender.getColorNote());
                 bidtenderVO.setClarity(tender.getClarity());
                 bidtenderVO.setTenderQuantity(tender.getQuantity());
                 bidtenderVO.setTenderWeight(tender.getWeight());

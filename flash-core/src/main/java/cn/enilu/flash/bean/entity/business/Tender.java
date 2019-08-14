@@ -31,6 +31,8 @@ public class Tender extends BaseEntity {
     @Column
     private String color;
     @Column
+    private String colorNote;
+    @Column
     private String clarity;
     @Column
     private Integer quantity;
