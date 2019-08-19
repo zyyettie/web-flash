@@ -48,7 +48,7 @@ public class BidController extends BaseController{
      * @return
      */
     @RequestMapping(method = RequestMethod.POST)
-    @BussinessLog(value = "编辑投标", key = "name", dict = BidDict.class)
+    @BussinessLog(value = "投标", key = "name", dict = BidDict.class)
     public Object save(@ModelAttribute Bid bid){
         logger.info(JSON.toJSONString(bid));
         if(ToolUtil.isOneEmpty(bid, bid.getTenderId())){
@@ -70,6 +70,27 @@ public class BidController extends BaseController{
         newlyCreatedBid.setContact(user.getAccount());
         bidService.save(newlyCreatedBid);
 
+        return Rets.success();
+    }
+
+    /**
+     * 修改投标 (EDIT)
+     * @param bid
+     * @return
+     */
+    @RequestMapping(value="/edit", method = RequestMethod.POST)
+    @BussinessLog(value = "修改投标", key = "name", dict = BidDict.class)
+    public Object edit(@ModelAttribute Bid bid){
+        logger.info(JSON.toJSONString(bid));
+        if(ToolUtil.isOneEmpty(bid, bid.getId())){
+            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
+        }
+        Bid bidInDB = bidService.get(bid.getId());
+        if(bidInDB.getIsApproved()!=0){
+            throw new GunsException(BizExceptionEnum.BID_HAS_BEEN_APPROVED_ERROR);
+        }
+        //供应商更新bid的数量和价格
+        bidService.updateQuantityAndPrice(bid.getId(), bid.getQuantity(), bid.getPrice());
         return Rets.success();
     }
 
@@ -142,6 +163,7 @@ public class BidController extends BaseController{
                 bidtenderVO.setTenderWeight(tender.getWeight());
                 bidtenderVO.setTenderUnitOfWeight(tender.getUnitOfWeight());
                 bidtenderVO.setEnhance(tender.getEnhance());
+                bidtenderVO.setMaterial(tender.getMaterial());
                 bidtenderVO.setTenderStatus(tender.getStatus());
                 bidtenderVO.setDueDate(tender.getDueDate());
                 bidtenderVO.setCount(tender.getCount());

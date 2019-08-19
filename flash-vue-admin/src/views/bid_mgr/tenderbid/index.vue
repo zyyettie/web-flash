@@ -67,6 +67,11 @@
           {{scope.row.enhance}}
         </template>
       </el-table-column>
+      <el-table-column label="MATERIAL">
+        <template slot-scope="scope">
+          {{scope.row.material}}
+        </template>
+      </el-table-column>
       <el-table-column label="ORDER STATE">
         <template slot-scope="scope">
           {{scope.row.status}}
@@ -153,6 +158,11 @@
           <el-col :span="12">
             <el-form-item label="ENHANCE" prop="enhance">
               <el-input v-model="bidForm.enhance" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="MATERIAL" prop="material">
+              <el-input v-model="bidForm.material" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">

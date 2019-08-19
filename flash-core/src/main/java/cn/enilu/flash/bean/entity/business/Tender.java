@@ -37,11 +37,13 @@ public class Tender extends BaseEntity {
     @Column
     private Integer quantity;
     @Column
-    private Integer weight;
+    private Float weight;
     @Column
     private String unitOfWeight;
     @Column
     private String enhance;
+    @Column
+    private String material;
     @Column
     private String status;
     @Column

@@ -64,6 +64,11 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
+            <el-form-item label="MATERIAL" prop="material">
+              <el-input v-model="bidForm.material" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="ORDER STATUS" prop="status">
               <el-input v-model="bidForm.status" :disabled="true"></el-input>
             </el-form-item>

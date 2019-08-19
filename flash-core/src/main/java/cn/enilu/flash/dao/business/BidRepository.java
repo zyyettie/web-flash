@@ -13,6 +13,8 @@ public interface BidRepository extends PagingAndSortingRepository<Bid, Long> {
 
     Bid findBidByNo(String no);
 
+//    Bid findById(Long id);
+
     List<Bid> findBidsByCreateBy(Long userId);
 
     @Transactional
@@ -44,4 +46,9 @@ public interface BidRepository extends PagingAndSortingRepository<Bid, Long> {
     @Modifying
     @Query(nativeQuery = true, value = "update t_biz_bid set is_approved = -1 where id=?1")
     void deny(Long id);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "update t_biz_bid set quantity=?2, price=?3 where id=?1")
+    void updateQuantityAndPrice(Long id, Integer quantity, Integer price);
 }

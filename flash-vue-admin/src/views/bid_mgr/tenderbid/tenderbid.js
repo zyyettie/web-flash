@@ -1,6 +1,6 @@
 import { delTenderBid, saveTenderBid } from '@/api/business/tenderbid'
 import { getTenderList } from '@/api/business/tender'
-import { saveBid, getBidList } from '@/api/business/bid'
+import { getBidList } from '@/api/business/bid'
 
 export default {
   data() {
@@ -21,6 +21,7 @@ export default {
         weight: '',
         unitOfWeight: '',
         enhance: '',
+        material: '',
         status: '',
         dueDate: '',
         count: '',

@@ -16,6 +16,7 @@ export default {
         weight: '',
         unitOfWeight: '',
         enhance: '',
+        material: '',
         dueDate: '',
         note: '',
         stoneUseFor: ''
@@ -73,7 +74,8 @@ export default {
         { value: 'PS', label: 'PS' },
         { value: 'RD', label: 'RD' },
         { value: 'SQ/PC', label: 'SQ/PC' },
-        { value: 'TR', label: 'TR' }],
+        { value: 'TR', label: 'TR' },
+        { value: 'SQ', label: 'SQ' }],
       clarityOptions: [
         { value: 'Loup Clean', label: 'Loup Clean' },
         { value: 'Eye Clean', label: 'Eye Clean' },
@@ -88,6 +90,11 @@ export default {
         { value: 'Heat', label: 'Heat' },
         { value: 'Unheat', label: 'Unheat' },
         { value: 'Diffusion', label: 'Diffusion' }
+      ],
+      materialOptions: [
+        { value: 'Rough stones', label: 'Rough stones' },
+        { value: 'Preform', label: 'Preform' },
+        { value: 'Cut stones', label: 'Cut stones' }
       ]
     }
   },
@@ -127,6 +134,9 @@ export default {
         ],
         enhance: [
           { required: true, message: 'ENHANCE' + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
+        material: [
+          { required: true, message: 'MATERIAL' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         dueDate: [
           { required: true, message: 'DUEDATE' + this.$t('common.isRequired'), trigger: 'blur' }
@@ -222,6 +232,7 @@ export default {
             weight: this.form.weight,
             unitOfWeight: this.form.unitOfWeight,
             enhance: this.form.enhance,
+            material: this.form.material,
             dueDate: this.form.dueDate,
             note: this.form.note,
             stoneUseFor: this.form.stoneUseFor
@@ -291,6 +302,7 @@ export default {
           weight: rowData.weight,
           unitOfWeight: rowData.unitOfWeight,
           enhance: rowData.enhance,
+          material: rowData.material,
           dueDate: rowData.dueDate,
           status: rowData.status
         }

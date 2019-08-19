@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BidService {
@@ -65,5 +66,17 @@ public class BidService {
 
     public void deny(Long id){
         bidRepository.deny(id);
+    }
+
+    public void updateQuantityAndPrice(Long id, Integer quantity, Integer price){
+        bidRepository.updateQuantityAndPrice(id, quantity, price);
+    }
+
+    public Bid get(Long id){
+        Optional<Bid> optional = bidRepository.findById(id);
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+        return null;
     }
 }

@@ -157,11 +157,9 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           saveBid({
-            no: this.form.no,
-            name: this.form.name,
-            email: this.form.email,
-            telephone: this.form.telephone,
-            isDelete: this.form.isDelete
+            id: this.form.bidId,
+            quantity: this.form.quantity,
+            price: this.form.price
           }).then(response => {
             this.$message({
               message: this.$t('common.optionSuccess'),
@@ -194,7 +192,7 @@ export default {
       }
     },
     editBid(row) {
-      this.form.tenderId = row.id
+      this.form.bidId = row.bidId
       this.form = row
       this.formVisible = true
     },

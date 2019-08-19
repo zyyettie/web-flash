@@ -78,6 +78,11 @@
           {{scope.row.enhance}}
         </template>
       </el-table-column>
+      <el-table-column label="MATERIAL">
+        <template slot-scope="scope">
+          {{scope.row.material}}
+        </template>
+      </el-table-column>
       <el-table-column label="QUANTITY">
         <template slot-scope="scope">
           {{scope.row.quantity}}
@@ -130,11 +135,6 @@
           {{scope.row.bidStatus}}
         </template>
       </el-table-column>
-      <!--el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-button type="button" @click="editBid(scope.row)">{{$t('button.edit')}}</el-button>
-        </template>
-      </el-table-column-->
       <el-table-column label="EDIT">
         <template slot-scope="scope">
           <div v-if="scope.row.isApproved === 0">
@@ -217,6 +217,11 @@
           <el-col :span="12">
             <el-form-item label="ENHANCE" prop="enhance">
               <el-input v-model="form.enhance" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="MATERIAL" prop="material">
+              <el-input v-model="form.material" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">

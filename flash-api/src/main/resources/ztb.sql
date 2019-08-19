@@ -4,7 +4,7 @@ Navicat MySQL Data Transfer
 Source Server         : localhost
 Source Server Version : 50725
 Source Host           : localhost:3306
-Source Database       : guns-lite
+Source Database       : ztb
 
 Target Server Type    : MYSQL
 Target Server Version : 50725
@@ -33,9 +33,10 @@ CREATE TABLE `t_biz_tender` (
   `color_note` varchar(255) DEFAULT NULL COMMENT '颜色注释',
   `clarity` varchar(255) DEFAULT NULL COMMENT '净度',
   `quantity` int(20) DEFAULT 0 COMMENT '数量',
-  `weight` int(20) DEFAULT 0 COMMENT '重量',
+  `weight` float(20) DEFAULT 0 COMMENT '重量',
   `unit_of_weight` varchar(255) DEFAULT NULL COMMENT '重量单位',
   `enhance` varchar(255) DEFAULT NULL COMMENT '处理方式',
+  `material` varchar(255) DEFAULT NULL COMMENT '材料',
   `status` varchar(255) DEFAULT NULL COMMENT '发标状态(OPEN,CLOSE)',
   `due_date` datetime DEFAULT NULL COMMENT '到期时间,',
   `count` int(20) DEFAULT 0 COMMENT '已投标数',
@@ -76,7 +77,7 @@ CREATE TABLE `t_biz_bid` (
   `no` varchar(255) DEFAULT NULL COMMENT '投标编号',
   `quantity` int(20) DEFAULT 0 COMMENT '数量',
   `price` int(20) DEFAULT 0 COMMENT '价格',
-  `weight` int(20) DEFAULT 0 COMMENT '重量',
+  `weight` float(20) DEFAULT 0 COMMENT '重量',
   `unit_of_weight` varchar(255) DEFAULT NULL COMMENT '重量单位',
   `contact` varchar(255) DEFAULT NULL COMMENT '投标人',
   `is_approved` int(20) DEFAULT '0' COMMENT '是否中标(0：未中标；1：已中标)',

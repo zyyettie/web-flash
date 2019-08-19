@@ -68,6 +68,11 @@
           {{scope.row.enhance}}
         </template>
       </el-table-column>
+      <el-table-column label="MATERIAL">
+        <template slot-scope="scope">
+          {{scope.row.material}}
+        </template>
+      </el-table-column>
       <el-table-column label="NOTE">
         <template slot-scope="scope">
           {{scope.row.note}}
@@ -194,6 +199,18 @@
               <el-select v-model="form.enhance" placeholder="please select">
                 <el-option
                   v-for="item in enhanceOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="MATERIAL" prop="material">
+              <el-select v-model="form.material" placeholder="please select">
+                <el-option
+                  v-for="item in materialOptions"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">

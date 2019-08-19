@@ -10,7 +10,7 @@ export function getBidList(params) {
 
 export function saveBid(params) {
   return request({
-    url: '/bid',
+    url: '/bid/edit',
     method: 'post',
     params: params
   })

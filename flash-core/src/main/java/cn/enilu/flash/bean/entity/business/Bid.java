@@ -17,11 +17,11 @@ public class Bid extends BaseEntity {
     @Column
     private String no;
     @Column
-    private String quantity;
+    private Integer quantity;
     @Column
     private Integer price;
     @Column
-    private Integer weight;
+    private Float weight;
     @Column
     private String unitOfWeight;
     @Column

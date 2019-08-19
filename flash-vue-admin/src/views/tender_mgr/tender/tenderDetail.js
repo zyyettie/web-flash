@@ -28,6 +28,7 @@ export default {
         weight: '',
         unitOfWeight: '',
         enhance: '',
+        material: '',
         status: '',
         dueDate: '',
         count: '',
@@ -117,6 +118,7 @@ export default {
       this.bidForm.weight = routerParams.weight
       this.bidForm.unitOfWeight = routerParams.unitOfWeight
       this.bidForm.enhance = routerParams.enhance
+      this.bidForm.material = routerParams.material
       this.bidForm.dueDate = routerParams.dueDate
       this.bidForm.status = routerParams.status
     },
@@ -196,7 +198,7 @@ export default {
       approveBid(id).then(response => {
         console.log(response)
         this.$message({
-          message: '批准投标成功',
+          message: 'Bid has been approved successfully',
           type: 'success'
         })
         this.fetchData()
