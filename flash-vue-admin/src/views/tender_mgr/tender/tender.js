@@ -112,7 +112,7 @@ export default {
     rules() {
       return {
         name: [
-          { required: true, message: 'STONE' + this.$t('common.isRequired'), trigger: 'blur' }
+          { required: true, message: 'GEMSTONE' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         shape: [
           { required: true, message: 'SHAPE' + this.$t('common.isRequired'), trigger: 'blur' }
@@ -127,22 +127,22 @@ export default {
           { required: true, message: 'CLARITY' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         quantity: [
-          { required: true, message: 'QUANTITY' + this.$t('common.isRequired'), trigger: 'blur' }
+          { required: true, message: 'PIECES' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         weight: [
           { required: true, message: 'WEIGHT' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         enhance: [
-          { required: true, message: 'ENHANCE' + this.$t('common.isRequired'), trigger: 'blur' }
+          { required: true, message: 'TREATMENT' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         material: [
           { required: true, message: 'MATERIAL' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         dueDate: [
-          { required: true, message: 'DUEDATE' + this.$t('common.isRequired'), trigger: 'blur' }
+          { required: true, message: 'CLOSE DATE' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         stoneUseFor: [
-          { required: true, message: 'STONEUSEFOR' + this.$t('common.isRequired'), trigger: 'blur' }
+          { required: true, message: 'USE FOR' + this.$t('common.isRequired'), trigger: 'blur' }
         ]
       }
     }

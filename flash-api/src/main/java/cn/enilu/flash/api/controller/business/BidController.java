@@ -164,6 +164,7 @@ public class BidController extends BaseController{
                 bidtenderVO.setTenderUnitOfWeight(tender.getUnitOfWeight());
                 bidtenderVO.setEnhance(tender.getEnhance());
                 bidtenderVO.setMaterial(tender.getMaterial());
+                bidtenderVO.setNote(tender.getNote());
                 bidtenderVO.setTenderStatus(tender.getStatus());
                 bidtenderVO.setDueDate(tender.getDueDate());
                 bidtenderVO.setCount(tender.getCount());

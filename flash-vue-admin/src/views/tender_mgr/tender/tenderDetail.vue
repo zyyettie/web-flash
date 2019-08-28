@@ -16,7 +16,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="STONE" prop="name">
+            <el-form-item label="GEMSTONE" prop="name">
               <el-input v-model="bidForm.name" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
@@ -44,7 +44,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="QUANTITY" prop="quantity">
+            <el-form-item label="PIECES" prop="quantity">
               <el-input v-model="bidForm.quantity" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
@@ -59,7 +59,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="ENHANCE" prop="enhance">
+            <el-form-item label="TREATMENT" prop="enhance">
               <el-input v-model="bidForm.enhance" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
@@ -69,12 +69,17 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
+            <el-form-item label="NOTE" prop="note">
+              <el-input v-model="bidForm.note" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="ORDER STATUS" prop="status">
               <el-input v-model="bidForm.status" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="DUE DATE" prop="dueDate">
+            <el-form-item label="CLOSE DATE" prop="dueDate">
               <el-input v-model="bidForm.dueDate" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
@@ -108,7 +113,7 @@
           {{scope.row.weight}}{{scope.row.unitOfWeight}}
         </template>
       </el-table-column>
-      <el-table-column label="QUANTITY">
+      <el-table-column label="PIECES">
         <template slot-scope="scope">
           {{scope.row.quantity}}
         </template>
@@ -153,7 +158,7 @@
           <p v-else>Undecided</p>
         </template>
       </el-table-column>
-      <el-table-column label="PIC">
+      <el-table-column label="ATTACHMENT">
         <template slot-scope="scope">
         <div v-if="scope.row.idFile!=='' && scope.row.idFile!==null && scope.row.idFile!==undefined">
           <el-popover

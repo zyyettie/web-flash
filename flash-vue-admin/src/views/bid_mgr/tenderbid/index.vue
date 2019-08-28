@@ -27,9 +27,14 @@
           {{scope.row.no}}
         </template>
       </el-table-column>
-      <el-table-column label="STONE">
+      <el-table-column label="GEMSTONE">
         <template slot-scope="scope">
           {{scope.row.name}}
+        </template>
+      </el-table-column>
+      <el-table-column label="COLOR">
+        <template slot-scope="scope">
+          <el-tag :color="scope.row.color"></el-tag>{{scope.row.colorNote}}
         </template>
       </el-table-column>
       <el-table-column label="SHAPE">
@@ -42,17 +47,7 @@
           {{scope.row.size}}
         </template>
       </el-table-column>
-      <el-table-column label="COLOR">
-        <template slot-scope="scope">
-          <el-tag :color="scope.row.color"></el-tag>{{scope.row.colorNote}}
-        </template>
-      </el-table-column>
-      <el-table-column label="CLARITY">
-        <template slot-scope="scope">
-          {{scope.row.clarity}}
-        </template>
-      </el-table-column>
-      <el-table-column label="QUANTITY">
+      <el-table-column label="PIECES">
         <template slot-scope="scope">
           {{scope.row.quantity}}
         </template>
@@ -62,7 +57,12 @@
           {{scope.row.weight}}{{scope.row.unitOfWeight}}
         </template>
       </el-table-column>
-      <el-table-column label="ENHANCE">
+      <el-table-column label="CLARITY">
+        <template slot-scope="scope">
+          {{scope.row.clarity}}
+        </template>
+      </el-table-column>
+      <el-table-column label="TREATMENT">
         <template slot-scope="scope">
           {{scope.row.enhance}}
         </template>
@@ -72,14 +72,19 @@
           {{scope.row.material}}
         </template>
       </el-table-column>
+      <el-table-column label="NOTE">
+        <template slot-scope="scope">
+          {{scope.row.note}}
+        </template>
+      </el-table-column>
+      <el-table-column label="CLOSE DATE">
+        <template slot-scope="scope">
+          {{scope.row.dueDate}}
+        </template>
+      </el-table-column>
       <el-table-column label="ORDER STATE">
         <template slot-scope="scope">
           {{scope.row.status}}
-        </template>
-      </el-table-column>
-      <el-table-column label="DUE DATE">
-        <template slot-scope="scope">
-          {{scope.row.dueDate}}
         </template>
       </el-table-column>
       <el-table-column label="EDIT" >
@@ -107,14 +112,22 @@
       width="70%">
       <el-form ref="bidForm" :model="bidForm" :rules="rules" label-width="80px">
         <el-row>
-          <el-col :span="12">
+          <el-col :span="24">
             <el-form-item label="ORDER REF.NO." prop="no">
               <el-input v-model="bidForm.no" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="STONE" prop="name">
+            <el-form-item label="GEMSTONE" prop="name">
               <el-input v-model="bidForm.name" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="COLOR" prop="color">
+              <el-tag :color="bidForm.color"></el-tag>
+              <el-col :span="9">
+              <el-input v-model="bidForm.colorNote" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -128,20 +141,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="COLOR" prop="color">
-              <el-tag :color="bidForm.color"></el-tag>
-              <el-col :span="9">
-              <el-input v-model="bidForm.colorNote" :disabled="true"></el-input>
-              </el-col>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="CLARITY" prop="clarity">
-              <el-input v-model="bidForm.clarity" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="QUANTITY" prop="quantity">
+            <el-form-item label="PIECES" prop="quantity">
               <el-input v-model="bidForm.quantity" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
@@ -156,7 +156,12 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="ENHANCE" prop="enhance">
+            <el-form-item label="CLARITY" prop="clarity">
+              <el-input v-model="bidForm.clarity" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="TREATMENT" prop="enhance">
               <el-input v-model="bidForm.enhance" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
@@ -166,12 +171,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="ORDER STATE" prop="status">
-              <el-input v-model="bidForm.status" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="DUE DATE" prop="dueDate">
+            <el-form-item label="CLOSE DATE" prop="dueDate">
               <el-input v-model="bidForm.dueDate" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
@@ -179,6 +179,11 @@
             <el-form-item label="NOTE" prop="note">
               <el-input v-model="bidForm.note" :disabled="true"></el-input>
             </el-form-item>
+          <el-col :span="12">
+            <el-form-item label="ORDER STATE" prop="status">
+              <el-input v-model="bidForm.status" :disabled="true"></el-input>
+            </el-form-item>
+          </el-col>
           </el-col>
         </el-row>
         <!-- bid信息 -->

@@ -28,9 +28,14 @@
           <el-button type="text" @click.native="viewTender(scope.row)"> {{scope.row.no}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="STONE">
+      <el-table-column label="GEMSTONE">
         <template slot-scope="scope">
           {{scope.row.name}}
+        </template>
+      </el-table-column>
+      <el-table-column label="COLOR">
+        <template slot-scope="scope">
+          <el-tag :color="scope.row.color"></el-tag>{{scope.row.colorNote}}
         </template>
       </el-table-column>
       <el-table-column label="SHAPE">
@@ -43,17 +48,7 @@
           {{scope.row.size}}
         </template>
       </el-table-column>
-      <el-table-column label="COLOR">
-        <template slot-scope="scope">
-          <el-tag :color="scope.row.color"></el-tag>{{scope.row.colorNote}}
-        </template>
-      </el-table-column>
-      <el-table-column label="CLARITY">
-        <template slot-scope="scope">
-          {{scope.row.clarity}}
-        </template>
-      </el-table-column>
-      <el-table-column label="QUANTITY">
+      <el-table-column label="PIECES">
         <template slot-scope="scope">
           {{scope.row.quantity}}
         </template>
@@ -63,7 +58,12 @@
           {{scope.row.weight}}{{scope.row.unitOfWeight}}
         </template>
       </el-table-column>
-      <el-table-column label="ENHANCE">
+      <el-table-column label="CLARITY">
+        <template slot-scope="scope">
+          {{scope.row.clarity}}
+        </template>
+      </el-table-column>
+      <el-table-column label="TREATMENT">
         <template slot-scope="scope">
           {{scope.row.enhance}}
         </template>
@@ -78,24 +78,24 @@
           {{scope.row.note}}
         </template>
       </el-table-column>
+      <el-table-column label="CLOSE DATE">
+        <template slot-scope="scope">
+          {{scope.row.dueDate}}
+        </template>
+      </el-table-column>
+      <el-table-column label="USE FOR">
+        <template slot-scope="scope">
+          {{scope.row.stoneUseFor}}
+        </template>
+      </el-table-column>
       <el-table-column label="ORDER STATE">
         <template slot-scope="scope">
           {{scope.row.status}}
         </template>
       </el-table-column>
-      <el-table-column label="DUE DATE">
-        <template slot-scope="scope">
-          {{scope.row.dueDate}}
-        </template>
-      </el-table-column>
       <el-table-column label="BID">
         <template slot-scope="scope">
           {{scope.row.count}}
-        </template>
-      </el-table-column>
-      <el-table-column label="STONE USE FOR">
-        <template slot-scope="scope">
-          {{scope.row.stoneUseFor}}
         </template>
       </el-table-column>
     </el-table>
@@ -119,7 +119,7 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="STONE" prop="name">
+            <el-form-item label="GEMSTONE" prop="name">
               <el-select v-model="form.name" placeholder="please select">
                 <el-option
                   v-for="item in nameOptions"
@@ -128,6 +128,14 @@
                   :value="item.value">
                 </el-option>
               </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="COLOR" prop="color">
+              <el-color-picker v-model="form.color"></el-color-picker>
+              <el-col :span="9">
+              <el-input v-model="form.colorNote"  minlength=1></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -150,11 +158,25 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="COLOR" prop="color">
-              <el-color-picker v-model="form.color"></el-color-picker>
+            <el-form-item label="PIECES" prop="quantity">
               <el-col :span="9">
-              <el-input v-model="form.colorNote"  minlength=1></el-input>
+              <el-input v-model="form.quantity"></el-input>
               </el-col>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="WEIGHT" prop="weight">
+              <el-col :span="9">
+              <el-input v-model="form.weight"></el-input>
+              </el-col>
+              <el-select v-model="form.unitOfWeight" placeholder="please select">
+                <el-option
+                  v-for="item in unitOfWeightOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -170,32 +192,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="QUANTITY" prop="quantity">
-              <el-col :span="9">
-              <el-input v-model="form.quantity"></el-input>
-              </el-col>
-              <el-col :span="9">
-                <el-form-item label="Pieces"/>
-              </el-col>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="WEIGHT" prop="weight">
-              <el-col :span="6">
-              <el-input v-model="form.weight"></el-input>
-              </el-col>
-              <el-select v-model="form.unitOfWeight" placeholder="please select">
-                <el-option
-                  v-for="item in unitOfWeightOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="ENHANCE" prop="enhance">
+            <el-form-item label="TREATMENT" prop="enhance">
               <el-select v-model="form.enhance" placeholder="please select">
                 <el-option
                   v-for="item in enhanceOptions"
@@ -219,22 +216,22 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="DUEDATE">
-              <el-col :span="9">
-              <el-date-picker type="date" placeholder="DUE DATE" v-model="form.dueDate" style="width: 100%;">
-              </el-date-picker>
-              </el-col>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
             <el-form-item label="NOTE" prop="note">
               <el-col :span="9">
               <el-input v-model="form.note"  minlength=1></el-input>
               </el-col>
             </el-form-item>
           </el-col>
-          <el-col :span="24">
-            <el-form-item label="STONE USE FOR" prop="stoneUseFor">
+          <el-col :span="12">
+            <el-form-item label="CLOSE DATE">
+              <el-col :span="9">
+              <el-date-picker type="date" placeholder="CLOSE DATE" v-model="form.dueDate" style="width: 100%;">
+              </el-date-picker>
+              </el-col>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="USE FOR" prop="stoneUseFor">
               <el-input type="textarea" :rows="2" v-model="form.stoneUseFor"  minlength=1></el-input>
             </el-form-item>
           </el-col>

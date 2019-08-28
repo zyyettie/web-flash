@@ -34,6 +34,7 @@ public class Bidtender {
     private String tenderUnitOfWeight;
     private String enhance;
     private String material;
+    private String note;
     private String tenderStatus;
     private Date dueDate;
     private Integer count;
