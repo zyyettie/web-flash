@@ -38,7 +38,7 @@ public enum BizExceptionEnum implements ServiceExceptionEnum {
 	/**
 	 * 账户问题
 	 */
-	USER_ALREADY_REG(401,"该用户已经注册"),
+	USER_ALREADY_REG(401,"The user has already registered"),
 	NO_THIS_USER(400,"没有此用户"),
 	USER_NOT_EXISTED(400, "没有此用户"),
 	ACCOUNT_FREEZED(401, "账号被冻结"),
@@ -51,10 +51,10 @@ public enum BizExceptionEnum implements ServiceExceptionEnum {
 	MENU_PCODE_COINCIDENCE(400,"菜单编号和副编号不能一致"),
 	EXISTED_THE_MENU(400,"菜单编号重复，不能添加"),
 	DICT_MUST_BE_NUMBER(400,"字典的值必须为数字"),
-	REQUEST_NULL(400, "请求有错误"),
+	REQUEST_NULL(400, "This is a bad request, please try proper way"),
 	BID_HAS_BEEN_APPROVED_ERROR(400, "This bid has been approved, EDIT is forbidden"),
-	SESSION_TIMEOUT(400, "会话超时"),
-	SERVER_ERROR(500, "服务器异常");
+	SESSION_TIMEOUT(400, "The session has timed out, please re-login"),
+	SERVER_ERROR(500, "There is server internal error on this request, please contact your administrator");
 
 	BizExceptionEnum(int code, String message) {
 		this.code = code;

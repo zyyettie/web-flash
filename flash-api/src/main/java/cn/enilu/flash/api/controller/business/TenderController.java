@@ -1,14 +1,15 @@
 package cn.enilu.flash.api.controller.business;
 
 import cn.enilu.flash.api.controller.BaseController;
+import cn.enilu.flash.api.mail.MailService;
 import cn.enilu.flash.bean.core.BussinessLog;
 import cn.enilu.flash.bean.dictmap.TenderDict;
-import cn.enilu.flash.bean.entity.business.Bid;
 import cn.enilu.flash.bean.entity.business.Tender;
 import cn.enilu.flash.bean.enumeration.BizExceptionEnum;
 import cn.enilu.flash.bean.exception.GunsException;
 import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.service.business.TenderService;
+import cn.enilu.flash.service.system.UserService;
 import cn.enilu.flash.utils.ToolUtil;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
@@ -16,9 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +28,10 @@ public class TenderController extends BaseController {
     private Logger logger = LoggerFactory.getLogger(TenderController.class);
     @Autowired
     private TenderService tenderService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private MailService mailService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Object List() {
@@ -52,6 +55,11 @@ public class TenderController extends BaseController {
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
         }
         tenderService.save(tender);
+        //群发邮件
+        List<String> emailList = userService.getAllVendorEmail();
+        for(String to : emailList){
+            mailService.sendSimpleMail(to,"A new tender <"+ no +"> has been published","Please login to Bid Management System to check");
+        }
         return Rets.success();
     }
     @RequestMapping(method = RequestMethod.DELETE)

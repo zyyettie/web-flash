@@ -104,4 +104,21 @@ public class UserService {
         }
         return null;
     }
+
+    public List<String> getAllVendorEmail() {
+        List<String> emailList = userRepository.getAllVendorEmail();
+        return emailList;
+    }
+    public String getEmailByTenderId(Long tenderId) {
+        String email = userRepository.getEmailByTenderId(tenderId);
+        return email;
+    }
+    public String getVendorEmailByBidId(Long bidId) {
+        String email = userRepository.getVendorEmailByBidId(bidId);
+        return email;
+    }
+    public String getTenderAdminEmailByBidId(Long bidId) {
+        String email = userRepository.getTenderAdminEmailByBidId(bidId);
+        return email;
+    }
 }

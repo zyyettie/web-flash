@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * ApiApplication
@@ -22,6 +23,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan(basePackages="cn.enilu.flash.bean.entity")
 @EnableJpaRepositories(basePackages= "cn.enilu.flash.dao")
 @EnableJpaAuditing
+@EnableAsync
 public class ApiApplication extends SpringBootServletInitializer {
 
     @Override

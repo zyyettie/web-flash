@@ -141,6 +141,7 @@ public class UserController extends BaseController {
             user.setDeptid(dept.getId());
             Role role = roleService.findRolebyName("vendor");
             user.setRoleid(role.getId().toString());
+            user.setEmail(user.getAccount());
             user.setStatus(0);
             userRepository.save(UserFactory.createUser(user, new User()));
         }else{

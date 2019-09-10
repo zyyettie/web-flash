@@ -1,6 +1,7 @@
 package cn.enilu.flash.api.controller.business;
 
 import cn.enilu.flash.api.controller.BaseController;
+import cn.enilu.flash.api.mail.MailService;
 import cn.enilu.flash.bean.core.BussinessLog;
 import cn.enilu.flash.bean.dictmap.BidDict;
 import cn.enilu.flash.bean.entity.business.Bid;
@@ -35,6 +36,9 @@ public class BidController extends BaseController{
     private TenderService tenderService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private MailService mailService;
+
 
 //    @RequestMapping(value = "/list", method = RequestMethod.GET)
 //    public Object List(){
@@ -70,6 +74,10 @@ public class BidController extends BaseController{
         newlyCreatedBid.setContact(user.getAccount());
         bidService.save(newlyCreatedBid);
 
+        //发邮件给tenderadmin
+        Long tenderId = bid.getTenderId();
+        String tenderAdminEmail = userService.getEmailByTenderId(tenderId);
+        mailService.sendSimpleMail(tenderAdminEmail,"A new bid <"+ bidNo +"> has been created","Please login to Bid Management System to check");
         return Rets.success();
     }
 
@@ -178,6 +186,7 @@ public class BidController extends BaseController{
     @BussinessLog(value = "移到下一步状态", key = "name", dict = BidDict.class)
     public Object moveToNextStatus(@PathVariable Long id){
         bidService.moveToNextStatus(id);
+        sendEmail(id);
         return Rets.success();
     }
 
@@ -185,6 +194,7 @@ public class BidController extends BaseController{
     @BussinessLog(value = "移到供应商发货状态", key = "name", dict = BidDict.class)
     public Object moveToNextStatusWithDeliverInfo(@ModelAttribute Bid bid){
         bidService.moveToNextStatusWithDeliverInfo(bid.getId(), bid.getDeliverType(),bid.getDeliverNo());
+        sendEmail(bid.getId());
         return Rets.success();
     }
 
@@ -192,6 +202,7 @@ public class BidController extends BaseController{
     @BussinessLog(value = "移到确认数量价格状态", key = "name", dict = BidDict.class)
     public Object moveToNextStatusWithQuantityPrice(@ModelAttribute Bid bid){
         bidService.moveToNextStatusWithQuantityPrice(bid.getId(), bid.getConfirmedQuantity(),bid.getConfirmedPrice());
+        sendEmail(bid.getId());
         return Rets.success();
     }
 
@@ -199,6 +210,7 @@ public class BidController extends BaseController{
     @BussinessLog(value = "移到完成付款状态", key = "name", dict = BidDict.class)
     public Object moveToNextStatusWithPayment(@ModelAttribute Bid bid){
         bidService.moveToNextStatusWithPayment(bid.getId(), bid.getIdFile());
+        sendEmail(bid.getId());
         return Rets.success();
     }
 
@@ -206,6 +218,7 @@ public class BidController extends BaseController{
     @BussinessLog(value = "接受投标", key = "name", dict = BidDict.class)
     public Object approve(@PathVariable Long id){
         bidService.approve(id);
+        sendEmail(id);
         return Rets.success();
     }
 
@@ -213,6 +226,16 @@ public class BidController extends BaseController{
     @BussinessLog(value = "拒绝投标", key = "name", dict = BidDict.class)
     public Object deny(@PathVariable Long id){
         bidService.deny(id);
+        sendEmail(id);
         return Rets.success();
+    }
+
+    private void sendEmail(Long id) {
+        //发送邮件给tenderadmin
+        String tenderAdminEmail = userService.getTenderAdminEmailByBidId(id);
+        mailService.sendSimpleMail(tenderAdminEmail,"Your tender status has been changed","Please login to Bid Management System to check");
+        //发邮件给vendor
+        String vendorEmail = userService.getVendorEmailByBidId(id);
+        mailService.sendSimpleMail(tenderAdminEmail,"Your bid status has been changed","Please login to Bid Management System to check");
     }
 }
