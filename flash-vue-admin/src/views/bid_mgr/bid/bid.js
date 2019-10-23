@@ -1,6 +1,7 @@
 import { delBid, getBidList, saveBid, moveBidToNextStatus } from '@/api/business/bid'
 import { moveBidToNextStatusWithDeliverInfo } from '@/api/business/bid'
 import { getApiUrl } from '@/utils/utils'
+import { Loading } from 'element-ui'
 
 export default {
   data() {
@@ -154,13 +155,23 @@ export default {
       this.isAdd = true
     },
     save() {
+      // 添加loading页面
+      let loadingInstance
+      const loadingOption = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       this.$refs['form'].validate((valid) => {
         if (valid) {
+          loadingInstance = Loading.service(loadingOption)
           saveBid({
             id: this.form.bidId,
             quantity: this.form.quantity,
             price: this.form.price
           }).then(response => {
+            loadingInstance.close()
             this.$message({
               message: this.$t('common.optionSuccess'),
               type: 'success'
@@ -232,14 +243,24 @@ export default {
     //   })
     // },
     nextStepWithAdditionalInfo(id) {
+      // 添加loading页面
+      let loadingInstance
+      const loadingOption = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       if (this.statusForm.bidStatus === 1) {
         this.$refs['statusForm'].validate((valid) => {
           if (valid) {
+            loadingInstance = Loading.service(loadingOption)
             moveBidToNextStatusWithDeliverInfo({
               id: id,
               deliverType: this.statusForm.deliverType,
               deliverNo: this.statusForm.deliverNo
             }).then(response => {
+              loadingInstance.close()
               this.$message({
                 message: this.$t('common.optionSuccess'),
                 type: 'success'
@@ -252,8 +273,10 @@ export default {
           }
         })
       } else {
+        loadingInstance = Loading.service(this.loadingOption)
         moveBidToNextStatus(id).then(response => {
           console.log(response)
+          loadingInstance.close()
           this.$message({
             message: 'Status modification succeeded',
             type: 'success'
@@ -263,6 +286,5 @@ export default {
         })
       }
     }
-
   }// close methods():
 }

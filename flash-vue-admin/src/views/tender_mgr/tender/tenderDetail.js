@@ -104,6 +104,11 @@ export default {
       this.listQuery.tenderId = this.$route.params.tenderId
       this.fetchData()
     },
+    // tableHeaderFontSize({ row, column, rowIndex, columnIndex }) {
+    //   if (rowIndex === 0) {
+    //     return 'font-weight: 1000;'
+    //   }
+    // },
     getParams() {
       // 取到路由带过来的参数
       var routerParams = this.$route.params
@@ -260,14 +265,24 @@ export default {
     //   })
     // },
     nextStepWithAdditionalInfo(id) {
+      // 添加loading页面
+      let loadingInstance2
+      const loadingOption = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       if (this.statusForm.status === 3) {
         this.$refs['statusForm'].validate((valid) => {
           if (valid) {
+            loadingInstance2 = Loading.service(loadingOption)
             moveBidToNextStatusWithQuantityPrice({
               id: id,
               confirmedQuantity: this.statusForm.confirmedQuantity,
               confirmedPrice: this.statusForm.confirmedPrice
             }).then(response => {
+              loadingInstance2.close()
               this.$message({
                 message: this.$t('common.optionSuccess'),
                 type: 'success'
@@ -282,10 +297,12 @@ export default {
       } else if (this.statusForm.status === 6) {
         this.$refs['statusForm'].validate((valid) => {
           if (valid) {
+            loadingInstance2 = Loading.service(this.loadingOption)
             moveBidToNextStatusWithPayment({
               id: id,
               idFile: this.uploadFileId
             }).then(response => {
+              loadingInstance2.close()
               this.$message({
                 message: this.$t('common.optionSuccess'),
                 type: 'success'
@@ -298,7 +315,9 @@ export default {
           }
         })
       } else {
+        loadingInstance2 = Loading.service(this.loadingOption)
         moveBidToNextStatus(id).then(response => {
+          loadingInstance2.close()
           console.log(response)
           this.$message({
             message: 'Status modification succeeded',

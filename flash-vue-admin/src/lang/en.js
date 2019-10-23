@@ -26,7 +26,7 @@ export default {
     tenderMgr: 'PURCHASE PART',
     supplierMgr: 'Supplier',
     bidMgr: 'ORDER PROCESS',
-    tenderbidMgr: 'SUPPLIER PART'
+    tenderbidMgr: 'ORDER LIST'
   },
   navbar: {
     logOut: 'Log Out',
@@ -57,6 +57,7 @@ export default {
     back: 'Back'
   },
   common: {
+    uploading: 'uploading',
     mustSelectOne: 'Please select the record to operate!',
     deleteConfirm: 'Are you sure delete the record?',
     tooltip: 'Tooltip',
@@ -109,7 +110,7 @@ export default {
     failMsg: 'Register failed, please try again.'
   },
   business: {
-    bid: 'Bid',
+    bid: 'SUPPLY',
     accept: 'Accept',
     deny: 'Deny',
     addTender: 'ORDER INFORMATION',

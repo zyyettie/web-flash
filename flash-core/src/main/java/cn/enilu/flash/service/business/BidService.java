@@ -52,7 +52,7 @@ public class BidService {
         bidRepository.moveToNextStatusWithDeliverInfo(id, deliverType, deliverNo);
     }
 
-    public void moveToNextStatusWithQuantityPrice(Long id, Integer confirmedQuantity, Integer confirmedPrice){
+    public void moveToNextStatusWithQuantityPrice(Long id, Integer confirmedQuantity, Float confirmedPrice){
         bidRepository.moveToNextStatusWithQuantityPrice(id, confirmedQuantity, confirmedPrice);
     }
 
@@ -68,7 +68,7 @@ public class BidService {
         bidRepository.deny(id);
     }
 
-    public void updateQuantityAndPrice(Long id, Integer quantity, Integer price){
+    public void updateQuantityAndPrice(Long id, Integer quantity, Float price){
         bidRepository.updateQuantityAndPrice(id, quantity, price);
     }
 

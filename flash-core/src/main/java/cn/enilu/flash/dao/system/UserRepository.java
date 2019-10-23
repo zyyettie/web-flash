@@ -19,8 +19,8 @@ public interface UserRepository extends JpaRepository<User,Long>,JpaSpecificatio
     @Query(nativeQuery = true, value = "select email from t_sys_user where roleid=5")
     List<String> getAllVendorEmail();
 
-    @Query(nativeQuery = true, value = "select email from t_sys_user where id = (select create_by from t_biz_tender where tender_id=?1)")
-    String getEmailByTenderId(Long tenderId);
+    @Query(nativeQuery = true, value = "select email from t_sys_user where id = (select create_by from t_biz_tender where id=?1)")
+    String getEmailByTenderId(Long id);
 
     @Query(nativeQuery = true, value = "select email from t_sys_user where id = (select create_by from t_biz_bid where id=?1)")
     String getVendorEmailByBidId(Long id);

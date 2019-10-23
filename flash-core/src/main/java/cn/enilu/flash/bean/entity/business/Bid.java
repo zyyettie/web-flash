@@ -19,7 +19,7 @@ public class Bid extends BaseEntity {
     @Column
     private Integer quantity;
     @Column
-    private Integer price;
+    private Float price;
     @Column
     private Float weight;
     @Column
@@ -37,7 +37,7 @@ public class Bid extends BaseEntity {
     @Column
     private Integer confirmedQuantity;
     @Column
-    private Integer confirmedPrice;
+    private Float confirmedPrice;
     @Column
     private Long idFile;
     @Column

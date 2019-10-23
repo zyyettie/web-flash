@@ -17,6 +17,11 @@
     <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
               @current-change="handleCurrentChange">
 
+      <el-table-column label="EDIT" >
+        <template slot-scope="scope">
+          <el-button type="button" @click="addBid(scope.row)" :disabled="isBidAlready(scope.row)">{{$t('business.bid')}}</el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="发标ID" v-if="false">
         <template slot-scope="scope">
           {{scope.row.id}}
@@ -87,11 +92,6 @@
           {{scope.row.status}}
         </template>
       </el-table-column>
-      <el-table-column label="EDIT" >
-        <template slot-scope="scope">
-          <el-button type="button" @click="addBid(scope.row)" :disabled="isBidAlready(scope.row)">{{$t('business.bid')}}</el-button>
-        </template>
-      </el-table-column>
     </el-table>
 
     <el-pagination
@@ -111,6 +111,7 @@
       :visible.sync="bidFormVisible"
       width="70%">
       <el-form ref="bidForm" :model="bidForm" :rules="rules" label-width="80px">
+        <!-- tender信息 -->
         <el-row>
           <el-col :span="24">
             <el-form-item label="ORDER REF.NO." prop="no">
@@ -196,10 +197,10 @@
           <el-col :span="12">
             <el-form-item label="SUPPLIER SUPPLY WEIGHT" prop="weight">
               <el-col :span="12">
-              <el-input v-model="bidForm.weight" :disabled="true"></el-input>
+              <el-input v-model="bidForm.weight"></el-input>
               </el-col>
               <el-col :span="12">
-              <el-input v-model="bidForm.unitOfWeight" :disabled="true"></el-input>
+              <el-input v-model="bidForm.unitOfWeight"></el-input>
               </el-col>
             </el-form-item>
           </el-col>

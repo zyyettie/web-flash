@@ -98,6 +98,22 @@
     <!-- 投标列表 -->
     <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
               @current-change="handleCurrentChange">
+      <el-table-column label="EDIT">
+        <template slot-scope="scope">
+          <div v-if="scope.row.isApproved === 0">
+          <el-button type="button" @click="approve(scope.row.id)">{{$t('business.accept')}}</el-button>
+          <el-button type="button" @click="deny(scope.row.id)">{{$t('business.deny')}}</el-button>
+          </div>
+          <div v-else>
+            <div v-if="scope.row.status === 2 || scope.row.status === 3 || scope.row.status === 5 || scope.row.status === 6">
+              <el-button type="button" @click="changeStatus(scope.row)">{{$t('business.nextStep')}}</el-button>
+            </div>
+            <div v-else>
+              <el-button type="button" :disabled="true">{{$t('business.nextStep')}}</el-button>
+            </div>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column label="BID REF.NO." v-if=false>
         <template slot-scope="scope">
           {{scope.row.id}}
@@ -176,22 +192,7 @@
           {{scope.row.status}}
         </template>
       </el-table-column>
-      <el-table-column label="EDIT">
-        <template slot-scope="scope">
-          <div v-if="scope.row.isApproved === 0">
-          <el-button type="button" @click="approve(scope.row.id)">{{$t('business.accept')}}</el-button>
-          <el-button type="button" @click="deny(scope.row.id)">{{$t('business.deny')}}</el-button>
-          </div>
-          <div v-else>
-            <div v-if="scope.row.status === 2 || scope.row.status === 3 || scope.row.status === 5 || scope.row.status === 6">
-              <el-button type="button" @click="changeStatus(scope.row)">{{$t('UPDATE STATE')}}</el-button>
-            </div>
-            <div v-else>
-              <el-button type="button" :disabled="true">{{$t('UPDATE STATE')}}</el-button>
-            </div>
-          </div>
-        </template>
-      </el-table-column>
+
     </el-table>
 
     <el-pagination
@@ -233,16 +234,16 @@
         <br>
         <el-row>
         <el-table
-        :data="statusData" style="width: 50%">
+        :data="statusData" style="width: 65%">
         <el-table-column
           prop="host"
           label="PURCHASE"
-          width="300">
+          width="400">
         </el-table-column>
         <el-table-column
           prop="vendor"
           label="SUPPLIER"
-          width="300">
+          width="400">
         </el-table-column>
         </el-table>
         </el-row>
@@ -268,7 +269,7 @@
               <el-upload
                 class="upload-demo"
                 drag
-                multiple=false
+                :multiple=false
                 :action="uploadUrl"
                 :headers="uploadHeaders"
                 :before-upload="handleBeforeUpload"

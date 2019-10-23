@@ -10,7 +10,7 @@ public class Bidtender {
     private Long bidId;
     private String no;
     private int quantity;
-    private int price;
+    private Float price;
     private Float weight;
     private String unitOfWeight;
     private int isApproved;
@@ -18,7 +18,7 @@ public class Bidtender {
     private int deliverType;
     private String deliverNo;
     private int confirmedQuantity;
-    private int confirmedPrice;
+    private Float confirmedPrice;
     private Long tenderId;
 
     //tender info

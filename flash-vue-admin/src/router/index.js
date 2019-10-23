@@ -230,16 +230,16 @@ export const asyncRouterMap = [
     },
     children: [
       {
-        path: 'bid',
-        name: 'Bid',
-        component: () => import('@/views/bid_mgr/bid/index'),
-        meta: { title: 'bidMgr' }
-      },
-      {
         path: 'tenderbid',
         name: 'TenderBid',
         component: () => import('@/views/bid_mgr/tenderbid/index'),
         meta: { title: 'tenderbidMgr' }
+      },
+      {
+        path: 'bid',
+        name: 'Bid',
+        component: () => import('@/views/bid_mgr/bid/index'),
+        meta: { title: 'bidMgr' }
       }
     ]
   },

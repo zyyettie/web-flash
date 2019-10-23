@@ -1,4 +1,5 @@
 import { delTender, getTenderList, saveTender } from '@/api/business/tender'
+import { Loading } from 'element-ui'
 
 export default {
   data() {
@@ -219,8 +220,17 @@ export default {
       this.isAdd = true
     },
     save() {
+      // 添加loading页面
+      let loadingInstance
+      const loadingOption = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       this.$refs['form'].validate((valid) => {
         if (valid) {
+          loadingInstance = Loading.service(loadingOption)
           saveTender({
             name: this.form.name,
             shape: this.form.shape,
@@ -237,6 +247,7 @@ export default {
             note: this.form.note,
             stoneUseFor: this.form.stoneUseFor
           }).then(response => {
+            loadingInstance.close()
             this.$message({
               message: this.$t('common.optionSuccess'),
               type: 'success'

@@ -15,6 +15,12 @@
 	<!-- 向文件输出日志 -->
 	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- dev日志目录
+			<fileNamePattern>/data/web-flash/runtime/log/api_%d{yyyy-MM-dd}.log</fileNamePattern>
+			-->
+			<!-- prod日志目录
+			<fileNamePattern>${catalina.base}/logs/api_%d{yyyy-MM-dd}.log</fileNamePattern>
+			-->
 			<fileNamePattern>/data/web-flash/runtime/log/api_%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>1000</maxHistory>
 		</rollingPolicy>

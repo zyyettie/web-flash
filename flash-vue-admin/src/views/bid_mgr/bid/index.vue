@@ -33,6 +33,21 @@
     <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
               @current-change="handleCurrentChange">
 
+      <el-table-column label="EDIT">
+        <template slot-scope="scope">
+          <div v-if="scope.row.isApproved === 0">
+            <el-button type="button" @click="editBid(scope.row)">EDIT</el-button>
+          </div>
+          <div v-else>
+            <div v-if="scope.row.bidStatus === 1 || scope.row.bidStatus === 4">
+              <el-button type="button" @click="changeVendorStatus(scope.row)">{{$t('business.nextStep')}}</el-button>
+            </div>
+            <div v-else>
+              <el-button type="button" :disabled="true">{{$t('business.nextStep')}}</el-button>
+            </div>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column label="投标id" v-if="false">
         <template slot-scope="scope">
           {{scope.row.bidId}}
@@ -138,21 +153,6 @@
       <el-table-column label="BID STATE">
         <template slot-scope="scope">
           {{scope.row.bidStatus}}
-        </template>
-      </el-table-column>
-      <el-table-column label="EDIT">
-        <template slot-scope="scope">
-          <div v-if="scope.row.isApproved === 0">
-            <el-button type="button" @click="editBid(scope.row)">EDIT</el-button>
-          </div>
-          <div v-else>
-            <div v-if="scope.row.bidStatus === 1 || scope.row.bidStatus === 4">
-              <el-button type="button" @click="changeVendorStatus(scope.row)">{{$t('business.nextStep')}}</el-button>
-            </div>
-            <div v-else>
-              <el-button type="button" :disabled="true">{{$t('business.nextStep')}}</el-button>
-            </div>
-          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -302,16 +302,16 @@
         <br>
         <el-row>
         <el-table
-        :data="statusData" style="width: 50%">
+        :data="statusData" style="width: 65%">
         <el-table-column
           prop="host"
           label="PURCHASE"
-          width="300">
+          width="400">
         </el-table-column>
         <el-table-column
           prop="vendor"
           label="SUPPLIER"
-          width="300">
+          width="400">
         </el-table-column>
         </el-table>
         </el-row>
@@ -321,7 +321,7 @@
           <div v-if="statusForm.bidStatus === 1">
           <el-col :span="12">
             <el-form-item label="DELIVER TYPE" prop="deliverType">
-              <el-select v-model="statusForm.deliverType" placeholder="please select">
+              <el-select v-model="statusForm.deliverType" placeholder="please select" >
                 <el-option
                   v-for="item in deliverTypeOptions"
                   :key="item.value"
@@ -332,7 +332,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="DELIVER NO." prop="deliverNo">
+            <el-form-item label="DELIVER NO." prop="deliverNo" >
               <el-input v-model="statusForm.deliverNo" ></el-input>
             </el-form-item>
           </el-col>

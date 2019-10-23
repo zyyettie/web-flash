@@ -1,6 +1,7 @@
 import { delTenderBid, saveTenderBid } from '@/api/business/tenderbid'
 import { getTenderList } from '@/api/business/tender'
 import { getBidList } from '@/api/business/bid'
+import { Loading } from 'element-ui'
 
 export default {
   data() {
@@ -128,8 +129,17 @@ export default {
       this.isAdd = true
     },
     save() {
+      // 添加loading页面
+      let loadingInstance
+      const loadingOption = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       this.$refs['bidForm'].validate((valid) => {
         if (valid) {
+          loadingInstance = Loading.service(loadingOption)
           saveTenderBid({
             quantity: this.bidForm.bidQuantity,
             weight: this.bidForm.weight,
@@ -137,6 +147,7 @@ export default {
             price: this.bidForm.bidPrice,
             tenderId: this.bidForm.id
           }).then(response => {
+            loadingInstance.close()
             this.$message({
               message: this.$t('common.optionSuccess'),
               type: 'success'
