@@ -194,7 +194,7 @@ public class BidController extends BaseController{
         Bid bid = bidService.get(id);
         String bidNo = bid.getNo();
         //发送step3 邮件
-        String subject = "Confirmation of receiving shipment";
+        String subject = "Confirmation Received Shipment";
         String templateName = "step3";
         Context context = new Context();
         Date date = new Date();
@@ -223,10 +223,10 @@ public class BidController extends BaseController{
         //准备邮件信息
         Long bidId =bid.getId();
         Bid realBid = bidService.get(bidId);
-        Tender tender = tenderService.get(bidId);
+        Tender tender = tenderService.get(realBid.getTenderId());
 //        String bidNo = realBid.getNo();
         //发送step4 邮件
-        String subject = "Confirmation of Order Items";
+        String subject = "Confirmation Order Items";
         String templateName = "step4";
         Context context = new Context();
         context.setVariable("name",tender.getName());
@@ -258,7 +258,7 @@ public class BidController extends BaseController{
         Bid realBid = bidService.get(bidId);
 
         //发送step6 邮件
-        String subject = "Confirmation of Order Items";
+        String subject = "Payment Notification";
         String templateName = "step6";
         Context context = new Context();
         context.setVariable("invoiceNo",realBid.getInvoiceNo());

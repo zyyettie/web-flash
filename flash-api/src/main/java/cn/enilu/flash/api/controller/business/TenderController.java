@@ -57,7 +57,7 @@ public class TenderController extends BaseController {
         }
         tenderService.save(tender);
         //群发邮件 step0
-        String subject = "New order arrive";
+        String subject = "New Order";
         String templateName = "step0";
         Context context = new Context();
         context.setVariable("name",tender.getName());
