@@ -34,7 +34,7 @@ public class MailServiceImpl implements MailService {
     /**
      * 邮件模板路径
      */
-    private static final String TEMPLATE_PATH = "mail/";
+    private static final String TEMPLATE_PATH = "email/";
 
     @Value("${spring.mail.username}")
     private String from;
@@ -91,7 +91,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     @Async
-    public void sendTemplateMail(String to, String subject, String templateName) {
+    public void sendTemplateMail(String to, String subject, String templateName, Context context) {
         log.info("{} sendTemplateMail to {}, subject : {}, templateName : {}", from, to, subject, templateName);
 
         MimeMessage message = javaMailSender.createMimeMessage();
@@ -104,10 +104,10 @@ public class MailServiceImpl implements MailService {
 //            ClassPathResource backgroundImage = new ClassPathResource(IMAGE_PATH + "peachblossom.jpg");
 //            helper.addInline("backgroundImage", backgroundImage);
 
-            Context context = new Context();
-            context.setVariable("receiver", to);
+//            Context context = new Context();
+//            context.setVariable("receiver", to);
             String content = templateEngine.process(TEMPLATE_PATH + templateName, context);
-            helper.setText(content);
+            helper.setText(content,true);
         } catch (MessagingException e) {
             log.warn("sendTemplateMail MessagingException : {}", e.getMessage());
         }

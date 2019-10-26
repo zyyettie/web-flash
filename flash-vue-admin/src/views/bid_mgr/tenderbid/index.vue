@@ -197,15 +197,15 @@
           <el-col :span="12">
             <el-form-item label="SUPPLIER SUPPLY WEIGHT" prop="weight">
               <el-col :span="12">
-              <el-input v-model="bidForm.weight"></el-input>
+              <el-input v-model="bidForm.weight" :disabled="true"></el-input>
               </el-col>
               <el-col :span="12">
-              <el-input v-model="bidForm.unitOfWeight"></el-input>
+              <el-input v-model="bidForm.unitOfWeight" :disabled="true"></el-input>
               </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="PRICE" prop="bidPrice">
+            <el-form-item label="TOTAL PRICE" prop="bidPrice">
               <el-input v-model="bidForm.bidPrice" ></el-input>
             </el-form-item>
           </el-col>

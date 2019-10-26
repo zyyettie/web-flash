@@ -1,5 +1,5 @@
-import { getBidByTenderId, moveBidToNextStatus, approveBid, denyBid } from '@/api/business/bid'
-import { moveBidToNextStatusWithQuantityPrice, moveBidToNextStatusWithPayment } from '@/api/business/bid'
+import { getBidByTenderId, moveBidToNextStatusStep3, approveBid, denyBid } from '@/api/business/bid'
+import { moveBidToNextStatusWithQuantityPrice, moveBidToNextStatusWithInvoice, moveBidToNextStatusWithPayment } from '@/api/business/bid'
 import { getToken } from '@/utils/auth'
 import { Loading } from 'element-ui'
 import { getApiUrl } from '@/utils/utils'
@@ -33,7 +33,10 @@ export default {
         dueDate: '',
         count: '',
         img: '',
-        idFile: ''
+        idFile: '',
+        invoiceImg: '',
+        invoiceNo: '',
+        invoiceIdFile: ''
       },
       listQuery: {
         page: 1,
@@ -47,7 +50,8 @@ export default {
       statusForm: {
         id: '',
         no: '',
-        status: ''
+        status: '',
+        invoiceNo: ''
       },
       statusData: [{
         host: '1. Purchase confirm supplier',
@@ -134,6 +138,7 @@ export default {
         for (var index in this.list) {
           const item = this.list[index]
           item.img = getApiUrl() + '/file/getImgStream?idFile=' + item.idFile
+          item.invoiceImg = getApiUrl() + '/file/getImgStream?idFile=' + item.invoiceIdFile
           console.log(item)
         }
         this.listLoading = false
@@ -294,6 +299,27 @@ export default {
             return false
           }
         })
+      } else if (this.statusForm.status === 5) {
+        this.$refs['statusForm'].validate((valid) => {
+          if (valid) {
+            loadingInstance2 = Loading.service(this.loadingOption)
+            moveBidToNextStatusWithInvoice({
+              id: id,
+              invoiceIdFile: this.uploadFileId,
+              invoiceNo: this.statusForm.invoiceNo
+            }).then(response => {
+              loadingInstance2.close()
+              this.$message({
+                message: this.$t('common.optionSuccess'),
+                type: 'success'
+              })
+              this.fetchData()
+              this.statusFormVisible = false
+            })
+          } else {
+            return false
+          }
+        })
       } else if (this.statusForm.status === 6) {
         this.$refs['statusForm'].validate((valid) => {
           if (valid) {
@@ -316,7 +342,7 @@ export default {
         })
       } else {
         loadingInstance2 = Loading.service(this.loadingOption)
-        moveBidToNextStatus(id).then(response => {
+        moveBidToNextStatusStep3(id).then(response => {
           loadingInstance2.close()
           console.log(response)
           this.$message({

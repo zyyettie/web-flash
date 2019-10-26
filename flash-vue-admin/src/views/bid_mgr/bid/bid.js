@@ -8,7 +8,7 @@ export default {
     return {
       uploadUrl: '',
       formVisible: false,
-      formTitle: this.$t('config.add'),
+      formTitle: this.$t('business.modify'),
       isAdd: true,
       form: {
         quantity: '',

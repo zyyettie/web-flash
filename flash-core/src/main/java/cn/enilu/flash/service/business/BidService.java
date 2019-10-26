@@ -56,6 +56,10 @@ public class BidService {
         bidRepository.moveToNextStatusWithQuantityPrice(id, confirmedQuantity, confirmedPrice);
     }
 
+    public void moveToNextStatusWithInvoice(Long id, Long invoiceIdFile, String invoiceNo){
+        bidRepository.moveToNextStatusWithInvoice(id, invoiceIdFile, invoiceNo);
+    }
+
     public void moveToNextStatusWithPayment(Long id, Long idFile){
         bidRepository.moveToNextStatusWithPayment(id, idFile);
     }

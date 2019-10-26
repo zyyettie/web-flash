@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Notify Supplier</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          th:href="@{https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css}"/>
+</head>
+<style type="text/css">
+    .full-screen {
+        height: fit-content;
+        width: fit-content;
+    }
+
+    .fixed-page {
+        overflow-x: scroll;
+        overflow-y: scroll;
+    }
+
+    .container {
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto
+    }
+
+    .jumbotron {
+        padding: 2rem 1rem;
+        margin-bottom: 2rem;
+        background-color: #e9ecef;
+        border-radius: .3rem
+    }
+
+    .jumbotron-fluid {
+        padding-right: 0;
+        padding-left: 0;
+        border-radius: 0
+    }
+
+</style>
+<body class="fixed-page">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#ffffff"
+       style="font-family:'Microsoft YaHei';">
+    <div class="jumbotron jumbotron-fluid full-screen">
+        <div class="container  full-screen">
+            <h3>Dear Vendor,</h3>
+
+            <p>Many thanks for your order details.
+                This is a confirmation email to verify product(s) <code style="color: #d57e13;"><span th:text="${name}">name</span></code> for order <code style="color: #d57e13;"><span th:text="${bidNo}">bidNo</span></code>.<br>
+                Please send order items to our Bangkok office to the attention of ChinaStone purchase team.<br>
+
+                On delivery, please clearly write the order number on sealed packing bag. Please describe product clearly, or note ‘un-sure' on memo.<br>
+                If any purchase condition is required, please apply to memo - if unnecessary we will consider order as free selection.<br>
+                After delivery, you will receive an immediate confirmation email.
+            </p>
+
+            <span >Thank you<br>
+Purchase team  China Stone Co.,Ltd</span>
+        </div>
+    </div>
+</table>
+</body>
+</html>

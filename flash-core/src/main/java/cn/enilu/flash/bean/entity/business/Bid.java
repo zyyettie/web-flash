@@ -41,5 +41,9 @@ public class Bid extends BaseEntity {
     @Column
     private Long idFile;
     @Column
+    private String invoiceNo;
+    @Column
+    private Long invoiceIdFile;
+    @Column
     private Long tenderId;
 }

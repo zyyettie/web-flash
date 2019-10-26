@@ -87,6 +87,8 @@ CREATE TABLE `t_biz_bid` (
   `confirmed_quantity` int(20) DEFAULT 0 COMMENT '确认购买数量',
   `confirmed_price` float(20) DEFAULT 0 COMMENT '确认购买价格',
   `id_file` bigint(20) DEFAULT NULL COMMENT '付款凭证文件id',
+  `invoice_no` varchar(255) DEFAULT NULL COMMENT '发票号码',
+  `invoice_id_file` bigint(20) DEFAULT NULL COMMENT '发票图片文件id',
   `tender_id` bigint(20) NOT NULL COMMENT '发标ID',
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_tender_id` FOREIGN KEY (`tender_id`) REFERENCES `t_biz_tender` (`id`) ON DELETE RESTRICT ON UPDATE NO ACTION

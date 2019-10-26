@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Notification</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          th:href="@{https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css}"/>
+</head>
+<style type="text/css">
+    .full-screen {
+        height: fit-content;
+        width: fit-content;
+    }
+
+    .fixed-page {
+        overflow-x: scroll;
+        overflow-y: scroll;
+    }
+
+    .container {
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto
+    }
+
+    .jumbotron {
+        padding: 2rem 1rem;
+        margin-bottom: 2rem;
+        background-color: #e9ecef;
+        border-radius: .3rem
+    }
+
+    .jumbotron-fluid {
+        padding-right: 0;
+        padding-left: 0;
+        border-radius: 0
+    }
+
+</style>
+<body class="fixed-page">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#ffffff"
+       style="font-family:'Microsoft YaHei';">
+    <div class="jumbotron jumbotron-fluid full-screen">
+        <div class="container  full-screen">
+            <h3>Dear Vendor,</h3>
+
+            <p>We have received the following order(s):<br>
+                1) name : <code style="color: #d57e13;"><span th:text="${name}">name</span></code><br>
+                2) size :<code style="color: #d57e13;"><span th:text="${size}">size</span></code><br>
+                3) color :<code style="color: #d57e13;"><span th:text="${color}">color</span></code><br>
+                4) clarity : <code style="color: #d57e13;"><span th:text="${clarity}">clarity</span></code><br>
+                5) treatment :<code style="color: #d57e13;"><span th:text="${treatment}">treatment</span></code><br>
+                5) estimate quantity : <code style="color: #d57e13;"><span th:text="${quantity}">quantity</span></code><br>
+                6) price range : <code style="color: #d57e13;"><span th:text="${note}">note</span></code><br>
+                Please use your login ID and password to access your account on our site https://bms.chinastonefind.com<br>
+                On login, please check order details and confirm by clicking on the link.<br>
+                Within 2 working days you will receive a notification email to send your product to us.<br>
+                If no confirmation email is received within the 2 working days framework, it means that the order is closed.
+            </p>
+
+            <span >Thank you in advance,<br>
+Purchase team  China Stone Co.,Ltd</span>
+        </div>
+    </div>
+</table>
+</body>
+</html>

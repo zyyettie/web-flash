@@ -127,12 +127,12 @@ export default {
         clarity: [
           { required: true, message: 'CLARITY' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
-        quantity: [
-          { required: true, message: 'PIECES' + this.$t('common.isRequired'), trigger: 'blur' }
-        ],
-        weight: [
-          { required: true, message: 'WEIGHT' + this.$t('common.isRequired'), trigger: 'blur' }
-        ],
+        // quantity: [
+        //  { required: true, message: 'PIECES' + this.$t('common.isRequired'), trigger: 'blur' }
+        // ],
+        // weight: [
+        //  { required: true, message: 'WEIGHT' + this.$t('common.isRequired'), trigger: 'blur' }
+        // ],
         enhance: [
           { required: true, message: 'TREATMENT' + this.$t('common.isRequired'), trigger: 'blur' }
         ],

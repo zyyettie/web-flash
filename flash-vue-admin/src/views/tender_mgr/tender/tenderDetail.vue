@@ -174,6 +174,19 @@
           <p v-else>Undecided</p>
         </template>
       </el-table-column>
+      <el-table-column label="INVOICE">
+        <template slot-scope="scope">
+        <div v-if="scope.row.invoiceIdFile!=='' && scope.row.invoiceIdFile!==null && scope.row.invoiceIdFile!==undefined">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="scope.row.invoiceImg"/>
+            <img slot="reference" :src="scope.row.invoiceImg" :alt="scope.row.invoiceImg" style="max-height: 80px;max-width: 80px">
+          </el-popover>
+        </div>
+        </template>
+      </el-table-column>
       <el-table-column label="ATTACHMENT">
         <template slot-scope="scope">
         <div v-if="scope.row.idFile!=='' && scope.row.idFile!==null && scope.row.idFile!==undefined">
@@ -259,6 +272,32 @@
           <el-col :span="12">
             <el-form-item label="CONFIRMED PRICE" prop="confirmedPrice">
               <el-input v-model="statusForm.confirmedPrice" ></el-input>
+            </el-form-item>
+          </el-col>
+          </div>
+          <!-- 上传发票-->
+          <div v-else-if="statusForm.status === 5">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="INVOICE NO" prop="invoiceNo">
+                <el-input v-model="statusForm.invoiceNo" ></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-col :span="12">
+            <el-form-item label="INVOICE">
+              <el-upload
+                class="upload-demo"
+                drag
+                :multiple=false
+                :action="uploadUrl"
+                :headers="uploadHeaders"
+                :before-upload="handleBeforeUpload"
+                :on-success="handleUploadSuccess"
+              >
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">Click to upload</div>
+              </el-upload>
             </el-form-item>
           </el-col>
           </div>

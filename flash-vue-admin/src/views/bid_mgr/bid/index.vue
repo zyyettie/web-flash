@@ -211,7 +211,12 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="WEIGHT" prop="weight">
-              <el-input v-model="form.tenderUnit" :disabled="true"></el-input>
+              <el-col :span="12">
+              <el-input v-model="form.weight" :disabled="true"></el-input>
+              </el-col>
+              <el-col :span="12">
+              <el-input v-model="form.unitOfWeight" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -248,7 +253,7 @@
         <!-- bid信息 -->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="SUPPLIER SUPPLY QUANTITY" prop="bidQuantity">
+            <el-form-item label="SUPPLIER SUPPLY QUANTITY" prop="bidQuantity" >
               <el-input v-model="form.quantity" ></el-input>
             </el-form-item>
           </el-col>
@@ -263,7 +268,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="PRICE" prop="bidPrice">
+            <el-form-item label="TOTAL PRICE" prop="bidPrice">
               <el-input v-model="form.price" ></el-input>
             </el-form-item>
           </el-col>

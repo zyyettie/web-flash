@@ -115,6 +115,7 @@ export default {
     deny: 'Deny',
     addTender: 'ORDER INFORMATION',
     statusChange: 'UPDATE STATE',
-    nextStep: 'UPDATE STATE'
+    nextStep: 'UPDATE STATE',
+    modify: 'Modify Order'
   }
 }

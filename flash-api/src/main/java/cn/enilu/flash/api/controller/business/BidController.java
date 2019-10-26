@@ -21,9 +21,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.context.Context;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -182,32 +185,91 @@ public class BidController extends BaseController{
         return Rets.success(list);
     }
 
-    @RequestMapping(value = "/moveToNextStatus/{id}",method = RequestMethod.GET)
-    @BussinessLog(value = "移到下一步状态", key = "name", dict = BidDict.class)
-    public Object moveToNextStatus(@PathVariable Long id){
+    @RequestMapping(value = "/moveToNextStatusStep3/{id}",method = RequestMethod.GET)
+    @BussinessLog(value = "移到下一步状态step3 ", key = "name", dict = BidDict.class)
+    public Object moveToNextStatusStep3(@PathVariable Long id){
         bidService.moveToNextStatus(id);
-        sendEmail(id);
+
+        //准备邮件信息
+        Bid bid = bidService.get(id);
+        String bidNo = bid.getNo();
+        //发送step3 邮件
+        String subject = "Confirmation of receiving shipment";
+        String templateName = "step3";
+        Context context = new Context();
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
+        context.setVariable("receivedDate",dateFormat.format(date));
+        context.setVariable("bidNo",bidNo);
+        String vendorEmail = userService.getVendorEmailByBidId(id);
+        mailService.sendTemplateMail(vendorEmail,subject,templateName,context);
+//        sendEmail(id);
         return Rets.success();
     }
 
     @RequestMapping(value = "/moveToNextStatusWithDeliverInfo",method = RequestMethod.POST)
-    @BussinessLog(value = "移到供应商发货状态", key = "name", dict = BidDict.class)
+    @BussinessLog(value = "移到供应商发货状态step2", key = "name", dict = BidDict.class)
     public Object moveToNextStatusWithDeliverInfo(@ModelAttribute Bid bid){
         bidService.moveToNextStatusWithDeliverInfo(bid.getId(), bid.getDeliverType(),bid.getDeliverNo());
-        sendEmail(bid.getId());
+//        sendEmail(bid.getId());
         return Rets.success();
     }
 
     @RequestMapping(value = "/moveToNextStatusWithQuantityPrice",method = RequestMethod.POST)
-    @BussinessLog(value = "移到确认数量价格状态", key = "name", dict = BidDict.class)
+    @BussinessLog(value = "移到确认数量价格状态step4", key = "name", dict = BidDict.class)
     public Object moveToNextStatusWithQuantityPrice(@ModelAttribute Bid bid){
         bidService.moveToNextStatusWithQuantityPrice(bid.getId(), bid.getConfirmedQuantity(),bid.getConfirmedPrice());
-        sendEmail(bid.getId());
+
+        //准备邮件信息
+        Long bidId =bid.getId();
+        Bid realBid = bidService.get(bidId);
+        Tender tender = tenderService.get(bidId);
+//        String bidNo = realBid.getNo();
+        //发送step4 邮件
+        String subject = "Confirmation of Order Items";
+        String templateName = "step4";
+        Context context = new Context();
+        context.setVariable("name",tender.getName());
+        context.setVariable("weight",tender.getWeight());
+        context.setVariable("pieces",realBid.getConfirmedQuantity());
+        context.setVariable("price",realBid.getConfirmedPrice());
+        context.setVariable("totalPrice", realBid.getConfirmedPrice());
+        String vendorEmail = userService.getVendorEmailByBidId(bidId);
+        mailService.sendTemplateMail(vendorEmail,subject,templateName,context);
+//        sendEmail(bid.getId());
+        return Rets.success();
+    }
+
+    @RequestMapping(value = "/moveToNextStatus/{id}",method = RequestMethod.GET)
+    @BussinessLog(value = "移到下一步状态step5 ", key = "name", dict = BidDict.class)
+    public Object moveToNextStatus(@PathVariable Long id){
+        bidService.moveToNextStatus(id);
+//        sendEmail(id);
+        return Rets.success();
+    }
+
+    @RequestMapping(value = "/moveToNextStatusWithInvoice",method = RequestMethod.POST)
+    @BussinessLog(value = "移到收到发票状态step6", key = "name", dict = BidDict.class)
+    public Object moveToNextStatusWithInvoice(@ModelAttribute Bid bid){
+        bidService.moveToNextStatusWithInvoice(bid.getId(), bid.getInvoiceIdFile(), bid.getInvoiceNo());
+
+        //准备邮件信息
+        Long bidId =bid.getId();
+        Bid realBid = bidService.get(bidId);
+
+        //发送step6 邮件
+        String subject = "Confirmation of Order Items";
+        String templateName = "step6";
+        Context context = new Context();
+        context.setVariable("invoiceNo",realBid.getInvoiceNo());
+        String vendorEmail = userService.getVendorEmailByBidId(bidId);
+        mailService.sendTemplateMail(vendorEmail,subject,templateName,context);
+//        sendEmail(bid.getId());
         return Rets.success();
     }
 
     @RequestMapping(value = "/moveToNextStatusWithPayment",method = RequestMethod.POST)
-    @BussinessLog(value = "移到完成付款状态", key = "name", dict = BidDict.class)
+    @BussinessLog(value = "移到完成付款状态step7", key = "name", dict = BidDict.class)
     public Object moveToNextStatusWithPayment(@ModelAttribute Bid bid){
         bidService.moveToNextStatusWithPayment(bid.getId(), bid.getIdFile());
         sendEmail(bid.getId());
@@ -215,10 +277,25 @@ public class BidController extends BaseController{
     }
 
     @RequestMapping(value = "/approve/{id}", method = RequestMethod.GET)
-    @BussinessLog(value = "接受投标", key = "name", dict = BidDict.class)
+    @BussinessLog(value = "接受投标 step1", key = "name", dict = BidDict.class)
     public Object approve(@PathVariable Long id){
+        //id为bid id
         bidService.approve(id);
-        sendEmail(id);
+
+        //准备邮件信息
+        Bid bid = bidService.get(id);
+        String bidNo = bid.getNo();
+        Tender tender = tenderService.get(bid.getTenderId());
+        String tenderName = tender.getName();
+        //发送step1 邮件
+        String subject = "Confirmation of product "+tenderName;
+        String templateName = "step1";
+        Context context = new Context();
+        context.setVariable("name",tenderName);
+        context.setVariable("bidNo",bidNo);
+        String vendorEmail = userService.getVendorEmailByBidId(id);
+        mailService.sendTemplateMail(vendorEmail,subject,templateName,context);
+//        sendEmail(id);
         return Rets.success();
     }
 

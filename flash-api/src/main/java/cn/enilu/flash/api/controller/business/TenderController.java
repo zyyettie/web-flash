@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.context.Context;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,10 +56,20 @@ public class TenderController extends BaseController {
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
         }
         tenderService.save(tender);
-        //群发邮件
+        //群发邮件 step0
+        String subject = "New order arrive";
+        String templateName = "step0";
+        Context context = new Context();
+        context.setVariable("name",tender.getName());
+        context.setVariable("size",tender.getSize());
+        context.setVariable("color",tender.getColor());
+        context.setVariable("clarity",tender.getClarity());
+        context.setVariable("treatment",tender.getEnhance());
+        context.setVariable("quantity",tender.getQuantity());
+        context.setVariable("note",tender.getNote());
         List<String> emailList = userService.getAllVendorEmail();
         for(String to : emailList){
-            mailService.sendSimpleMail(to,"A new tender <"+ no +"> has been published","Please login to Bid Management System to check");
+            mailService.sendTemplateMail(to,subject,templateName,context);
         }
         return Rets.success();
     }
