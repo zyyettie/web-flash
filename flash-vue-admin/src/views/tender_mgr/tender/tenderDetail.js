@@ -1,5 +1,5 @@
 import { getBidByTenderId, moveBidToNextStatusStep3, approveBid, denyBid } from '@/api/business/bid'
-import { moveBidToNextStatusWithQuantityPrice, moveBidToNextStatusWithInvoice, moveBidToNextStatusWithPayment } from '@/api/business/bid'
+import { moveBidToNextStatusWithQuantityPrice, moveBidToNextStatusWithPayment } from '@/api/business/bid'
 import { getToken } from '@/utils/auth'
 import { Loading } from 'element-ui'
 import { getApiUrl } from '@/utils/utils'
@@ -286,27 +286,6 @@ export default {
               id: id,
               confirmedQuantity: this.statusForm.confirmedQuantity,
               confirmedPrice: this.statusForm.confirmedPrice
-            }).then(response => {
-              loadingInstance2.close()
-              this.$message({
-                message: this.$t('common.optionSuccess'),
-                type: 'success'
-              })
-              this.fetchData()
-              this.statusFormVisible = false
-            })
-          } else {
-            return false
-          }
-        })
-      } else if (this.statusForm.status === 5) {
-        this.$refs['statusForm'].validate((valid) => {
-          if (valid) {
-            loadingInstance2 = Loading.service(this.loadingOption)
-            moveBidToNextStatusWithInvoice({
-              id: id,
-              invoiceIdFile: this.uploadFileId,
-              invoiceNo: this.statusForm.invoiceNo
             }).then(response => {
               loadingInstance2.close()
               this.$message({

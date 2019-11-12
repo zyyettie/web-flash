@@ -160,6 +160,9 @@ public class BidController extends BaseController{
                 if(bid.getConfirmedPrice()!=null)
                   bidtenderVO.setConfirmedPrice(bid.getConfirmedPrice());
                 bidtenderVO.setTenderId(bid.getTenderId());
+                bidtenderVO.setIdFile(bid.getIdFile());
+                bidtenderVO.setInvoiceNo(bid.getInvoiceNo());
+                bidtenderVO.setInvoiceIdFile(bid.getInvoiceIdFile());
 
                 //tender info
                 bidtenderVO.setTenderId(tenderId);

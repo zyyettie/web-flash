@@ -20,6 +20,9 @@ public class Bidtender {
     private int confirmedQuantity;
     private Float confirmedPrice;
     private Long tenderId;
+    private Long idFile;
+    private String invoiceNo;
+    private Long invoiceIdFile;
 
     //tender info
     private String tenderNo;

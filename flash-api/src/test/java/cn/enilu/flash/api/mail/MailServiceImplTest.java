@@ -40,19 +40,19 @@ public class MailServiceImplTest {
 
     @Test
     public void sendTemplateMail() throws Exception {
-        String subject = "sendTemplateMail-5";
-        String templateName = "5";
+        String subject = "sendTemplateMail-0";
+        String templateName = "step0";
         String to="zyyettie@163.com";
         Context context = new Context();
-        context.setVariable("receivedDate", "25/10/2019");
-//        context.setVariable("name", "蓝宝石");
-//        context.setVariable("bidNo", "1910240001");
-//        context.setVariable("size", "1.1mm*2.2mm");
-//        context.setVariable("color", "red");
-//        context.setVariable("clarity", "Eye Clean");
-//        context.setVariable("treatment", "Heated");
-//        context.setVariable("quantity", "100");
-//        context.setVariable("note", "1000~1200");
+//        context.setVariable("receivedDate", "25/10/2019");
+        context.setVariable("name", "蓝宝石");
+        context.setVariable("bidNo", "1910240001");
+        context.setVariable("size", "1.1mm*2.2mm");
+        context.setVariable("color", "red");
+        context.setVariable("clarity", "Eye Clean");
+        context.setVariable("treatment", "Heated");
+        context.setVariable("quantity", "100");
+        context.setVariable("note", "1000~1200");
         mailService.sendTemplateMail(to, subject, templateName, context);
         log.info("test sendTemplateMail to {}", to);
     }

@@ -1,11 +1,11 @@
 package cn.enilu.flash.service.business;
 
 import cn.enilu.flash.bean.entity.business.Tender;
-import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.dao.business.TenderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +19,11 @@ public class TenderService {
     private TenderRepository tenderRepository;
 
     public Object queryAll() {
-        List<Tender> list = (List<Tender>) tenderRepository.findAll();
+        List<Tender> list = tenderRepository.findAll(sortByIdDesc());
         return list;
+    }
+    private Sort sortByIdDesc() {
+        return new Sort(Sort.Direction.DESC, "id");
     }
 
     public void save(Tender tender) {

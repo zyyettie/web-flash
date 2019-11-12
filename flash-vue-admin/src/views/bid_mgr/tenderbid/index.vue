@@ -77,7 +77,7 @@
           {{scope.row.material}}
         </template>
       </el-table-column>
-      <el-table-column label="NOTE">
+      <el-table-column label="PRICE RANGE">
         <template slot-scope="scope">
           {{scope.row.note}}
         </template>
@@ -177,7 +177,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="NOTE" prop="note">
+            <el-form-item label="PRICE RANGE" prop="note">
               <el-input v-model="bidForm.note" :disabled="true"></el-input>
             </el-form-item>
           <el-col :span="12">

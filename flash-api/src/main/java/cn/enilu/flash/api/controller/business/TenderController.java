@@ -62,7 +62,7 @@ public class TenderController extends BaseController {
         Context context = new Context();
         context.setVariable("name",tender.getName());
         context.setVariable("size",tender.getSize());
-        context.setVariable("color",tender.getColor());
+        context.setVariable("color",tender.getColorNote());
         context.setVariable("clarity",tender.getClarity());
         context.setVariable("treatment",tender.getEnhance());
         context.setVariable("quantity",tender.getQuantity());

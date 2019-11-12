@@ -1,12 +1,18 @@
 import { delBid, getBidList, saveBid, moveBidToNextStatus } from '@/api/business/bid'
 import { moveBidToNextStatusWithDeliverInfo } from '@/api/business/bid'
+import { moveBidToNextStatusWithInvoice } from '@/api/business/bid'
 import { getApiUrl } from '@/utils/utils'
 import { Loading } from 'element-ui'
+import { getToken } from '@/utils/auth'
 
 export default {
   data() {
     return {
       uploadUrl: '',
+      uploadFileId: '',
+      uploadHeaders: {
+        'Authorization': ''
+      },
       formVisible: false,
       formTitle: this.$t('business.modify'),
       isAdd: true,
@@ -95,12 +101,19 @@ export default {
   methods: {
     init() {
       this.uploadUrl = getApiUrl() + '/file'
+      this.uploadHeaders['Authorization'] = getToken()
       this.fetchData()
     },
     fetchData() {
       this.listLoading = true
       getBidList(this.listQuery).then(response => {
         this.list = response.data
+        for (var index in this.list) {
+          const item = this.list[index]
+          item.img = getApiUrl() + '/file/getImgStream?idFile=' + item.idFile
+          item.invoiceImg = getApiUrl() + '/file/getImgStream?idFile=' + item.invoiceIdFile
+          console.log(item)
+        }
         this.listLoading = false
         this.total = response.data.total
       })
@@ -231,6 +244,34 @@ export default {
       this.statusFormTitle = this.$t('business.statusChange')
       this.statusFormVisible = true
     },
+    handleBeforeUpload() {
+      if (this.uploadFileId !== '') {
+        this.$message({
+          message: this.$t('common.mustSelectOne'),
+          type: 'warning'
+        })
+        return false
+      }
+      this.loadingInstance = Loading.service({
+        lock: true,
+        text: this.$t('common.uploading'),
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
+    },
+    handleUploadSuccess(response, raw) {
+      this.loadingInstance.close()
+      if (response.code === 20000) {
+        console.log(response.data)
+        this.uploadFileId = response.data.id
+        this.statusForm.fileName = response.data.originalFileName
+      } else {
+        this.$message({
+          message: this.$t('common.uploadError'),
+          type: 'error'
+        })
+      }
+    },
     // nextStep(id) {
     //   moveBidToNextStatus(id).then(response => {
     //     console.log(response)
@@ -259,6 +300,27 @@ export default {
               id: id,
               deliverType: this.statusForm.deliverType,
               deliverNo: this.statusForm.deliverNo
+            }).then(response => {
+              loadingInstance.close()
+              this.$message({
+                message: this.$t('common.optionSuccess'),
+                type: 'success'
+              })
+              this.fetchData()
+              this.statusFormVisible = false
+            })
+          } else {
+            return false
+          }
+        })
+      } else if (this.statusForm.bidStatus === 4) {
+        this.$refs['statusForm'].validate((valid) => {
+          if (valid) {
+            loadingInstance = Loading.service(this.loadingOption)
+            moveBidToNextStatusWithInvoice({
+              id: id,
+              invoiceIdFile: this.uploadFileId,
+              invoiceNo: this.statusForm.invoiceNo
             }).then(response => {
               loadingInstance.close()
               this.$message({

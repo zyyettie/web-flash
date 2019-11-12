@@ -69,7 +69,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="NOTE" prop="note">
+            <el-form-item label="PRICE RANGE" prop="note">
               <el-input v-model="bidForm.note" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
@@ -272,32 +272,6 @@
           <el-col :span="12">
             <el-form-item label="CONFIRMED PRICE" prop="confirmedPrice">
               <el-input v-model="statusForm.confirmedPrice" ></el-input>
-            </el-form-item>
-          </el-col>
-          </div>
-          <!-- 上传发票-->
-          <div v-else-if="statusForm.status === 5">
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="INVOICE NO" prop="invoiceNo">
-                <el-input v-model="statusForm.invoiceNo" ></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-col :span="12">
-            <el-form-item label="INVOICE">
-              <el-upload
-                class="upload-demo"
-                drag
-                :multiple=false
-                :action="uploadUrl"
-                :headers="uploadHeaders"
-                :before-upload="handleBeforeUpload"
-                :on-success="handleUploadSuccess"
-              >
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">Click to upload</div>
-              </el-upload>
             </el-form-item>
           </el-col>
           </div>
