@@ -316,7 +316,7 @@ export default {
       } else if (this.statusForm.bidStatus === 4) {
         this.$refs['statusForm'].validate((valid) => {
           if (valid) {
-            loadingInstance = Loading.service(this.loadingOption)
+            loadingInstance = Loading.service(loadingOption)
             moveBidToNextStatusWithInvoice({
               id: id,
               invoiceIdFile: this.uploadFileId,

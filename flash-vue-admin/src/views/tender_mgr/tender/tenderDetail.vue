@@ -105,7 +105,7 @@
           <el-button type="button" @click="deny(scope.row.id)">{{$t('business.deny')}}</el-button>
           </div>
           <div v-else>
-            <div v-if="scope.row.status === 2 || scope.row.status === 3 || scope.row.status === 5 || scope.row.status === 6">
+            <div v-if="scope.row.status === 2 || scope.row.status === 3 || scope.row.status === 5">
               <el-button type="button" @click="changeStatus(scope.row)">{{$t('business.nextStep')}}</el-button>
             </div>
             <div v-else>

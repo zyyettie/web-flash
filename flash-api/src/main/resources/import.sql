@@ -135,6 +135,7 @@ INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, 
 INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('27', '4', '24', '[0],[24],', '战略部', '战略部', '', null, null, null, null, null);
 INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('28', '5', '24', '[0],[24],', 'tender dept', 'tender department', '', null, null, null, null, null);
 INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('29', '6', '24', '[0],[24],', 'vendor dept', 'vendor department', '', null, null, null, null, null);
+INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('30', '7', '24', '[0],[24],', 'payment dept', 'payment department', '', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `t_sys_dict`
@@ -294,6 +295,8 @@ INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`
 INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('219', 'bid_mgr', '0', '[0],', '投标管理', null, '/bid_mgr', '2001', '1', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
 INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('220', 'bid', 'bid_mgr', '[0],[bid_mgr],', '我的投标', null, '/bid', '201', '2', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
 INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('221', 'tenderbid', 'bid_mgr', '[0],[bid_mgr],', '投标', null, '/tenderbid', '202', '2', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
+INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('222', 'pay_mgr', '0', '[0],', '支付管理', null, '/pay_mgr', '3001', '1', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
+INSERT INTO `t_sys_menu` (`id`, `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('223', 'pay', 'pay_mgr', '[0],[pay_mgr],', '付款凭证', null, '/pay', '301', '2', '1', null, '1', null, '2019-07-01 22:30:18', '1', null, null);
 
 -- ----------------------------
 -- Table structure for `t_sys_notice`
@@ -491,6 +494,8 @@ INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('624', '218', '4
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('625', '219', '5');
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('626', '220', '5');
 INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('627', '221', '5');
+INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('628', '222', '6');
+INSERT INTO `t_sys_relation` (`id`, `menuid`, `roleid`) VALUES ('629', '223', '6');
 -- ----------------------------
 -- Table structure for `t_sys_role`
 -- ----------------------------
@@ -517,6 +522,7 @@ INSERT INTO `t_sys_role` (`id`, `num`, `pid`, `name`, `deptid`, `tips`, `version
 INSERT INTO `t_sys_role` (`id`, `num`, `pid`, `name`, `deptid`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('3', '3', '0', 'test', '24', '测试', null, null, null, null, null);
 INSERT INTO `t_sys_role` (`id`, `num`, `pid`, `name`, `deptid`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('4', '4', '0', 'tender', '28', 'tender', null, null, null, null, null);
 INSERT INTO `t_sys_role` (`id`, `num`, `pid`, `name`, `deptid`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('5', '5', '0', 'vendor', '29', 'vendor', null, null, null, null, null);
+INSERT INTO `t_sys_role` (`id`, `num`, `pid`, `name`, `deptid`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('6', '6', '0', 'payment', '30', 'payment', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `t_sys_task`
@@ -610,4 +616,6 @@ INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify
   VALUES ('47', null, '2018-09-13 17:21:02', '1', '2019-01-09 23:05:51', 'developer', null, '2017-12-31 00:00:00', '25', 'purchase@mailchinastone.com', '开发人员', 'fac36d5616fe9ebd460691264b28ee27', '', '2,', 'vscp9', '1', '1', null, null, null, null, null, null, null);
 INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`,  `company_name`,  `address`,  `registration_no`,  `tax_no`,  `payment_terms`,  `payment_type`)
   VALUES ('48', null, '2018-09-13 17:21:02', '1', '2019-01-09 23:05:51', 'tenderadmin', null, '2017-12-31 00:00:00', '28', 'purchase@mailchinastone.com', 'tenderadmin', 'b5a51391f271f062867e5984e2fcffee', '', '4,', '8pgby', '1', '1', null, null, null, null, null, null, null);
+INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`,  `company_name`,  `address`,  `registration_no`,  `tax_no`,  `payment_terms`,  `payment_type`)
+  VALUES ('49', null, '2018-09-13 17:21:02', '1', '2019-01-09 23:05:51', 'paymentadmin', null, '2017-12-31 00:00:00', '30', 'purchase@mailchinastone.com', 'paymentadmin', 'b5a51391f271f062867e5984e2fcffee', '', '6,', '8pgby', '1', '1', null, null, null, null, null, null, null);
 

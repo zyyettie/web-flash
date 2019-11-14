@@ -243,6 +243,26 @@ export const asyncRouterMap = [
       }
     ]
   },
+  {
+    path: '/pay_mgr',
+    component: Layout,
+    redicrect: '#',
+    name: 'pay_mgr',
+    alwaysShow: true,
+    meta: {
+      roles: ['administrator', 'developer'],
+      title: 'pay_mgr',
+      icon: 'documentation'
+    },
+    children: [
+      {
+        path: 'pay',
+        name: 'Pay',
+        component: () => import('@/views/pay_mgr/pay/index'),
+        meta: { title: 'payMgr' }
+      }
+    ]
+  },
   { path: '/404', component: () => import('@/views/404'), hidden: true }
 ]
 

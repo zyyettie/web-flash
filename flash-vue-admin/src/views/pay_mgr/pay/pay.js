@@ -1,8 +1,8 @@
-import { getBidByTenderId, moveBidToNextStatusStep3, approveBid, denyBid } from '@/api/business/bid'
-import { moveBidToNextStatusWithQuantityPrice } from '@/api/business/bid'
-import { getToken } from '@/utils/auth'
-import { Loading } from 'element-ui'
+import { delBid, getBidListForPayment, saveBid, moveBidToNextStatus } from '@/api/business/bid'
+import { moveBidToNextStatusWithPayment } from '@/api/business/bid'
 import { getApiUrl } from '@/utils/utils'
+import { Loading } from 'element-ui'
+import { getToken } from '@/utils/auth'
 
 export default {
   data() {
@@ -12,36 +12,30 @@ export default {
       uploadHeaders: {
         'Authorization': ''
       },
-      statusFormTitle: 'business.statusChange',
-      statusFormVisible: false,
+      formVisible: false,
+      formTitle: this.$t('business.modify'),
       isAdd: true,
-      bidFormVisible: false,
-      bidFormTitle: this.$t('config.add'),
-      bidForm: {
-        no: '',
-        name: '',
-        shape: '',
-        size: '',
-        color: '',
-        clarity: '',
+      form: {
         quantity: '',
-        weight: '',
-        unitOfWeight: '',
-        enhance: '',
-        material: '',
-        status: '',
-        dueDate: '',
-        count: '',
-        img: '',
-        idFile: '',
-        invoiceImg: '',
-        invoiceNo: '',
-        invoiceIdFile: ''
+        unit: '',
+        contact: '',
+        isApproved: '',
+        tenderNo: ''
       },
+      deliverTypeOptions: [
+        { value: '1', label: 'Sent By Messenger' },
+        { value: '2', label: 'Express' },
+        { value: '3', label: 'Other Way' }
+      ],
+      unitOptions: [
+        { value: 'carat', label: 'carat' },
+        { value: 'piece', label: 'piece' }
+      ],
       listQuery: {
         page: 1,
         limit: 20,
-        tenderId: undefined
+        name: undefined,
+        type: undefined
       },
       total: 0,
       list: null,
@@ -50,9 +44,10 @@ export default {
       statusForm: {
         id: '',
         no: '',
-        status: '',
-        invoiceNo: ''
+        status: ''
       },
+      statusFormTitle: 'business.statusChange',
+      statusFormVisible: false,
       statusData: [{
         host: '1. Purchase confirm supplier',
         vendor: ''
@@ -73,7 +68,7 @@ export default {
         vendor: ''
       }, {
         host: '7. Finished payment',
-        vender: ''
+        vendor: ''
       }]
     }
   },
@@ -91,49 +86,26 @@ export default {
     rules() {
       return {
         name: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+          { required: true, message: 'SUPPLIER SUPPLY QUANTITY is required', trigger: 'blur' }
+        ],
+        type: [
+          { required: true, message: 'PRICE is required', trigger: 'blur' }
         ]
       }
     }
   },
   created() {
     this.init()
-    this.getParams()
   },
   methods: {
     init() {
       this.uploadUrl = getApiUrl() + '/file'
       this.uploadHeaders['Authorization'] = getToken()
-      // this.listQuery.tenderId = this.$route.query.tenderId
-      this.listQuery.tenderId = this.$route.params.tenderId
       this.fetchData()
-    },
-    // tableHeaderFontSize({ row, column, rowIndex, columnIndex }) {
-    //   if (rowIndex === 0) {
-    //     return 'font-weight: 1000;'
-    //   }
-    // },
-    getParams() {
-      // 取到路由带过来的参数
-      var routerParams = this.$route.params
-      // 将数据放在当前组件的数据内
-      this.bidForm.no = routerParams.no
-      this.bidForm.name = routerParams.name
-      this.bidForm.shape = routerParams.shape
-      this.bidForm.size = routerParams.size
-      this.bidForm.color = routerParams.color
-      this.bidForm.clarity = routerParams.clarity
-      this.bidForm.quantity = routerParams.quantity
-      this.bidForm.weight = routerParams.weight
-      this.bidForm.unitOfWeight = routerParams.unitOfWeight
-      this.bidForm.enhance = routerParams.enhance
-      this.bidForm.material = routerParams.material
-      this.bidForm.dueDate = routerParams.dueDate
-      this.bidForm.status = routerParams.status
     },
     fetchData() {
       this.listLoading = true
-      getBidByTenderId(this.listQuery).then(response => {
+      getBidListForPayment(this.listQuery).then(response => {
         this.list = response.data
         for (var index in this.list) {
           const item = this.list[index]
@@ -179,10 +151,21 @@ export default {
     handleCurrentChange(currentRow, oldCurrentRow) {
       this.selRow = currentRow
     },
-    clickCell(row, column, cell, event) {
-      this.selRow = row
+    resetForm() {
+      this.form = {
+        quantity: '',
+        unit: '',
+        contact: '',
+        isApproved: '',
+        tenderNo: ''
+      }
     },
-
+    add() {
+      this.resetForm()
+      this.formTitle = this.$t('config.add')
+      this.formVisible = true
+      this.isAdd = true
+    },
     checkSel() {
       if (this.selRow && this.selRow.id) {
         return true
@@ -201,31 +184,31 @@ export default {
         this.formVisible = true
       }
     },
-    back() {
-      this.$router.go(-1)
+    editBid(row) {
+      this.form.bidId = row.bidId
+      this.form = row
+      this.formVisible = true
     },
-    approve(id) {
-      approveBid(id).then(response => {
-        console.log(response)
-        this.$message({
-          message: 'Bid has been approved successfully',
-          type: 'success'
+    remove() {
+      if (this.checkSel()) {
+        var id = this.selRow.id
+        this.$confirm(this.$t('common.deleteConfirm'), this.$t('common.tooltip'), {
+          confirmButtonText: this.$t('button.submit'),
+          cancelButtonText: this.$t('button.cancel'),
+          type: 'warning'
+        }).then(() => {
+          delBid(id).then(response => {
+            this.$message({
+              message: this.$t('common.optionSuccess'),
+              type: 'success'
+            })
+            this.fetchData()
+          })
+        }).catch(() => {
         })
-        this.fetchData()
-      })
+      }
     },
-    deny(id) {
-      denyBid(id).then(response => {
-        console.log(response)
-        this.$message({
-          message: '拒绝投标成功',
-          type: 'success'
-        })
-        this.fetchData()
-      })
-    },
-    changeStatus(row) {
-      //this.statusForm = this.selRow
+    changeVendorStatus(row) {
       this.statusForm = row
       this.statusFormTitle = this.$t('business.statusChange')
       this.statusFormVisible = true
@@ -271,23 +254,22 @@ export default {
     // },
     nextStepWithAdditionalInfo(id) {
       // 添加loading页面
-      let loadingInstance2
+      let loadingInstance
       const loadingOption = this.$loading({
         lock: true,
         text: 'Loading',
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       })
-      if (this.statusForm.status === 3) {
+      if (this.statusForm.bidStatus === 6) {
         this.$refs['statusForm'].validate((valid) => {
           if (valid) {
-            loadingInstance2 = Loading.service(loadingOption)
-            moveBidToNextStatusWithQuantityPrice({
+            loadingInstance = Loading.service(loadingOption)
+            moveBidToNextStatusWithPayment({
               id: id,
-              confirmedQuantity: this.statusForm.confirmedQuantity,
-              confirmedPrice: this.statusForm.confirmedPrice
+              idFile: this.uploadFileId
             }).then(response => {
-              loadingInstance2.close()
+              loadingInstance.close()
               this.$message({
                 message: this.$t('common.optionSuccess'),
                 type: 'success'
@@ -300,10 +282,10 @@ export default {
           }
         })
       } else {
-        loadingInstance2 = Loading.service(this.loadingOption)
-        moveBidToNextStatusStep3(id).then(response => {
-          loadingInstance2.close()
+        loadingInstance = Loading.service(this.loadingOption)
+        moveBidToNextStatus(id).then(response => {
           console.log(response)
+          loadingInstance.close()
           this.$message({
             message: 'Status modification succeeded',
             type: 'success'
@@ -313,10 +295,5 @@ export default {
         })
       }
     }
-
-  },
-  watch: {
-    // 监测路由变化,只要变化了就调用获取路由参数方法将数据存储本组件即可
-    '$route': 'getParams'
-  }
+  }// close methods():
 }

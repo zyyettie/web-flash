@@ -8,6 +8,14 @@ export function getBidList(params) {
   })
 }
 
+export function getBidListForPayment(params) {
+  return request({
+    url: '/bid/listForPayment',
+    method: 'get',
+    params
+  })
+}
+
 export function saveBid(params) {
   return request({
     url: '/bid/edit',

@@ -1,6 +1,7 @@
 package cn.enilu.flash.dao.business;
 
 import cn.enilu.flash.bean.entity.business.Bid;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -9,13 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface BidRepository extends PagingAndSortingRepository<Bid, Long> {
-    List<Bid> findBidsByTenderId(Long tenderId);
+    List<Bid> findBidsByTenderId(Long tenderId, Sort sort);
 
     Bid findBidByNo(String no);
 
 //    Bid findById(Long id);
 
-    List<Bid> findBidsByCreateBy(Long userId);
+    List<Bid> findBidsByCreateBy(Long userId, Sort sort);
+
+    @Query(nativeQuery = true, value = "select * from t_biz_bid where status=6 or status=7 order by id DESC")
+    List<Bid> getBidsForPayment();
 
     @Transactional
     @Modifying

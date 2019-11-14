@@ -5,6 +5,7 @@ import cn.enilu.flash.dao.business.BidRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class BidService {
     }
 
     public Object getBidsByTenderId(Long tenderId){
-        List<Bid> list = bidRepository.findBidsByTenderId(tenderId);
+        List<Bid> list = bidRepository.findBidsByTenderId(tenderId, sortByIdDesc());
         return list;
     }
 
@@ -40,7 +41,15 @@ public class BidService {
     }
 
     public Object getListByUser(Long userId){
-        List<Bid> list = bidRepository.findBidsByCreateBy(userId);
+        List<Bid> list = bidRepository.findBidsByCreateBy(userId, sortByIdDesc());
+        return list;
+    }
+    private Sort sortByIdDesc() {
+        return new Sort(Sort.Direction.DESC, "id");
+    }
+
+    public Object getListForPayment(){
+        List<Bid> list = bidRepository.getBidsForPayment();
         return list;
     }
 

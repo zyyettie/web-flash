@@ -26,7 +26,9 @@ export default {
     tenderMgr: 'PURCHASE PART',
     supplierMgr: 'Supplier',
     bidMgr: 'ORDER PROCESS',
-    tenderbidMgr: 'ORDER LIST'
+    tenderbidMgr: 'ORDER LIST',
+    pay_mgr: 'PAYMENT',
+    payMgr: 'PAYMENT PROCESS'
   },
   navbar: {
     logOut: 'Log Out',

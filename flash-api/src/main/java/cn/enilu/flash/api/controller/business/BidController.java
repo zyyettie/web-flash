@@ -128,7 +128,7 @@ public class BidController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public Object List(HttpServletRequest request){
+    public Object list(HttpServletRequest request){
         Long idUser;
         try {
             idUser = getIdUser(request);
@@ -309,6 +309,60 @@ public class BidController extends BaseController{
         sendEmail(id);
         return Rets.success();
     }
+
+    @RequestMapping(value = "/listForPayment", method = RequestMethod.GET)
+    public Object listForPayment(HttpServletRequest request){
+        List<Bidtender> list = new ArrayList();
+            List<Bid> bidList = (List<Bid>)bidService.getListForPayment();
+            for(Bid bid: bidList){
+                Long tenderId = bid.getTenderId();
+                Tender tender = tenderService.get(tenderId);
+                Bidtender bidtenderVO = new Bidtender();
+                //bid info
+                bidtenderVO.setBidId(bid.getId());
+                bidtenderVO.setNo(bid.getNo());
+                bidtenderVO.setQuantity(bid.getQuantity());
+                bidtenderVO.setPrice(bid.getPrice());
+                bidtenderVO.setWeight(bid.getWeight());
+                bidtenderVO.setUnitOfWeight(bid.getUnitOfWeight());
+                bidtenderVO.setIsApproved(bid.getIsApproved());
+                bidtenderVO.setBidStatus(bid.getStatus());
+                if(bid.getDeliverType()!=null)
+                    bidtenderVO.setDeliverType(bid.getDeliverType());
+                if(bid.getDeliverNo()!=null)
+                    bidtenderVO.setDeliverNo(bid.getDeliverNo());
+                if(bid.getConfirmedQuantity()!=null)
+                    bidtenderVO.setConfirmedQuantity(bid.getConfirmedQuantity());
+                if(bid.getConfirmedPrice()!=null)
+                    bidtenderVO.setConfirmedPrice(bid.getConfirmedPrice());
+                bidtenderVO.setTenderId(bid.getTenderId());
+                bidtenderVO.setIdFile(bid.getIdFile());
+                bidtenderVO.setInvoiceNo(bid.getInvoiceNo());
+                bidtenderVO.setInvoiceIdFile(bid.getInvoiceIdFile());
+
+                //tender info
+                bidtenderVO.setTenderId(tenderId);
+                bidtenderVO.setTenderNo(tender.getNo());
+                bidtenderVO.setName(tender.getName());
+                bidtenderVO.setShape(tender.getShape());
+                bidtenderVO.setSize(tender.getSize());
+                bidtenderVO.setColor(tender.getColor());
+                bidtenderVO.setColorNote(tender.getColorNote());
+                bidtenderVO.setClarity(tender.getClarity());
+                bidtenderVO.setTenderQuantity(tender.getQuantity());
+                bidtenderVO.setTenderWeight(tender.getWeight());
+                bidtenderVO.setTenderUnitOfWeight(tender.getUnitOfWeight());
+                bidtenderVO.setEnhance(tender.getEnhance());
+                bidtenderVO.setMaterial(tender.getMaterial());
+                bidtenderVO.setNote(tender.getNote());
+                bidtenderVO.setTenderStatus(tender.getStatus());
+                bidtenderVO.setDueDate(tender.getDueDate());
+                bidtenderVO.setCount(tender.getCount());
+                list.add(bidtenderVO);
+            }
+        return Rets.success(list);
+    }
+
 
     private void sendEmail(Long id) {
         //发送邮件给tenderadmin
