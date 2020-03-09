@@ -1,6 +1,7 @@
 package cn.enilu.flash.api.controller.system;
 
 import cn.enilu.flash.api.controller.BaseController;
+import cn.enilu.flash.api.mail.MailService;
 import cn.enilu.flash.bean.core.BussinessLog;
 import cn.enilu.flash.bean.constant.Const;
 import cn.enilu.flash.bean.constant.factory.PageFactory;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.thymeleaf.context.Context;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -56,6 +58,8 @@ public class UserController extends BaseController {
     private RoleService roleService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private MailService mailService;
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public Object list(@RequestParam(required = false) String account,
                        @RequestParam(required = false) String name){
@@ -135,15 +139,31 @@ public class UserController extends BaseController {
             // 完善账号信息
             user.setSalt(ToolUtil.getRandomString(5));
             user.setPassword(MD5.md5(user.getPassword(), user.getSalt()));
-            user.setStatus(ManagerStatus.OK.getCode());
+            user.setStatus(ManagerStatus.FREEZED.getCode());
             // 设置用户部门为vendor department
             Dept dept = deptService.getDeptByFullName("vendor department");
             user.setDeptid(dept.getId());
             Role role = roleService.findRolebyName("vendor");
             user.setRoleid(role.getId().toString());
             user.setEmail(user.getAccount());
-            user.setStatus(0);
+
+            //user.setStatus(ManagerStatus.OK.getCode());
             userRepository.save(UserFactory.createUser(user, new User()));
+            //发送注册成功邮件
+            String subject = "Register Successfully";
+            String templateName = "registerSuccess";
+            Context context = new Context();
+            context.setVariable("name",user.getName());
+            context.setVariable("email",user.getEmail());
+            context.setVariable("phone",user.getPhone());
+            context.setVariable("companyName",user.getCompanyName());
+            context.setVariable("address",user.getAddress());
+            context.setVariable("registrationNo",user.getRegistrationNo());
+            context.setVariable("taxNo",user.getTaxNo());
+            context.setVariable("paymentTerms",user.getPaymentTerms());
+            context.setVariable("paymentType",user.getPaymentType());
+//            String vendorEmail = userService.getVendorEmailByBidId(id);
+            mailService.sendTemplateMail(user.getEmail(),subject,templateName,context);
         }else{
             User oldUser = userService.get(user.getId());
             userRepository.save(UserFactory.updateUser(user,oldUser));

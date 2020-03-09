@@ -53,7 +53,7 @@
           {{scope.row.quantity}}
         </template>
       </el-table-column>
-      <el-table-column label="WEIGHT">
+      <el-table-column label="WEIGHT BY PIECE">
         <template slot-scope="scope">
           {{scope.row.weight}}{{scope.row.unitOfWeight}}
         </template>
@@ -73,7 +73,7 @@
           {{scope.row.material}}
         </template>
       </el-table-column>
-      <el-table-column label="PRICE RANGE">
+      <el-table-column label="PRICE RANGE(THB)">
         <template slot-scope="scope">
           {{scope.row.note}}
         </template>
@@ -165,7 +165,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="WEIGHT" prop="weight">
+            <el-form-item label="WEIGHT BY PIECE" prop="weight">
               <el-col :span="9">
               <el-input v-model="form.weight"></el-input>
               </el-col>
@@ -216,7 +216,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="PRICE RANGE" prop="note">
+            <el-form-item label="PRICE RANGE(THB)" prop="note">
               <el-col :span="9">
               <el-input v-model="form.note"  minlength=1></el-input>
               </el-col>

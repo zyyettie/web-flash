@@ -92,6 +92,11 @@
           {{scope.row.status}}
         </template>
       </el-table-column>
+      <el-table-column label="Purchase User">
+        <template slot-scope="scope">
+          {{scope.row.userName}}
+        </template>
+      </el-table-column>
     </el-table>
 
     <el-pagination
@@ -190,12 +195,12 @@
         <!-- bid信息 -->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="SUPPLIER SUPPLY QUANTITY" prop="bidQuantity">
+            <el-form-item label="SUPPLIER AVAILABLE PIECE" label-width="220px"  prop="bidQuantity" >
               <el-input v-model="bidForm.bidQuantity" ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="SUPPLIER SUPPLY WEIGHT" prop="weight">
+            <el-form-item label="SUPPLIER AVAILABLE QUANTITY BY WEIGHT (OPTION)" label-width="300px" prop="weight">
               <el-col :span="12">
               <el-input v-model="bidForm.weight" :disabled="true"></el-input>
               </el-col>
@@ -205,7 +210,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="TOTAL PRICE" prop="bidPrice">
+            <el-form-item label="UNIT PRICE (THB)" label-width="146px" prop="bidPrice">
               <el-input v-model="bidForm.bidPrice" ></el-input>
             </el-form-item>
           </el-col>

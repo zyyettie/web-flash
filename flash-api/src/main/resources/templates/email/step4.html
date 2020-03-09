@@ -46,15 +46,25 @@
     <div class="jumbotron jumbotron-fluid full-screen">
         <div class="container  full-screen">
             <h3>Dear Vendor,</h3>
-
-            <p>Please see below confirmation of order items:<br>
-                1. <code style="color: #d57e13;"><span th:text="${name}">name</span></code> ,
+            <p>We confirmed the following purchase</p>
+            <p>Order: <span th:text="${tenderNo}">tenderNo</span></p>
+            <p><code style="color: #d57e13;"><span th:text="${name}">name</span></code> ,
                 <code style="color: #d57e13;"><span th:text="${weight}">weight</span></code> ,
                 <code style="color: #d57e13;"><span th:text="${pieces}">pieces</span></code> ,
                 <code style="color: #d57e13;"><span th:text="${price}">price</span></code> ,
                 <code style="color: #d57e13;"><span th:text="${totalPrice}">totalPrice</span></code> ,<br>
-                2. XXX   In addition, please issue tax invoice to:<br>
-                China Stone Co., Ltd  Address  Vat number
+            </p>
+            <br>
+            <p>payment due date is: ${dueDate}</p>
+            <p>Please issue tax invoice to<br>
+               <br>
+               China Stone Co., Ltd. (Head office)<br>
+               Address:<br>
+               919/522-523 Jewelry Trade Center 45th FI., Silom Rd.,Bangrak,<br>
+               Bangkok 10500 Thailand.<br>
+               VAT No.: 0-1055-40017-2<br>
+               Tel.: 66 2630 0730<br>
+               Fax: 66 2630 0732<br>
             </p>
 
             <span >Thank you<br>

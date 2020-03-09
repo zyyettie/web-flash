@@ -49,7 +49,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="WEIGHT" prop="weight">
+            <el-form-item label="WEIGHT BY PIECE" prop="weight">
               <el-col :span="12">
               <el-input v-model="bidForm.weight" :disabled="true"></el-input>
               </el-col>
@@ -69,7 +69,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="PRICE RANGE" prop="note">
+            <el-form-item label="PRICE RANGE(THB)" prop="note">
               <el-input v-model="bidForm.note" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
@@ -114,12 +114,12 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="BID REF.NO." v-if=false>
+      <el-table-column label="ORDER NO." v-if=false>
         <template slot-scope="scope">
           {{scope.row.id}}
         </template>
       </el-table-column>
-      <el-table-column label="BID REF.NO.">
+      <el-table-column label="ORDER REF.NO.">
         <template slot-scope="scope">
           {{scope.row.no}}
         </template>
@@ -167,7 +167,7 @@
           {{scope.row.contact}}
         </template>
       </el-table-column>
-      <el-table-column label="BID ACCEPT STATE">
+      <el-table-column label="ORDER ACCEPT STATE">
         <template slot-scope="scope">
           <p v-if="scope.row.isApproved===1">Approved</p>
           <p v-else-if="scope.row.isApproved===-1">Denied</p>
@@ -200,7 +200,7 @@
         </div>
         </template>
       </el-table-column>
-      <el-table-column label="BID STATUS">
+      <el-table-column label="ORDER STATUS">
         <template slot-scope="scope">
           {{scope.row.status}}
         </template>
@@ -228,7 +228,7 @@
       <el-form ref="statusForm" :model="statusForm" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="BID REF.NO." prop="no">
+            <el-form-item label="ORDER NO." prop="no">
               <el-input v-model="statusForm.no" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
@@ -265,13 +265,30 @@
           <!-- 确认数量/价格-->
           <div v-if="statusForm.status === 3">
           <el-col :span="12">
+            <el-col :span="12">
             <el-form-item label="CONFIRMED QUANTITY" prop="confirmedQuantity">
               <el-input v-model="statusForm.confirmedQuantity" ></el-input>
             </el-form-item>
+            </el-col>
+            <el-select v-model="statusForm.confirmedQuantityUnit" placeholder="please select">
+                <el-option
+                  v-for="item in confirmedQuantityUnitOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+            </el-select>
           </el-col>
           <el-col :span="12">
             <el-form-item label="CONFIRMED PRICE" prop="confirmedPrice">
+              <el-col :span="9">
               <el-input v-model="statusForm.confirmedPrice" ></el-input>
+              </el-col>
+              <el-col :span="9">
+              </el-col>
+              <el-col :span="9">
+              <el-input v-model="statusForm.confirmedUnitPrice" disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           </div>

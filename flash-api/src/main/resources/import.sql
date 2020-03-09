@@ -104,7 +104,7 @@ CREATE TABLE `t_sys_cfg` (
 -- ----------------------------
 -- Records of t_sys_cfg
 -- ----------------------------
-INSERT INTO `t_sys_cfg` (`id`, `cfg_name`, `cfg_value`, `cfg_desc`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('1', 'system.app.name', 'Bid Management System', '应用名称update by 2019-03-27 11:47:04', null, null, '2019-04-15 21:36:07', '1');
+INSERT INTO `t_sys_cfg` (`id`, `cfg_name`, `cfg_value`, `cfg_desc`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('1', 'system.app.name', 'China Stone Purchase System', '应用名称update by 2019-03-27 11:47:04', null, null, '2019-04-15 21:36:07', '1');
 INSERT INTO `t_sys_cfg` (`id`, `cfg_name`, `cfg_value`, `cfg_desc`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('2', 'system.file.upload.path', 'D:\\data\\tender\\runtime\\upload', '系统默认上传文件路径', null, null, '2019-04-15 21:36:17', '1');
 
 -- ----------------------------
@@ -129,10 +129,7 @@ CREATE TABLE `t_sys_dept` (
 -- ----------------------------
 -- Records of t_sys_dept
 -- ----------------------------
-INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('24', '1', '0', '[0],', '总公司', '总公司', '', null, null, null, null, null);
-INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('25', '2', '24', '[0],[24],', '开发部', '开发部', '', null, null, null, null, null);
-INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('26', '3', '24', '[0],[24],', '运营部', '运营部', '', null, null, null, null, null);
-INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('27', '4', '24', '[0],[24],', '战略部', '战略部', '', null, null, null, null, null);
+INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('24', '1', '0', '[0],', 'Headquarters', 'Headquarters', '', null, null, null, null, null);
 INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('28', '5', '24', '[0],[24],', 'tender dept', 'tender department', '', null, null, null, null, null);
 INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('29', '6', '24', '[0],[24],', 'vendor dept', 'vendor department', '', null, null, null, null, null);
 INSERT INTO `t_sys_dept` (`id`, `num`, `pid`, `pids`, `simplename`, `fullname`, `tips`, `version`, `create_time`, `create_by`, `modify_time`, `modify_by`) VALUES ('30', '7', '24', '[0],[24],', 'payment dept', 'payment department', '', null, null, null, null, null);
@@ -596,8 +593,11 @@ CREATE TABLE `t_sys_user` (
   `address` varchar(1000) DEFAULT NULL COMMENT '地址',
   `registration_no` varchar(255) DEFAULT NULL COMMENT '注册号',
   `tax_no` varchar(255) DEFAULT NULL COMMENT '税号',
-  `payment_terms` varchar(255) DEFAULT NULL COMMENT '付款时间种类',
+  `payment_terms` varchar(255) DEFAULT NULL COMMENT '付款时间种类(1:cash 2:30days 3:60days 4:90days)',
   `payment_type` varchar(255) DEFAULT NULL COMMENT '付款类型',
+  `reg_type` varchar(255) DEFAULT NULL COMMENT '注册类型(公司，个人)',
+  `id_file` bigint(20) DEFAULT NULL COMMENT '上传凭证文件id',
+  `id_no` varchar(255) DEFAULT NULL COMMENT '个人注册者身份ID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COMMENT='管理员表';
 -- ----------------------------
@@ -605,7 +605,7 @@ CREATE TABLE `t_sys_user` (
 -- ----------------------------
 
 INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`,  `company_name`,  `address`,  `registration_no`,  `tax_no`,  `payment_terms`,  `payment_type`)
-  VALUES ('-1', null, null, null, null, 'system', null, null, null, null, '应用系统', null, null, null, null, null, null, null, 'system', null, null, null, null, null);
+  VALUES ('-1', null, null, null, null, 'system', null, null, null, null, 'System', null, null, null, null, null, null, null, 'system', null, null, null, null, null);
 INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`,  `company_name`,  `address`,  `registration_no`,  `tax_no`,  `payment_terms`,  `payment_type`)
   VALUES ('1', null, '2016-01-29 08:49:53', '1', '2019-03-20 23:45:24', 'admin', null, '2017-05-05 00:00:00', '27', 'purchase@mailchinastone.com', 'Admin', 'b5a51391f271f062867e5984e2fcffee', null, '1', '8pgby', '2', '1', '25', null, null, null, null, null, null);
 INSERT INTO `t_sys_user` (`id`, `create_by`, `create_time`, `modify_by`, `modify_time`, `account`, `avatar`, `birthday`, `deptid`, `email`, `name`, `password`, `phone`, `roleid`, `salt`, `sex`, `status`,  `version`,  `company_name`,  `address`,  `registration_no`,  `tax_no`,  `payment_terms`,  `payment_type`)

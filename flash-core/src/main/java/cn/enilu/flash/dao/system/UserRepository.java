@@ -16,7 +16,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User,Long>,JpaSpecificationExecutor<User> {
     User findByAccount(String account);
 
-    @Query(nativeQuery = true, value = "select email from t_sys_user where roleid=5")
+    @Query(nativeQuery = true, value = "select email from t_sys_user where roleid=5 and status=1")
     List<String> getAllVendorEmail();
 
     @Query(nativeQuery = true, value = "select email from t_sys_user where id = (select create_by from t_biz_tender where id=?1)")

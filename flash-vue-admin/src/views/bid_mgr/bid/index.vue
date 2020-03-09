@@ -53,7 +53,7 @@
           {{scope.row.bidId}}
         </template>
       </el-table-column>
-      <el-table-column label="BID REF.NO.">
+      <el-table-column label="ORDER NO.">
         <template slot-scope="scope">
           {{scope.row.no}}
         </template>
@@ -143,7 +143,7 @@
           <p v-else>{{scope.row.confirmedPrice}}</p>
         </template>
       </el-table-column>
-      <el-table-column label="BID ACCEPT STATE">
+      <el-table-column label="ORDER ACCEPT STATE">
         <template slot-scope="scope">
           <p v-if="scope.row.isApproved===1">Approved</p>
           <p v-else-if="scope.row.isApproved===-1">Denied</p>
@@ -176,7 +176,7 @@
         </div>
         </template>
       </el-table-column>
-      <el-table-column label="BID STATE">
+      <el-table-column label="ORDER STATE">
         <template slot-scope="scope">
           {{scope.row.bidStatus}}
         </template>
@@ -279,12 +279,12 @@
         <!-- bid信息 -->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="SUPPLIER SUPPLY QUANTITY" prop="bidQuantity" >
+            <el-form-item label="SUPPLIER AVAILABLE PIECE" prop="bidQuantity" >
               <el-input v-model="form.quantity" ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="SUPPLIER SUPPLY WEIGHT" prop="weight">
+            <el-form-item label="SUPPLIER AVAILABLE QUANTITY BY WEIGHT (OPTION)" prop="weight">
               <el-col :span="12">
               <el-input v-model="form.weight" :disabled="true"></el-input>
               </el-col>
@@ -294,7 +294,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="TOTAL PRICE" prop="bidPrice">
+            <el-form-item label="UNIT PRICE (THB)" prop="bidPrice">
               <el-input v-model="form.price" ></el-input>
             </el-form-item>
           </el-col>

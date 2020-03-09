@@ -53,6 +53,10 @@ export default {
         status: '',
         invoiceNo: ''
       },
+      confirmedQuantityUnitOptions: [
+        { value: 'pieces', label: 'pieces' },
+        { value: 'weight', label: 'weight' }
+      ],
       statusData: [{
         host: '1. Purchase confirm supplier',
         vendor: ''
@@ -225,7 +229,6 @@ export default {
       })
     },
     changeStatus(row) {
-      //this.statusForm = this.selRow
       this.statusForm = row
       this.statusFormTitle = this.$t('business.statusChange')
       this.statusFormVisible = true
@@ -285,7 +288,9 @@ export default {
             moveBidToNextStatusWithQuantityPrice({
               id: id,
               confirmedQuantity: this.statusForm.confirmedQuantity,
-              confirmedPrice: this.statusForm.confirmedPrice
+              confirmedPrice: this.statusForm.confirmedPrice,
+              confirmedQuantityUnit: this.statusForm.confirmedQuantityUnit,
+              confirmedUnitPrice: this.statusForm.confirmedUnitPrice
             }).then(response => {
               loadingInstance2.close()
               this.$message({

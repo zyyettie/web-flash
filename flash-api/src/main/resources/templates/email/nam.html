@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Notify Supplier</title>
+    <title>Notification</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
@@ -45,17 +45,11 @@
        style="font-family:'Microsoft YaHei';">
     <div class="jumbotron jumbotron-fluid full-screen">
         <div class="container  full-screen">
-            <h3>Dear Vendor,</h3>
+            <h3>Dear Nam,</h3>
+            <br>
+            <p>For order <code style="color: #d57e13;"><span th:text="${bidNo}">bidNo</span></code>,  Supplier has been shipped gemstone out, please check and accept.</p><br>
 
-            <p>This is a confirmation email for product(s) <br><code style="color: #d57e13;"><span th:text="${name}">name</span></code> order <code style="color: #d57e13;"><span th:text="${bidNo}">bidNo</span></code>.<br>
-                Please send order items to our Bangkok office and attention of ChinaStone purchase team.<br>
-                <br>
-                On delivery, please clearly write the order number on sealed packing bag. Please describe product clearly, or note 'un-sure' on memo.<br>
-                If any purchase condition is required, please write on memo - if no we will consider as free selection.<br>
-                After delivery, you will receive an immediate confirmation email.
-            </p>
-
-            <span >Thank you<br>
+            <span >Thank you in advance,<br>
 Purchase team  China Stone Co.,Ltd</span>
         </div>
     </div>

@@ -40,12 +40,13 @@ export default {
     size: 'Global Size'
   },
   login: {
-    title: 'Bid Management System',
+    title: 'China Stone Purchase System',
     logIn: 'Log in',
     username: 'Username',
     password: 'Password',
     register: 'Register',
-    tip: 'No account?'
+    tip: 'No account?',
+    emailTip: 'Please login with your email'
   },
   button: {
     add: 'Add',

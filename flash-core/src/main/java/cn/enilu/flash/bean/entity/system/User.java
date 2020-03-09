@@ -46,4 +46,24 @@ public class User  extends BaseEntity {
     private Integer status;
     @Column
     private Integer version;
+
+    //ext fileds
+    @Column
+    private String companyName;
+    @Column
+    private String address;
+    @Column
+    private String registrationNo;
+    @Column
+    private String taxNo;
+    @Column
+    private String paymentTerms;
+    @Column
+    private String paymentType;
+    @Column
+    private String regType;
+    @Column
+    private Long idFile;
+    @Column
+    private String idNo;
 }

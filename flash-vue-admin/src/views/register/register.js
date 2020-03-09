@@ -1,4 +1,7 @@
 import { userRegister } from '@/api/system/user'
+import { Loading } from 'element-ui'
+import { getApiUrl } from '@/utils/utils'
+import { getToken } from '@/utils/auth'
 export default{
   data() {
     // var checkAge = (rule, value, callback) => {
@@ -43,6 +46,11 @@ export default{
       }
     }
     return {
+      uploadUrl: '',
+      uploadFileId: '',
+      uploadHeaders: {
+        'Authorization': ''
+      },
       registerForm: {
         id: '',
         account: '',
@@ -56,7 +64,10 @@ export default{
         registrationNo: '',
         taxNo: '',
         paymentTerms: '',
-        paymentType: ''
+        paymentType: '',
+        regType: '',
+        idFile: '',
+        idNo: ''
       },
       paymentTermsOptions: [
         { value: 'cash', label: 'cash' },
@@ -64,8 +75,12 @@ export default{
         { value: '60days', label: '60days' },
         { value: '90days', label: '90days' }],
       paymentTypeOptions: [
-        { value: 'by cheque', label: 'by cheque' },
-        { value: 'by TT', label: 'by TT' }],
+        { value: 'by Cheque', label: 'by Cheque' },
+        { value: 'by TT', label: 'by TT' },
+        { value: 'by Cash', label: 'by Cash' }],
+      regTypeOptions: [
+        { value: 'company', label: 'company' },
+        { value: 'broker', label: 'broker' }],
       rules: {
         password: [
           { validator: validatePass, trigger: 'blur' }
@@ -79,7 +94,14 @@ export default{
       }
     }
   },
+  created() {
+    this.init()
+  },
   methods: {
+    init() {
+      this.uploadUrl = getApiUrl() + '/file'
+      this.uploadHeaders['Authorization'] = getToken()
+    },
     submitForm() {
       this.$refs.registerForm.validate((valid) => {
         if (valid) {
@@ -95,7 +117,10 @@ export default{
             registrationNo: this.registerForm.registrationNo,
             taxNo: this.registerForm.taxNo,
             paymentTerms: this.registerForm.paymentTerms,
-            paymentType: this.registerForm.paymentType
+            paymentType: this.registerForm.paymentType,
+            regType: this.registerForm.regType,
+            idNo: this.registerForm.idNo,
+            idFile: this.uploadFileId
           }).then(response => {
             this.$message({
               message: this.$t('register.successMsg'),
@@ -124,6 +149,35 @@ export default{
     },
     returnLogin() {
       this.$router.push('/login')
+    },
+    // upload file
+    handleBeforeUpload() {
+      if (this.uploadFileId !== '') {
+        this.$message({
+          message: this.$t('common.mustSelectOne'),
+          type: 'warning'
+        })
+        return false
+      }
+      this.loadingInstance = Loading.service({
+        lock: true,
+        text: this.$t('common.uploading'),
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
+    },
+    handleUploadSuccess(response, raw) {
+      this.loadingInstance.close()
+      if (response.code === 20000) {
+        console.log(response.data)
+        this.uploadFileId = response.data.id
+        this.registerForm.fileName = response.data.originalFileName
+      } else {
+        this.$message({
+          message: this.$t('common.uploadError'),
+          type: 'error'
+        })
+      }
     }
   }
 }

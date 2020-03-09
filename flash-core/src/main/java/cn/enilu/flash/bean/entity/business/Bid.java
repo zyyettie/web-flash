@@ -37,7 +37,11 @@ public class Bid extends BaseEntity {
     @Column
     private Integer confirmedQuantity;
     @Column
+    private String confirmedQuantityUnit;
+    @Column
     private Float confirmedPrice;
+    @Column
+    private Float confirmedUnitPrice;
     @Column
     private Long idFile;
     @Column

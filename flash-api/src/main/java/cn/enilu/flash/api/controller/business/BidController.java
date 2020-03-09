@@ -14,6 +14,7 @@ import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.service.business.BidService;
 import cn.enilu.flash.service.business.TenderService;
 import cn.enilu.flash.service.system.UserService;
+import cn.enilu.flash.utils.DateTime;
 import cn.enilu.flash.utils.ToolUtil;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
@@ -28,6 +29,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import cn.enilu.flash.utils.DateTimeKit;
+
 
 @RestController
 @RequestMapping("/bid")
@@ -215,6 +218,14 @@ public class BidController extends BaseController{
     public Object moveToNextStatusWithDeliverInfo(@ModelAttribute Bid bid){
         bidService.moveToNextStatusWithDeliverInfo(bid.getId(), bid.getDeliverType(),bid.getDeliverNo());
 //        sendEmail(bid.getId());
+        //供货商货物发出后需要给Nam（人名）发邮件
+        String subject = "Gemstone has been shipped out for order" + bid.getNo();
+        String templateName = "nam";
+        Context context = new Context();
+        context.setVariable("bidNo",bid.getNo());
+        //String namEmail = "nam@mailchinastone.com";
+        String namEmail = "zyyettie@163.com";
+        mailService.sendTemplateMail(namEmail,subject,templateName,context);
         return Rets.success();
     }
 
@@ -228,15 +239,37 @@ public class BidController extends BaseController{
         Bid realBid = bidService.get(bidId);
         Tender tender = tenderService.get(realBid.getTenderId());
 //        String bidNo = realBid.getNo();
+        String tenderNo = tender.getNo();
+        Long bidCreateBy = bid.getCreateBy();
+        User user = userService.get(bidCreateBy);
+        String paymentTerms = user.getPaymentTerms();
+        String dueDate = "";
+        Date today = new Date();
+        switch (paymentTerms){
+            case "cash":
+                dueDate = DateTimeKit.now();
+                break;
+            case "30days":
+                dueDate = DateTimeKit.offsiteDay(today,30).toString();
+                break;
+            case "60days":
+                dueDate = DateTimeKit.offsiteDay(today,60).toString();
+                break;
+            case "90days":
+                dueDate = DateTimeKit.offsiteDay(today,90).toString();
+                break;
+        }
         //发送step4 邮件
-        String subject = "Confirmation Order Items";
+        String subject = "Confirmation Order Items - Order: " + tenderNo;
         String templateName = "step4";
         Context context = new Context();
+        context.setVariable("tenderNo",tenderNo);
         context.setVariable("name",tender.getName());
         context.setVariable("weight",tender.getWeight());
         context.setVariable("pieces",realBid.getConfirmedQuantity());
         context.setVariable("price",realBid.getConfirmedPrice());
         context.setVariable("totalPrice", realBid.getConfirmedPrice());
+        context.setVariable("dueDate", dueDate);
         String vendorEmail = userService.getVendorEmailByBidId(bidId);
         mailService.sendTemplateMail(vendorEmail,subject,templateName,context);
 //        sendEmail(bid.getId());
@@ -291,7 +324,7 @@ public class BidController extends BaseController{
         Tender tender = tenderService.get(bid.getTenderId());
         String tenderName = tender.getName();
         //发送step1 邮件
-        String subject = "Confirmation of product "+tenderName;
+        String subject = "Delivery Confirmation "+tenderName;
         String templateName = "step1";
         Context context = new Context();
         context.setVariable("name",tenderName);

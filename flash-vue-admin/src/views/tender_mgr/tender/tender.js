@@ -90,7 +90,8 @@ export default {
         { value: 'Natural', label: 'Natural' },
         { value: 'Heat', label: 'Heat' },
         { value: 'Unheat', label: 'Unheat' },
-        { value: 'Diffusion', label: 'Diffusion' }
+        { value: 'Diffusion', label: 'Diffusion' },
+        { value: 'Beryllium', label: 'Beryllium' }
       ],
       materialOptions: [
         { value: 'Rough stones', label: 'Rough stones' },
@@ -220,17 +221,16 @@ export default {
       this.isAdd = true
     },
     save() {
-      // 添加loading页面
-      let loadingInstance
-      const loadingOption = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          loadingInstance = Loading.service(loadingOption)
+          // 添加loading页面
+          const loadingOption = this.$loading({
+            lock: true,
+            text: 'Loading',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          })
+          const loadingInstance = Loading.service(loadingOption)
           saveTender({
             name: this.form.name,
             shape: this.form.shape,

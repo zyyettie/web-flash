@@ -86,7 +86,7 @@ export default {
     rules() {
       return {
         name: [
-          { required: true, message: 'SUPPLIER SUPPLY QUANTITY is required', trigger: 'blur' }
+          { required: true, message: 'SUPPLIER AVAILABLE PIECE is required', trigger: 'blur' }
         ],
         type: [
           { required: true, message: 'PRICE is required', trigger: 'blur' }

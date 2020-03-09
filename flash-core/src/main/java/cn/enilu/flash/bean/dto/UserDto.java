@@ -33,5 +33,15 @@ public class UserDto{
 	private Integer version;
 	private String avatar;
 
+	//ext fileds
+	private String companyName;
+	private String address;
+	private String registrationNo;
+	private String taxNo;
+	private String paymentTerms;
+	private String paymentType;
+	private String regType;
+	private Long idFile;
+	private String idNo;
 
 }

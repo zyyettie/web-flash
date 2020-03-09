@@ -218,7 +218,7 @@ export default {
         this.form = this.selRow
         this.form.status = this.selRow.statusName === '启用'
         this.form.password = ''
-        this.formTitle = '修改用户'
+        this.formTitle = 'Modify Account'
         this.formVisible = true
       }
     },

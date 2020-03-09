@@ -3,10 +3,10 @@
     <div class="block">
       <el-row  :gutter="20">
         <el-col :span="6">
-          <el-input v-model="listQuery.account" placeholder="请输入帐号"></el-input>
+          <el-input v-model="listQuery.account" placeholder="input account please"></el-input>
         </el-col>
         <el-col :span="6">
-          <el-input v-model="listQuery.name" placeholder="请输入姓名"></el-input>
+          <el-input v-model="listQuery.name" placeholder="input name please"></el-input>
         </el-col>
         <el-col :span="6">
           <el-button type="success" icon="el-icon-search" @click.native="search">{{ $t('button.search') }}</el-button>
@@ -25,7 +25,7 @@
           <el-button type="danger" icon="el-icon-delete" @click.native="remove" v-permission="['/mgr/delete']">
             {{$t('button.delete') }}
           </el-button>
-          <el-button type="info" icon="el-icon-role" @click.native="openRole">角色分配</el-button>
+          <el-button type="info" icon="el-icon-role" @click.native="openRole">Assign Role</el-button>
         </el-col>
       </el-row>
     </div>
@@ -34,52 +34,61 @@
     <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
     @current-change="handleCurrentChange">
 
-      <el-table-column label="账号">
+      <el-table-column label="Account">
         <template slot-scope="scope">
           {{scope.row.account}}
         </template>
       </el-table-column>
-      <el-table-column label="姓名">
+      <el-table-column label="Name">
         <template slot-scope="scope">
           {{scope.row.name}}
         </template>
       </el-table-column>
-      <el-table-column label="性别">
-        <template slot-scope="scope">
-          {{scope.row.sexName}}
-        </template>
-      </el-table-column>
-      <el-table-column label="角色">
+      <el-table-column label="Role">
         <template slot-scope="scope">
           {{scope.row.roleName}}
         </template>
       </el-table-column>
-      <el-table-column label="部门">
+      <el-table-column label="Department">
         <template slot-scope="scope">
           {{scope.row.deptName}}
         </template>
       </el-table-column>
-      <el-table-column label="邮箱">
+      <el-table-column label="Email">
         <template slot-scope="scope">
           {{scope.row.email}}
         </template>
       </el-table-column>
-      <el-table-column label="电话">
+      <el-table-column label="Tel.">
         <template slot-scope="scope">
           {{scope.row.phone}}
         </template>
       </el-table-column>
-      <el-table-column label="创建时间">
-        <template slot-scope="scope">
-          {{scope.row.createtime}}
-        </template>
-      </el-table-column>
-      <el-table-column label="状态">
+      <el-table-column label="Status">
         <template slot-scope="scope">
           {{scope.row.statusName}}
         </template>
       </el-table-column>
-
+      <el-table-column label="regType">
+        <template slot-scope="scope">
+          {{scope.row.regType}}
+        </template>
+      </el-table-column>
+      <el-table-column label="PaymentTerms">
+        <template slot-scope="scope">
+          {{scope.row.paymentTerms}}
+        </template>
+      </el-table-column>
+      <el-table-column label="PaymentType">
+        <template slot-scope="scope">
+          {{scope.row.paymentType}}
+        </template>
+      </el-table-column>
+      <el-table-column label="idNo">
+        <template slot-scope="scope">
+          {{scope.row.idNo}}
+        </template>
+      </el-table-column>
 
     </el-table>
 
@@ -102,46 +111,79 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="账户" prop="account">
+            <el-form-item label="Account" prop="account">
               <el-input v-model="form.account" minlength=1></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="姓名" prop="name">
+            <el-form-item label="Name" prop="name">
               <el-input v-model="form.name"  minlength=1></el-input>
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
-            <el-form-item label="性别">
-              <el-radio-group v-model="form.sex">
-                <el-radio :label="1">男</el-radio>
-                <el-radio :label="2">女</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="邮箱" prop="email">
+            <el-form-item label="Email" prop="email">
               <el-input v-model="form.email"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12" v-show="isAdd">
-            <el-form-item label="密码" prop="password">
+            <el-form-item label="Password" prop="password">
               <el-input v-model="form.password"  type="password"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12" v-show="isAdd">
-            <el-form-item label="确认密码" prop="rePassword">
+            <el-form-item label="Confirm Password" prop="rePassword">
               <el-input v-model="form.rePassword"  type="password"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="电话" prop="phone">
+            <el-form-item label="Phone" prop="phone">
               <el-input v-model="form.phone"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="所属部门" >
+            <el-form-item label="CompanyName" prop="companyName">
+              <el-input v-model="form.companyName"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="Address" prop="address">
+              <el-input v-model="form.address"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="RegistrationNo." prop="registrationNo">
+              <el-input v-model="form.registrationNo"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="TaxNo." prop="taxNo">
+              <el-input v-model="form.taxNo"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="IDNo." prop="idNo">
+              <el-input v-model="form.idNo"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="Reg.Type" prop="regType">
+              <el-input v-model="form.regType"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="PaymentTerms" prop="paymentTerms">
+              <el-input v-model="form.paymentTerms"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="PaymentType" prop="paymentType">
+              <el-input v-model="form.paymentType"></el-input>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item label="Department" >
               <el-input
                 placeholder="请选择所属部门"
                 v-model="form.deptName"
@@ -160,17 +202,25 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="是否启用" prop="status">
+            <el-form-item label="isActive" prop="status">
               <el-switch v-model="form.status"></el-switch>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="出生日期">
-                <el-date-picker type="date" placeholder="选择日期" v-model="form.birthday" style="width: 100%;">
 
-                </el-date-picker>
-            </el-form-item>
-          </el-col>
+        
+        <el-col :span="12">
+        <div v-if="scope.row.idFile!=='' && scope.row.idFile!==null && scope.row.idFile!==undefined">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="scope.row.img"/>
+            <img slot="reference" :src="scope.row.img" :alt="scope.row.img" style="max-height: 80px;max-width: 80px">
+          </el-popover>
+        </div>
+        </el-col>
+      
+
         </el-row>
         <el-form-item>
           <el-button type="primary" @click="saveUser">{{ $t('button.submit') }}</el-button>

@@ -6,13 +6,13 @@
       </div>
     <el-row>
       <el-col :span="12">
-      <el-form-item label="Email" prop="account">
-        <el-input v-model="registerForm.account" auto-complete="off"></el-input>
+      <el-form-item label="Name" prop="name">
+        <el-input v-model="registerForm.name" auto-complete="off"></el-input>
       </el-form-item>
       </el-col>
       <el-col :span="12">
-      <el-form-item label="Name" prop="name">
-        <el-input v-model="registerForm.name" auto-complete="off"></el-input>
+      <el-form-item label="Email" prop="account">
+        <el-input v-model="registerForm.account" auto-complete="off"></el-input>
       </el-form-item>
       </el-col>
       <el-col :span="12">
@@ -30,8 +30,28 @@
         <el-input v-model="registerForm.phone" auto-complete="off"></el-input>
       </el-form-item>
       </el-col>
+
       <el-col :span="12">
-      <el-form-item label="Company" prop="companyName">
+        <el-form-item label="Reg. Type" prop="regType">
+          <el-select v-model="registerForm.regType" placeholder="please select">
+            <el-option
+              v-for="item in regTypeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+
+      <el-col :span="12">
+      <el-form-item label="ID No." prop="idNo">
+        <el-input v-model="registerForm.idNo" auto-complete="off"></el-input>
+      </el-form-item>
+      </el-col>
+
+      <el-col :span="12">
+      <el-form-item label="Company Name" prop="companyName">
         <el-input type="textarea" :rows="1" v-model="registerForm.companyName" auto-complete="off"></el-input>
       </el-form-item>
       </el-col>
@@ -51,6 +71,7 @@
       </el-form-item>
       </el-col>
 
+
       <el-col :span="12">
         <el-form-item label="Payment Terms" prop="paymentTerms">
           <el-select v-model="registerForm.paymentTerms" placeholder="please select">
@@ -64,7 +85,7 @@
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="Payment" prop="paymentType">
+        <el-form-item label="Payment Method" prop="paymentType">
           <el-select v-model="registerForm.paymentType" placeholder="please select">
             <el-option
               v-for="item in paymentTypeOptions"
@@ -76,12 +97,26 @@
         </el-form-item>
       </el-col>
 
+      <!-- 上传身份图片-->
+      <el-col :span="12">
+        <el-form-item label="ID/LICENCE PICTURE">
+          <el-upload
+            class="upload-demo"
+            drag
+            :multiple=false
+            :action="uploadUrl"
+            :headers="uploadHeaders"
+            :before-upload="handleBeforeUpload"
+            :on-success="handleUploadSuccess"
+          >
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">Click to upload</div>
+          </el-upload>
+        </el-form-item>
+      </el-col>
+
       </el-row>
-      <!-- 年龄>
-      <el-form-item label="年龄" prop="age">
-        <el-input v-model.number="registerForm.age"></el-input>
-      </el-form-item>
-      <-->
+
       <el-form-item>
         <el-button type="primary" @click="submitForm('registerForm')">{{$t('button.submit')}}</el-button>
         <el-button @click="resetForm('registerForm')">{{$t('button.reset')}}</el-button>

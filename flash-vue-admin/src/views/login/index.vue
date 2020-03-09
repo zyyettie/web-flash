@@ -7,6 +7,12 @@
         <h3 class="title">{{ $t('login.title') }}</h3>
         <lang-select class="set-language"/>
       </div>
+      
+      <div style="position:relative">
+        <div class="tips">
+          <span>{{ $t('login.emailTip') }}</span>
+        </div>
+      </div>
 
       <el-form-item prop="username">
         <span class="svg-container">
