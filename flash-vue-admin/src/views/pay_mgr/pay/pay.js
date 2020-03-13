@@ -253,18 +253,17 @@ export default {
     //   })
     // },
     nextStepWithAdditionalInfo(id) {
-      // 添加loading页面
-      let loadingInstance
-      const loadingOption = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
       if (this.statusForm.bidStatus === 6) {
         this.$refs['statusForm'].validate((valid) => {
           if (valid) {
-            loadingInstance = Loading.service(loadingOption)
+            // 添加loading页面
+            const loadingOption = this.$loading({
+              lock: true,
+              text: 'Loading',
+              spinner: 'el-icon-loading',
+              background: 'rgba(0, 0, 0, 0.7)'
+            })
+            const loadingInstance = Loading.service(loadingOption)
             moveBidToNextStatusWithPayment({
               id: id,
               idFile: this.uploadFileId
@@ -282,7 +281,14 @@ export default {
           }
         })
       } else {
-        loadingInstance = Loading.service(this.loadingOption)
+        // 添加loading页面
+        const loadingOption = this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+        const loadingInstance = Loading.service(loadingOption)
         moveBidToNextStatus(id).then(response => {
           console.log(response)
           loadingInstance.close()

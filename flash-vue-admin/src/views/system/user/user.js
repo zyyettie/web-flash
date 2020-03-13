@@ -4,6 +4,7 @@ import { parseTime } from '@/utils/index'
 import { roleTreeListByIdUser } from '@/api/system/role'
 // 权限判断指令
 import permission from '@/directive/permission/index.js'
+import { getApiUrl } from '@/utils/utils'
 
 export default {
   directives: { permission },
@@ -44,7 +45,8 @@ export default {
         dept: '',
         status: true,
         deptid: 1,
-        deptName: ''
+        deptName: '',
+        img: ''
       },
       rules: {
         account: [
@@ -150,7 +152,7 @@ export default {
     },
     add() {
       this.resetForm()
-      this.formTitle = '添加用户'
+      this.formTitle = 'Add User'
       this.formVisible = true
       this.isAdd = true
     },
@@ -183,7 +185,7 @@ export default {
             form.createtime = parseTime(form.createtime)
             saveUser(form).then(response => {
               this.$message({
-                message: '提交成功',
+                message: 'submit successfully!',
                 type: 'success'
               })
               this.fetchData()
@@ -191,7 +193,7 @@ export default {
             })
           } else {
             this.$message({
-              message: '提交失败',
+              message: 'submit failed',
               type: 'error'
             })
           }
@@ -206,7 +208,7 @@ export default {
         return true
       }
       this.$message({
-        message: '请选中操作项',
+        message: 'please select account to proceed',
         type: 'warning'
       })
       return false
@@ -219,6 +221,8 @@ export default {
         this.form.status = this.selRow.statusName === '启用'
         this.form.password = ''
         this.formTitle = 'Modify Account'
+        //add for attachment picture
+        this.form.img = getApiUrl() + '/file/getImgStream?idFile=' + this.selRow.idFile
         this.formVisible = true
       }
     },

@@ -21,7 +21,7 @@
 			<!-- prod日志目录-用时copy到下面
 			<fileNamePattern>${catalina.base}/logs/api_%d{yyyy-MM-dd}.log</fileNamePattern>
 			-->
-			<fileNamePattern>${catalina.base}/logs/api_%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>/data/web-flash/runtime/log/api_%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>1000</maxHistory>
 		</rollingPolicy>
 		<encoder>

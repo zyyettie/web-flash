@@ -33,8 +33,8 @@ public interface BidRepository extends PagingAndSortingRepository<Bid, Long> {
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = true, value = "update t_biz_bid set status = status+1, confirmed_quantity=?2, confirmed_price=?3 where id=?1")
-    void moveToNextStatusWithQuantityPrice(Long id, Integer confirmedQuantity, Float confirmedPrice);
+    @Query(nativeQuery = true, value = "update t_biz_bid set status = status+1, confirmed_quantity=?2, confirmed_price=?3, confirmed_quantity_unit=?4, confirmed_unit_price=?5 where id=?1")
+    void moveToNextStatusWithQuantityPrice(Long id, Integer confirmedQuantity, Float confirmedPrice, String confirmedQuantityUnit, Float confirmedUnitPrice);
 
     @Transactional
     @Modifying

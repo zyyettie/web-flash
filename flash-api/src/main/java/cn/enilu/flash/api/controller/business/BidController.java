@@ -217,30 +217,34 @@ public class BidController extends BaseController{
     @BussinessLog(value = "移到供应商发货状态step2", key = "name", dict = BidDict.class)
     public Object moveToNextStatusWithDeliverInfo(@ModelAttribute Bid bid){
         bidService.moveToNextStatusWithDeliverInfo(bid.getId(), bid.getDeliverType(),bid.getDeliverNo());
-//        sendEmail(bid.getId());
+        Bid bidFromDB = bidService.get(bid.getId());
+        String bidNo = bidFromDB.getNo();
         //供货商货物发出后需要给Nam（人名）发邮件
-        String subject = "Gemstone has been shipped out for order" + bid.getNo();
+        String subject = "Gemstone has been shipped out for order" + bidNo;
         String templateName = "nam";
         Context context = new Context();
         context.setVariable("bidNo",bid.getNo());
-        //String namEmail = "nam@mailchinastone.com";
-        String namEmail = "zyyettie@163.com";
+        //查询nam的邮件, 暂定nam用户的id不会变，初始化时为50
+        User nam = userService.get(50L);
+        String namEmail = nam.getEmail();
+        context.setVariable("bidNo",bidNo);
+        context.setVariable("deliverType",bid.getDeliverType());
+        context.setVariable("deliverNo",bid.getDeliverNo());
         mailService.sendTemplateMail(namEmail,subject,templateName,context);
         return Rets.success();
     }
 
     @RequestMapping(value = "/moveToNextStatusWithQuantityPrice",method = RequestMethod.POST)
     @BussinessLog(value = "移到确认数量价格状态step4", key = "name", dict = BidDict.class)
-    public Object moveToNextStatusWithQuantityPrice(@ModelAttribute Bid bid){
-        bidService.moveToNextStatusWithQuantityPrice(bid.getId(), bid.getConfirmedQuantity(),bid.getConfirmedPrice());
+    public Object moveToNextStatusWithQuantityPrice(@ModelAttribute Bid bidDto){
+        bidService.moveToNextStatusWithQuantityPrice(bidDto.getId(), bidDto.getConfirmedQuantity(), bidDto.getConfirmedPrice(),bidDto.getConfirmedQuantityUnit(), bidDto.getConfirmedUnitPrice());
 
         //准备邮件信息
-        Long bidId =bid.getId();
+        Long bidId =bidDto.getId();
         Bid realBid = bidService.get(bidId);
         Tender tender = tenderService.get(realBid.getTenderId());
-//        String bidNo = realBid.getNo();
-        String tenderNo = tender.getNo();
-        Long bidCreateBy = bid.getCreateBy();
+        String bidNo = realBid.getNo();
+        Long bidCreateBy = realBid.getCreateBy();
         User user = userService.get(bidCreateBy);
         String paymentTerms = user.getPaymentTerms();
         String dueDate = "";
@@ -260,10 +264,10 @@ public class BidController extends BaseController{
                 break;
         }
         //发送step4 邮件
-        String subject = "Confirmation Order Items - Order: " + tenderNo;
+        String subject = "Confirmation Order Items - Order: " + bidNo;
         String templateName = "step4";
         Context context = new Context();
-        context.setVariable("tenderNo",tenderNo);
+        context.setVariable("bidNo",bidNo);
         context.setVariable("name",tender.getName());
         context.setVariable("weight",tender.getWeight());
         context.setVariable("pieces",realBid.getConfirmedQuantity());

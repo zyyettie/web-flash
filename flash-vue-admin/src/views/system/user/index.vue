@@ -168,17 +168,17 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="Reg.Type" prop="regType">
-              <el-input v-model="form.regType"></el-input>
+              <el-input v-model="form.regType" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="PaymentTerms" prop="paymentTerms">
-              <el-input v-model="form.paymentTerms"></el-input>
+              <el-input v-model="form.paymentTerms" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="PaymentType" prop="paymentType">
-              <el-input v-model="form.paymentType"></el-input>
+              <el-input v-model="form.paymentType" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
 
@@ -207,18 +207,19 @@
             </el-form-item>
           </el-col>
 
-        
-        <el-col :span="12">
-        <div v-if="scope.row.idFile!=='' && scope.row.idFile!==null && scope.row.idFile!==undefined">
-          <el-popover
-            placement="right"
-            title=""
-            trigger="click">
-            <img :src="scope.row.img"/>
-            <img slot="reference" :src="scope.row.img" :alt="scope.row.img" style="max-height: 80px;max-width: 80px">
-          </el-popover>
-        </div>
-        </el-col>
+          <el-col :span="12">
+          <div v-if="form.idFile!=='' && form.idFile!==null && form.idFile!==undefined">
+            <el-form-item label="ID/LICENCE PICTURE" prop="status">
+            <el-popover
+                placement="right"
+                title=""
+                trigger="click">
+                <img :src="form.img"/>
+                <img slot="reference" :src="form.img" :alt="form.img" style="max-height: 80px;max-width: 80px">
+              </el-popover>
+              </el-form-item>
+            </div>
+            </el-col>
       
 
         </el-row>

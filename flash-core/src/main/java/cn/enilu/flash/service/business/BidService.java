@@ -61,8 +61,8 @@ public class BidService {
         bidRepository.moveToNextStatusWithDeliverInfo(id, deliverType, deliverNo);
     }
 
-    public void moveToNextStatusWithQuantityPrice(Long id, Integer confirmedQuantity, Float confirmedPrice){
-        bidRepository.moveToNextStatusWithQuantityPrice(id, confirmedQuantity, confirmedPrice);
+    public void moveToNextStatusWithQuantityPrice(Long id, Integer confirmedQuantity, Float confirmedPrice, String confirmedQuantityUnit, Float confirmedUnitPrice){
+        bidRepository.moveToNextStatusWithQuantityPrice(id, confirmedQuantity, confirmedPrice, confirmedQuantityUnit, confirmedUnitPrice);
     }
 
     public void moveToNextStatusWithInvoice(Long id, Long invoiceIdFile, String invoiceNo){

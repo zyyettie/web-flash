@@ -7,6 +7,7 @@ import { getApiUrl } from '@/utils/utils'
 export default {
   data() {
     return {
+      loadingInstance: '',
       uploadUrl: '',
       uploadFileId: '',
       uploadHeaders: {
@@ -51,7 +52,11 @@ export default {
         id: '',
         no: '',
         status: '',
-        invoiceNo: ''
+        invoiceNo: '',
+        confirmedQuantity: '',
+        confirmedPrice: '',
+        confirmedQuantityUnit: '',
+        confirmedUnitPrice: ''
       },
       confirmedQuantityUnitOptions: [
         { value: 'pieces', label: 'pieces' },
@@ -94,8 +99,14 @@ export default {
   computed: {
     rules() {
       return {
-        name: [
-          { required: true, message: this.$t('config.name') + this.$t('common.isRequired'), trigger: 'blur' }
+        confirmedQuantity: [
+          { required: true, message: 'confirmedQuantity' + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
+        confirmedPrice: [
+          { required: true, message: 'confirmedPrice' + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
+        confirmedQuantityUnit: [
+          { required: true, message: 'confirmedQuantityUnit' + this.$t('common.isRequired'), trigger: 'blur' }
         ]
       }
     }
@@ -273,18 +284,17 @@ export default {
     //   })
     // },
     nextStepWithAdditionalInfo(id) {
-      // 添加loading页面
-      let loadingInstance2
-      const loadingOption = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
       if (this.statusForm.status === 3) {
         this.$refs['statusForm'].validate((valid) => {
           if (valid) {
-            loadingInstance2 = Loading.service(loadingOption)
+            // 添加loading页面
+            const loadingOption = this.$loading({
+              lock: true,
+              text: 'Loading',
+              spinner: 'el-icon-loading',
+              background: 'rgba(0, 0, 0, 0.7)'
+            })
+            const loadingInstance2 = Loading.service(loadingOption)
             moveBidToNextStatusWithQuantityPrice({
               id: id,
               confirmedQuantity: this.statusForm.confirmedQuantity,
@@ -305,7 +315,14 @@ export default {
           }
         })
       } else {
-        loadingInstance2 = Loading.service(this.loadingOption)
+        // 添加loading页面
+        const loadingOption = this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+        const loadingInstance2 = Loading.service(loadingOption)
         moveBidToNextStatusStep3(id).then(response => {
           loadingInstance2.close()
           console.log(response)
@@ -316,6 +333,14 @@ export default {
           this.fetchData()
           this.statusFormVisible = false
         })
+      }
+    },
+    calculateUnitPrice() {
+      if (this.statusForm.confirmedQuantity !== '0' && this.statusForm.confirmedQuantity !== '' && this.statusForm.confirmedQuantity !== null && this.statusForm.confirmedPrice !== '' && this.statusForm.confirmedPrice !== null) {
+        var unitPrice = this.statusForm.confirmedPrice / this.statusForm.confirmedQuantity
+        this.statusForm.confirmedUnitPrice = unitPrice.toFixed(2)
+      } else {
+        this.statusForm.confirmedUnitPrice = ''
       }
     }
 

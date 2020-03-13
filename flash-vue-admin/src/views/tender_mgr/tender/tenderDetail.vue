@@ -157,9 +157,14 @@
           {{scope.row.confirmedQuantity}}
         </template>
       </el-table-column>
+      <el-table-column label="CONFIRMED UNIT">
+        <template slot-scope="scope">
+          {{scope.row.confirmedQuantityUnit}}
+        </template>
+      </el-table-column>
       <el-table-column label="CONFIRMED PRICE">
         <template slot-scope="scope">
-          {{scope.row.confirmedPrice}}
+          {{scope.row.confirmedPrice}} ({{scope.row.confirmedUnitPrice}} THB/{{scope.row.confirmedQuantityUnit}})
         </template>
       </el-table-column>
       <el-table-column label="SUPPLIER">
@@ -267,7 +272,7 @@
           <el-col :span="12">
             <el-col :span="12">
             <el-form-item label="CONFIRMED QUANTITY" prop="confirmedQuantity">
-              <el-input v-model="statusForm.confirmedQuantity" ></el-input>
+              <el-input v-model="statusForm.confirmedQuantity" v-on:blur="calculateUnitPrice"></el-input>
             </el-form-item>
             </el-col>
             <el-select v-model="statusForm.confirmedQuantityUnit" placeholder="please select">
@@ -282,12 +287,12 @@
           <el-col :span="12">
             <el-form-item label="CONFIRMED PRICE" prop="confirmedPrice">
               <el-col :span="9">
-              <el-input v-model="statusForm.confirmedPrice" ></el-input>
+              <el-input v-model="statusForm.confirmedPrice" v-on:blur="calculateUnitPrice"></el-input>
               </el-col>
               <el-col :span="9">
               </el-col>
               <el-col :span="9">
-              <el-input v-model="statusForm.confirmedUnitPrice" disabled="true"></el-input>
+              <el-input v-model="statusForm.confirmedUnitPrice" :readonly="true" ></el-input>
               </el-col>
             </el-form-item>
           </el-col>
