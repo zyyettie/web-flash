@@ -4,6 +4,7 @@ import { Loading } from 'element-ui'
 export default {
   data() {
     return {
+      labelPosition: 'left',
       formVisible: false,
       formTitle: this.$t('business.addTender'),
       isAdd: true,
@@ -14,12 +15,12 @@ export default {
         color: '#FFFFFF',
         clarity: '',
         quantity: '',
-        weight: '',
-        unitOfWeight: '',
+        unitOfQuantity: '',
         enhance: '',
         material: '',
         dueDate: '',
         note: '',
+        unitOfNote: '',
         stoneUseFor: ''
       },
       listQuery: {
@@ -81,10 +82,13 @@ export default {
         { value: 'Loup Clean', label: 'Loup Clean' },
         { value: 'Eye Clean', label: 'Eye Clean' },
         { value: 'Commercial', label: 'Commercial' }],
-      unitOfWeightOptions: [
-        { value: 'ct', label: 'ct' },
-        { value: 'g', label: 'g' },
-        { value: 'kg', label: 'kg' }
+      unitOfQuantityOptions: [
+        { value: 'piece', label: 'piece' },
+        { value: 'carat', label: 'carat' }
+      ],
+      unitOfNoteOptions: [
+        { value: 'piece', label: 'piece' },
+        { value: 'carat', label: 'carat' }
       ],
       enhanceOptions: [
         { value: 'Natural', label: 'Natural' },
@@ -128,9 +132,12 @@ export default {
         clarity: [
           { required: true, message: 'CLARITY' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
-        // quantity: [
-        //  { required: true, message: 'PIECES' + this.$t('common.isRequired'), trigger: 'blur' }
-        // ],
+        quantity: [
+          { required: true, message: 'QUANTITY' + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
+        unitOfQuantity: [
+          { required: true, message: 'UnitOfQuantity' + this.$t('common.isRequired'), trigger: 'change' }
+        ],
         // weight: [
         //  { required: true, message: 'WEIGHT' + this.$t('common.isRequired'), trigger: 'blur' }
         // ],
@@ -140,8 +147,14 @@ export default {
         material: [
           { required: true, message: 'MATERIAL' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
+        note: [
+          { required: true, message: 'PRICE RANGE(THB)' + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
+        unitOfNote: [
+          { required: true, message: 'Unit of Price Range' + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
         dueDate: [
-          { required: true, message: 'CLOSE DATE' + this.$t('common.isRequired'), trigger: 'blur' }
+          { required: true, message: 'CLOSE DATE' + this.$t('common.isRequired'), trigger: 'change' }
         ],
         stoneUseFor: [
           { required: true, message: 'USE FOR' + this.$t('common.isRequired'), trigger: 'blur' }
@@ -206,11 +219,11 @@ export default {
         color: '#BF2929',
         clarity: '',
         quantity: '',
-        weight: '',
-        unitOfWeight: '',
+        unitOfQuantity: '',
         enhance: '',
         dueDate: '',
         note: '',
+        unitOfNote: '',
         stoneUseFor: ''
       }
     },
@@ -239,12 +252,12 @@ export default {
             colorNote: this.form.colorNote,
             clarity: this.form.clarity,
             quantity: this.form.quantity,
-            weight: this.form.weight,
-            unitOfWeight: this.form.unitOfWeight,
+            unitOfQuantity: this.form.unitOfQuantity,
             enhance: this.form.enhance,
             material: this.form.material,
             dueDate: this.form.dueDate,
             note: this.form.note,
+            unitOfNote: this.form.unitOfNote,
             stoneUseFor: this.form.stoneUseFor
           }).then(response => {
             loadingInstance.close()
@@ -308,12 +321,14 @@ export default {
           shape: rowData.shape,
           size: rowData.size,
           color: rowData.color,
+          colorNote: rowData.colorNote,
           clarity: rowData.clarity,
           quantity: rowData.quantity,
-          weight: rowData.weight,
-          unitOfWeight: rowData.unitOfWeight,
+          unitOfQuantity: rowData.unitOfQuantity,
           enhance: rowData.enhance,
           material: rowData.material,
+          note: rowData.note,
+          unitOfNote: rowData.unitOfNote,
           dueDate: rowData.dueDate,
           status: rowData.status
         }

@@ -37,9 +37,7 @@ public class Tender extends BaseEntity {
     @Column
     private Integer quantity;
     @Column
-    private Float weight;
-    @Column
-    private String unitOfWeight;
+    private String unitOfQuantity;
     @Column
     private String enhance;
     @Column
@@ -60,4 +58,6 @@ public class Tender extends BaseEntity {
     private String stoneUseFor;
     @Column
     private String note;
+    @Column
+    private String unitOfNote;
 }

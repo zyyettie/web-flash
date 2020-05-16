@@ -28,13 +28,18 @@ public interface BidRepository extends PagingAndSortingRepository<Bid, Long> {
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = true, value = "update t_biz_bid set status = status+1, deliver_type=?2, deliver_no=?3 where id=?1")
-    void moveToNextStatusWithDeliverInfo(Long id, Integer deliverType, String deliverNo);
+    @Query(nativeQuery = true, value = "update t_biz_bid set status = 1 where id=?1")
+    void moveBackToStatus1(Long id);
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = true, value = "update t_biz_bid set status = status+1, confirmed_quantity=?2, confirmed_price=?3, confirmed_quantity_unit=?4, confirmed_unit_price=?5 where id=?1")
-    void moveToNextStatusWithQuantityPrice(Long id, Integer confirmedQuantity, Float confirmedPrice, String confirmedQuantityUnit, Float confirmedUnitPrice);
+    @Query(nativeQuery = true, value = "update t_biz_bid set status = status+1, deliver_type=?2, deliver_no=?3, memo_no=?4 where id=?1")
+    void moveToNextStatusWithDeliverInfo(Long id, Integer deliverType, String deliverNo, String memoNo);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "update t_biz_bid set status = status+1, confirmed_quantity=?2, confirmed_price=?3, confirmed_quantity_unit=?4, confirmed_price_unit=?5 where id=?1")
+    void moveToNextStatusWithQuantityPrice(Long id, Integer confirmedQuantity, Float confirmedPrice, String confirmedQuantityUnit, String confirmedPriceUnit);
 
     @Transactional
     @Modifying
@@ -58,6 +63,6 @@ public interface BidRepository extends PagingAndSortingRepository<Bid, Long> {
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = true, value = "update t_biz_bid set quantity=?2, price=?3 where id=?1")
-    void updateQuantityAndPrice(Long id, Integer quantity, Float price);
+    @Query(nativeQuery = true, value = "update t_biz_bid set quantity=?2, unit_of_bid_quantity=?3, price=?4, unit_of_bid_price=?5 where id=?1")
+    void updateQuantityAndPrice(Long id, Integer quantity, String unitOfBidQuantity, Float price, String unitOfBidPrice);
 }

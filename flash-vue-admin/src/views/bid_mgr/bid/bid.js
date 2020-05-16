@@ -8,13 +8,15 @@ import { getToken } from '@/utils/auth'
 export default {
   data() {
     return {
+      dialogVisible: false,
+      labelPosition: 'left',
       uploadUrl: '',
       uploadFileId: '',
       uploadHeaders: {
         'Authorization': ''
       },
       formVisible: false,
-      formTitle: this.$t('business.modify'),
+      formTitle: 'ORDER INFORMATION',
       isAdd: true,
       form: {
         quantity: '',
@@ -32,6 +34,14 @@ export default {
         { value: 'carat', label: 'carat' },
         { value: 'piece', label: 'piece' }
       ],
+      unitOfBidQuantityOptions: [
+        { value: 'piece', label: 'piece' },
+        { value: 'carat', label: 'carat' }
+      ],
+      unitOfBidPriceOptions: [
+        { value: 'piece', label: 'piece' },
+        { value: 'carat', label: 'carat' }
+      ],
       listQuery: {
         page: 1,
         limit: 20,
@@ -45,7 +55,8 @@ export default {
       statusForm: {
         id: '',
         no: '',
-        status: ''
+        status: '',
+        deliverType: 1
       },
       statusFormTitle: 'business.statusChange',
       statusFormVisible: false,
@@ -88,6 +99,12 @@ export default {
       return {
         name: [
           { required: true, message: 'SUPPLIER AVAILABLE PIECE is required', trigger: 'blur' }
+        ],
+        deliverNo: [
+          { required: true, message: 'deliverNo is required', trigger: 'blur' }
+        ],
+        memoNo: [
+          { required: true, message: 'memoNo is required', trigger: 'blur' }
         ],
         type: [
           { required: true, message: 'PRICE is required', trigger: 'blur' }
@@ -168,21 +185,22 @@ export default {
       this.isAdd = true
     },
     save() {
-      // 添加loading页面
-      let loadingInstance
-      const loadingOption = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          loadingInstance = Loading.service(loadingOption)
+          // 添加loading页面
+          const loadingOption = this.$loading({
+            lock: true,
+            text: 'Loading',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          })
+          const loadingInstance = Loading.service(loadingOption)
           saveBid({
             id: this.form.bidId,
-            quantity: this.form.quantity,
-            price: this.form.price
+            quantity: this.form.bidQuantity,
+            unitOfBidQuantity: this.form.unitOfBidQuantity,
+            price: this.form.bidPrice,
+            unitOfBidPrice: this.form.unitOfBidPrice
           }).then(response => {
             loadingInstance.close()
             this.$message({
@@ -272,6 +290,13 @@ export default {
         })
       }
     },
+    handleUploadRemove(file) {
+      this.uploadFileId = ''
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
+    },
     // nextStep(id) {
     //   moveBidToNextStatus(id).then(response => {
     //     console.log(response)
@@ -298,7 +323,8 @@ export default {
             moveBidToNextStatusWithDeliverInfo({
               id: id,
               deliverType: this.statusForm.deliverType,
-              deliverNo: this.statusForm.deliverNo
+              deliverNo: this.statusForm.deliverNo,
+              memoNo: this.statusForm.memoNo
             }).then(response => {
               loadingInstance.close()
               this.$message({

@@ -10,13 +10,14 @@ public class Bidtender {
     private Long bidId;
     private String no;
     private int quantity;
+    private String unitOfBidQuantity;
     private Float price;
-    private Float weight;
-    private String unitOfWeight;
+    private String unitOfBidPrice;
     private int isApproved;
     private int bidStatus;
     private int deliverType;
     private String deliverNo;
+    private String memoNo;
     private int confirmedQuantity;
     private Float confirmedPrice;
     private Long tenderId;
@@ -33,8 +34,7 @@ public class Bidtender {
     private String colorNote;
     private String clarity;
     private Integer tenderQuantity;
-    private Float tenderWeight;
-    private String tenderUnitOfWeight;
+    private String tenderUnitOfQuantity;
     private String enhance;
     private String material;
     private String note;

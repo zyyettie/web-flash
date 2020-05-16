@@ -15,8 +15,7 @@ public class TenderDto {
     private String colorNote;
     private String clarity;
     private Integer quantity;
-    private Float weight;
-    private String unitOfWeight;
+    private String unitOfQuantity;
     private String enhance;
     private String material;
     private String status;
@@ -26,6 +25,7 @@ public class TenderDto {
     private Integer isDelete;
     private String stoneUseFor;
     private String note;
+    private String unitOfNote;
 
     private String UserName;
 }

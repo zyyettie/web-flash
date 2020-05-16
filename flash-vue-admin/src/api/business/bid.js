@@ -56,6 +56,13 @@ export function moveBidToNextStatusStep3(id) {
   })
 }
 
+export function moveBidBackToStep2(id) {
+  return request({
+    url: '/bid/moveBackToStep2/' + id,
+    method: 'get'
+  })
+}
+
 export function moveBidToNextStatusWithDeliverInfo(params) {
   return request({
     url: '/bid/moveToNextStatusWithDeliverInfo',

@@ -6,6 +6,7 @@ import { Loading } from 'element-ui'
 export default {
   data() {
     return {
+      labelPosition: 'left',
       formVisible: false,
       formTitle: this.$t('config.add'),
       isAdd: true,
@@ -40,9 +41,13 @@ export default {
       list: null,
       listLoading: true,
       selRow: {},
-      weightOptions: [
-        { value: 'carat', label: 'carat' },
-        { value: 'piece', label: 'piece' }
+      unitOfBidQuantityOptions: [
+        { value: 'piece', label: 'piece' },
+        { value: 'carat', label: 'carat' }
+      ],
+      unitOfBidPriceOptions: [
+        { value: 'piece', label: 'piece' },
+        { value: 'carat', label: 'carat' }
       ],
       bidListForCurrentUser: null
     }
@@ -129,22 +134,21 @@ export default {
       this.isAdd = true
     },
     save() {
-      // 添加loading页面
-      let loadingInstance
-      const loadingOption = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
       this.$refs['bidForm'].validate((valid) => {
         if (valid) {
-          loadingInstance = Loading.service(loadingOption)
+          // 添加loading页面
+          const loadingOption = this.$loading({
+            lock: true,
+            text: 'Loading',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          })
+          const loadingInstance = Loading.service(loadingOption)
           saveTenderBid({
             quantity: this.bidForm.bidQuantity,
-            weight: this.bidForm.weight,
-            unitOfWeight: this.bidForm.unitOfWeight,
+            unitOfBidQuantity: this.bidForm.unitOfBidQuantity,
             price: this.bidForm.bidPrice,
+            unitOfBidPrice: this.bidForm.unitOfBidPrice,
             tenderId: this.bidForm.id
           }).then(response => {
             loadingInstance.close()

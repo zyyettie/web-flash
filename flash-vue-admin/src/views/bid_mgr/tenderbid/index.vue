@@ -57,11 +57,6 @@
           {{scope.row.quantity}}
         </template>
       </el-table-column>
-      <el-table-column label="WEIGHT">
-        <template slot-scope="scope">
-          {{scope.row.weight}}{{scope.row.unitOfWeight}}
-        </template>
-      </el-table-column>
       <el-table-column label="CLARITY">
         <template slot-scope="scope">
           {{scope.row.clarity}}
@@ -115,106 +110,135 @@
       :title="bidFormTitle"
       :visible.sync="bidFormVisible"
       width="70%">
-      <el-form ref="bidForm" :model="bidForm" :rules="rules" label-width="80px">
+      <div slot="title">
+        <span>ORDER REF.NO.:</span>
+        <el-input v-model="bidForm.no" :disabled="true" style="width:300px"></el-input>
+        <span style="float:right; margin-right:25px; color:green" >OPEN ORDER</span>
+      </div>
+      <el-form ref="bidForm" :model="bidForm" :rules="rules" :label-position="labelPosition" label-width="160px">
         <!-- tender信息 -->
         <el-row>
-          <el-col :span="24">
-            <el-form-item label="ORDER REF.NO." prop="no">
-              <el-input v-model="bidForm.no" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
           <el-col :span="12">
             <el-form-item label="GEMSTONE" prop="name">
+              <el-col :span="12">
               <el-input v-model="bidForm.name" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="COLOR" prop="color">
               <el-tag :color="bidForm.color"></el-tag>
-              <el-col :span="9">
+              <el-col :span="12">
               <el-input v-model="bidForm.colorNote" :disabled="true"></el-input>
               </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="SHAPE" prop="shape">
+              <el-col :span="12">
               <el-input v-model="bidForm.shape" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="SIZE" prop="size">
-              <el-input v-model="bidForm.size" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="PIECES" prop="quantity">
-              <el-input v-model="bidForm.quantity" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="WEIGHT" prop="weight">
-              <el-col :span="12">
-              <el-input v-model="bidForm.weight" :disabled="true"></el-input>
               </el-col>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="SIZE(mm)" prop="size">
               <el-col :span="12">
-              <el-input v-model="bidForm.unitOfWeight" :disabled="true"></el-input>
+              <el-input v-model="bidForm.size" :disabled="true"></el-input>
+              </el-col>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="QUANTITY" prop="quantity">
+              <el-col :span="12">
+              <el-input v-model="bidForm.quantity" :disabled="true"></el-input>
+              </el-col>
+              <el-col :span="6">
+              <el-input v-model="bidForm.unitOfQuantity" :disabled="true"></el-input>
               </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="CLARITY" prop="clarity">
+              <el-col :span="12">
               <el-input v-model="bidForm.clarity" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="TREATMENT" prop="enhance">
+              <el-col :span="12">
               <el-input v-model="bidForm.enhance" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="MATERIAL" prop="material">
+              <el-col :span="12">
               <el-input v-model="bidForm.material" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="CLOSE DATE" prop="dueDate">
-              <el-input v-model="bidForm.dueDate" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="PRICE RANGE" prop="note">
+              <el-col :span="12">
               <el-input v-model="bidForm.note" :disabled="true"></el-input>
-            </el-form-item>
-          <el-col :span="12">
-            <el-form-item label="ORDER STATE" prop="status">
-              <el-input v-model="bidForm.status" :disabled="true"></el-input>
+              </el-col>
+              <el-col :span="6">
+              <el-input v-model="bidForm.unitOfNote" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="CLOSE DATE" prop="dueDate">
+              <el-col :span="12">
+              <el-input v-model="bidForm.dueDate" :disabled="true"></el-input>
+              </el-col>
+            </el-form-item>
           </el-col>
         </el-row>
+
+        <!-- 分隔线 -->
+        <el-divider></el-divider>
+        <br>
+        <br>
         <!-- bid信息 -->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="SUPPLIER AVAILABLE PIECE" label-width="220px"  prop="bidQuantity" >
+            <el-form-item label="SUPPLIER AVAILABLE QUANTITY"  prop="bidQuantity" >
+              <el-col :span="12">
               <el-input v-model="bidForm.bidQuantity" ></el-input>
+              </el-col>
+              <el-col :span="12">
+              <el-select v-model="bidForm.unitOfBidQuantity" style="width:60%" placeholder="please select">
+                <el-option
+                  v-for="item in unitOfBidQuantityOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="SUPPLIER AVAILABLE QUANTITY BY WEIGHT (OPTION)" label-width="300px" prop="weight">
+            <el-form-item label="UNIT PRICE (THB)"  prop="bidPrice">
               <el-col :span="12">
-              <el-input v-model="bidForm.weight" :disabled="true"></el-input>
-              </el-col>
-              <el-col :span="12">
-              <el-input v-model="bidForm.unitOfWeight" :disabled="true"></el-input>
-              </el-col>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="UNIT PRICE (THB)" label-width="146px" prop="bidPrice">
               <el-input v-model="bidForm.bidPrice" ></el-input>
+              </el-col>
+              <el-col :span="12">
+              <el-select v-model="bidForm.unitOfBidPrice" style="width:60%" placeholder="please select">
+                <el-option
+                  v-for="item in unitOfBidPriceOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+              </el-col>
             </el-form-item>
           </el-col>
         </el-row>
+        <br>
         <el-form-item>
           <el-button type="primary" @click="save">{{ $t('button.submit') }}</el-button>
           <el-button @click.native="bidFormVisible = false">{{ $t('button.cancel') }}</el-button>

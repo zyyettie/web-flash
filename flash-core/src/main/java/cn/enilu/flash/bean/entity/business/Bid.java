@@ -19,11 +19,11 @@ public class Bid extends BaseEntity {
     @Column
     private Integer quantity;
     @Column
+    private String unitOfBidQuantity;
+    @Column
     private Float price;
     @Column
-    private Float weight;
-    @Column
-    private String unitOfWeight;
+    private String unitOfBidPrice;
     @Column
     private String contact;
     @Column
@@ -35,13 +35,15 @@ public class Bid extends BaseEntity {
     @Column
     private String deliverNo;
     @Column
+    private String memoNo;
+    @Column
     private Integer confirmedQuantity;
     @Column
     private String confirmedQuantityUnit;
     @Column
     private Float confirmedPrice;
     @Column
-    private Float confirmedUnitPrice;
+    private String confirmedPriceUnit;
     @Column
     private Long idFile;
     @Column

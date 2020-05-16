@@ -8,26 +8,34 @@
       </el-row>
     </div>
     <!-- 标书信息 -->
-    <el-form ref="bidForm" :model="bidForm" :rules="rules" label-width="80px">
+    <el-form ref="bidForm" :model="bidForm" :rules="rules" :label-position="labelPosition" label-width="160px">
         <el-row>
           <el-col :span="12">
             <el-form-item label="ORDER REF.NO." prop="no">
+              <el-col :span="12">
               <el-input v-model="bidForm.no" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="GEMSTONE" prop="name">
+              <el-col :span="12">
               <el-input v-model="bidForm.name" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="SHAPE" prop="shape">
+              <el-col :span="12">
               <el-input v-model="bidForm.shape" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="SIZE" prop="size">
+              <el-col :span="12">
               <el-input v-model="bidForm.size" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -40,47 +48,57 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="CLARITY" prop="clarity">
+              <el-col :span="12">
               <el-input v-model="bidForm.clarity" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="PIECES" prop="quantity">
-              <el-input v-model="bidForm.quantity" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="WEIGHT BY PIECE" prop="weight">
-              <el-col :span="12">
-              <el-input v-model="bidForm.weight" :disabled="true"></el-input>
               </el-col>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="QUANTITY" prop="quantity">
               <el-col :span="12">
-              <el-input v-model="bidForm.unitOfWeight" :disabled="true"></el-input>
+              <el-input v-model="bidForm.quantity" :disabled="true"></el-input>
+              </el-col>
+              <el-col :span="4">
+              <el-input v-model="bidForm.unitOfQuantity" :disabled="true"></el-input>
               </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="TREATMENT" prop="enhance">
+              <el-col :span="12">
               <el-input v-model="bidForm.enhance" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="MATERIAL" prop="material">
+              <el-col :span="12">
               <el-input v-model="bidForm.material" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="PRICE RANGE(THB)" prop="note">
+              <el-col :span="12">
               <el-input v-model="bidForm.note" :disabled="true"></el-input>
+              </el-col>
+              <el-col :span="4">
+              <el-input v-model="bidForm.unitOfNote" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="ORDER STATUS" prop="status">
+              <el-col :span="12">
               <el-input v-model="bidForm.status" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="CLOSE DATE" prop="dueDate">
+              <el-col :span="12">
               <el-input v-model="bidForm.dueDate" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
         </el-row>
@@ -124,19 +142,14 @@
           {{scope.row.no}}
         </template>
       </el-table-column>
-      <el-table-column label="WEIGHT">
-        <template slot-scope="scope">
-          {{scope.row.weight}}{{scope.row.unitOfWeight}}
-        </template>
-      </el-table-column>
-      <el-table-column label="PIECES">
+      <el-table-column label="QUANTITY">
         <template slot-scope="scope">
           {{scope.row.quantity}}
         </template>
       </el-table-column>
       <el-table-column label="PRICE">
         <template slot-scope="scope">
-          {{scope.row.price}}
+          {{scope.row.price}}/{{scope.row.unitOfBidPrice}}
         </template>
       </el-table-column>
       <el-table-column label="DELIVER TYPE">
@@ -164,7 +177,7 @@
       </el-table-column>
       <el-table-column label="CONFIRMED PRICE">
         <template slot-scope="scope">
-          {{scope.row.confirmedPrice}} ({{scope.row.confirmedUnitPrice}} THB/{{scope.row.confirmedQuantityUnit}})
+          {{scope.row.confirmedPrice}} THB/{{scope.row.confirmedQuantityUnit}}
         </template>
       </el-table-column>
       <el-table-column label="SUPPLIER">
@@ -192,7 +205,7 @@
         </div>
         </template>
       </el-table-column>
-      <el-table-column label="ATTACHMENT">
+      <el-table-column label="PAYMENT">
         <template slot-scope="scope">
         <div v-if="scope.row.idFile!=='' && scope.row.idFile!==null && scope.row.idFile!==undefined">
           <el-popover
@@ -205,7 +218,7 @@
         </div>
         </template>
       </el-table-column>
-      <el-table-column label="ORDER STATUS">
+      <el-table-column label="ORDER STEP">
         <template slot-scope="scope">
           {{scope.row.status}}
         </template>
@@ -230,7 +243,7 @@
           :title="statusFormTitle"
           :visible.sync="statusFormVisible"
           width="70%">
-      <el-form ref="statusForm" :model="statusForm" :rules="rules" label-width="80px">
+      <el-form ref="statusForm" :model="statusForm" :rules="rules" :label-position="labelPosition" label-width="160px">
         <el-row>
           <el-col :span="12">
             <el-form-item label="ORDER NO." prop="no">
@@ -267,14 +280,32 @@
         </el-row>
         <br>
         <el-row>
-          <!-- 确认数量/价格-->
-          <div v-if="statusForm.status === 3">
+          <!-- 确认供应商发货数量是否正确-->
+          <div v-if="statusForm.status === 2">
           <el-col :span="12">
-            <el-col :span="12">
-            <el-form-item label="CONFIRMED QUANTITY" prop="confirmedQuantity">
-              <el-input v-model="statusForm.confirmedQuantity" v-on:blur="calculateUnitPrice"></el-input>
+            <el-form-item label="DELIVER QUANTITY CORRECT" prop="isDeliverQuantityCorrect">
+              <el-col :span="12">
+              <el-select v-model="statusForm.isDeliverQuantityCorrect" placeholder="please select">
+                  <el-option
+                    v-for="item in isDeliverQuantityCorrectOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+              </el-select>
+              </el-col>
             </el-form-item>
+          </el-col>
+          </div>
+          <!-- 确认数量/价格-->
+          <div v-else-if="statusForm.status === 3">
+          <el-col :span="12">
+            <el-form-item label="CONFIRMED QUANTITY" prop="confirmedQuantity">
+            <el-col :span="9">
+              <!--<el-input v-model="statusForm.confirmedQuantity" v-on:blur="calculateUnitPrice"></el-input>-->
+              <el-input v-model="statusForm.confirmedQuantity" ></el-input>
             </el-col>
+            <el-col :span="9">
             <el-select v-model="statusForm.confirmedQuantityUnit" placeholder="please select">
                 <el-option
                   v-for="item in confirmedQuantityUnitOptions"
@@ -283,16 +314,24 @@
                   :value="item.value">
                 </el-option>
             </el-select>
+            </el-col>
+            </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="CONFIRMED PRICE" prop="confirmedPrice">
               <el-col :span="9">
-              <el-input v-model="statusForm.confirmedPrice" v-on:blur="calculateUnitPrice"></el-input>
+              <!--<el-input v-model="statusForm.confirmedPrice" v-on:blur="calculateUnitPrice"></el-input>-->
+              <el-input v-model="statusForm.confirmedPrice"></el-input>
               </el-col>
               <el-col :span="9">
-              </el-col>
-              <el-col :span="9">
-              <el-input v-model="statusForm.confirmedUnitPrice" :readonly="true" ></el-input>
+              <el-select v-model="statusForm.confirmedPriceUnit" placeholder="please select">
+                  <el-option
+                    v-for="item in confirmedPriceUnitOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+              </el-select>
               </el-col>
             </el-form-item>
           </el-col>

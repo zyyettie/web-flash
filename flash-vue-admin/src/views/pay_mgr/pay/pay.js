@@ -1,4 +1,4 @@
-import { delBid, getBidListForPayment, saveBid, moveBidToNextStatus } from '@/api/business/bid'
+import { delBid, getBidListForPayment, moveBidToNextStatus } from '@/api/business/bid'
 import { moveBidToNextStatusWithPayment } from '@/api/business/bid'
 import { getApiUrl } from '@/utils/utils'
 import { Loading } from 'element-ui'
@@ -7,6 +7,7 @@ import { getToken } from '@/utils/auth'
 export default {
   data() {
     return {
+      dialogVisible: false,
       uploadUrl: '',
       uploadFileId: '',
       uploadHeaders: {
@@ -240,6 +241,13 @@ export default {
           type: 'error'
         })
       }
+    },
+    handleUploadRemove(file) {
+      this.uploadFileId = ''
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
     },
     // nextStep(id) {
     //   moveBidToNextStatus(id).then(response => {

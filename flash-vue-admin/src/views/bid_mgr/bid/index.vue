@@ -78,19 +78,14 @@
           {{scope.row.shape}}
         </template>
       </el-table-column>
-      <el-table-column label="SIZE">
+      <el-table-column label="SIZE(mm)">
         <template slot-scope="scope">
           {{scope.row.size}}
         </template>
       </el-table-column>
-      <el-table-column label="PIECES">
+      <el-table-column label="QUANTITY">
         <template slot-scope="scope">
           {{scope.row.quantity}}
-        </template>
-      </el-table-column>
-      <el-table-column label="WEIGHT">
-        <template slot-scope="scope">
-          {{scope.row.weight}}{{scope.row.unitOfWeight}}
         </template>
       </el-table-column>
       <el-table-column label="CLARITY">
@@ -200,102 +195,130 @@
       :title="formTitle"
       :visible.sync="formVisible"
       width="70%">
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <div slot="title">
+        <span>ORDER REF.NO.:</span>
+        <el-input v-model="form.no" :disabled="true" style="width:300px"></el-input>
+        <span style="float:right; margin-right:25px; color:green" >OPEN ORDER</span>
+      </div>
+      <el-form ref="form" :model="form" :rules="rules" :label-position="labelPosition" label-width="160px">
         <el-row>
-          <el-col :span="24">
-            <el-form-item label="ORDER REF.NO." prop="no">
-              <el-input v-model="form.no" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
           <el-col :span="12">
             <el-form-item label="GEMSTONE" prop="name">
+              <el-col :span="12">
               <el-input v-model="form.name" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="COLOR" prop="color">
               <el-tag :color="form.color"></el-tag>
-              <el-col :span="9">
+              <el-col :span="12">
               <el-input v-model="form.colorNote" :disabled="true"></el-input>
               </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="SHAPE" prop="shape">
+              <el-col :span="12">
               <el-input v-model="form.shape" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="SIZE" prop="size">
-              <el-input v-model="form.size" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="PIECES" prop="quantity">
-              <el-input v-model="form.tenderQuantity" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="WEIGHT" prop="weight">
-              <el-col :span="12">
-              <el-input v-model="form.weight" :disabled="true"></el-input>
               </el-col>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="SIZE(mm)" prop="size">
               <el-col :span="12">
-              <el-input v-model="form.unitOfWeight" :disabled="true"></el-input>
+              <el-input v-model="form.size" :disabled="true"></el-input>
+              </el-col>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="QUANTITY" prop="quantity">
+              <el-col :span="12">
+              <el-input v-model="form.quantity" :disabled="true"></el-input>
+              </el-col>
+              <el-col :span="6">
+              <el-input v-model="form.unitOfQuantity" :disabled="true"></el-input>
               </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="CLARITY" prop="clarity">
+              <el-col :span="12">
               <el-input v-model="form.clarity" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="TREATMENT" prop="enhance">
+              <el-col :span="12">
               <el-input v-model="form.enhance" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="MATERIAL" prop="material">
+              <el-col :span="12">
               <el-input v-model="form.material" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="PIRCE RANGE" prop="note">
+              <el-col :span="12">
               <el-input v-model="form.note" :disabled="true"></el-input>
+              </el-col>
+              <el-col :span="6">
+              <el-input v-model="form.unitOfNote" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="CLOSE DATE" prop="dueDate">
+              <el-col :span="12">
               <el-input v-model="form.dueDate" :disabled="true"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="ORDER STATE" prop="tenderStatus">
-              <el-input v-model="form.tenderStatus" :disabled="true"></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
         </el-row>
+        <!-- 分隔线 -->
+        <el-divider></el-divider>
+        <br>
+        <br>
+
         <!-- bid信息 -->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="SUPPLIER AVAILABLE PIECE" prop="bidQuantity" >
-              <el-input v-model="form.quantity" ></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="SUPPLIER AVAILABLE QUANTITY BY WEIGHT (OPTION)" prop="weight">
+            <el-form-item label="SUPPLIER AVAILABLE QUANTITY" prop="bidQuantity">
               <el-col :span="12">
-              <el-input v-model="form.weight" :disabled="true"></el-input>
+              <el-input v-model="form.bidQuantity" ></el-input>
               </el-col>
               <el-col :span="12">
-              <el-input v-model="form.unitOfWeight" :disabled="true"></el-input>
+              <el-select v-model="form.unitOfBidQuantity" style="width:60%" placeholder="please select">
+                <el-option
+                  v-for="item in unitOfBidQuantityOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
               </el-col>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="UNIT PRICE (THB)" prop="bidPrice">
-              <el-input v-model="form.price" ></el-input>
+               <el-col :span="12">
+              <el-input v-model="form.bidPrice" ></el-input>
+              </el-col>
+              <el-col :span="12">
+              <el-select v-model="form.unitOfBidPrice" style="width:60%" placeholder="please select">
+                <el-option
+                  v-for="item in unitOfBidPriceOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+              </el-col>
             </el-form-item>
           </el-col>
         </el-row>
@@ -311,7 +334,7 @@
           :title="statusFormTitle"
           :visible.sync="statusFormVisible"
           width="70%">
-      <el-form ref="statusForm" :model="statusForm" :rules="rules" label-width="80px">
+      <el-form ref="statusForm" :model="statusForm" :rules="rules" :label-position="labelPosition" label-width="160px">
         <el-row>
           <el-col :span="12">
             <el-form-item label="ORDER REF.NO." prop="no">
@@ -364,7 +387,16 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="DELIVER NO." prop="deliverNo" >
+              <el-col :span="12">
               <el-input v-model="statusForm.deliverNo" ></el-input>
+              </el-col>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="MEMO NO." prop="memoNo" >
+              <el-col :span="12">
+              <el-input v-model="statusForm.memoNo" ></el-input>
+              </el-col>
             </el-form-item>
           </el-col>
           </div>
@@ -387,10 +419,15 @@
                 :headers="uploadHeaders"
                 :before-upload="handleBeforeUpload"
                 :on-success="handleUploadSuccess"
+                :on-preview="handlePictureCardPreview"
+                :on-remove="handleUploadRemove"
               >
                 <i class="el-icon-upload"></i>
-                <div class="el-upload__text">Click to upload</div>
+                <div class="el-upload__text">Click to upload or drag files here</div>
               </el-upload>
+              <el-dialog :visible.sync="dialogVisible" append-to-body>
+                <img width="100%" fit="contain" :src="dialogImageUrl" alt="">
+              </el-dialog>
             </el-form-item>
           </el-col>
           </div>

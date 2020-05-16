@@ -74,13 +74,6 @@
         </template>
       </el-table-column>
       
-      <el-table-column label="BID ACCEPT STATE">
-        <template slot-scope="scope">
-          <p v-if="scope.row.isApproved===1">Approved</p>
-          <p v-else-if="scope.row.isApproved===-1">Denied</p>
-          <p v-else>Undecided</p>
-        </template>
-      </el-table-column>
       <el-table-column label="INVOICE">
         <template slot-scope="scope">
         <div v-if="scope.row.invoiceIdFile!=='' && scope.row.invoiceIdFile!==null && scope.row.invoiceIdFile!==undefined">
@@ -94,7 +87,7 @@
         </div>
         </template>
       </el-table-column>
-      <el-table-column label="ATTACHMENT">
+      <el-table-column label="PAYMENT">
         <template slot-scope="scope">
         <div v-if="scope.row.idFile!=='' && scope.row.idFile!==null && scope.row.idFile!==undefined">
           <el-popover
@@ -107,7 +100,7 @@
         </div>
         </template>
       </el-table-column>
-      <el-table-column label="BID STATE">
+      <el-table-column label="ORDER STEP">
         <template slot-scope="scope">
           {{scope.row.bidStatus}}
         </template>
@@ -180,10 +173,15 @@
                 :headers="uploadHeaders"
                 :before-upload="handleBeforeUpload"
                 :on-success="handleUploadSuccess"
+                :on-preview="handlePictureCardPreview"
+                :on-remove="handleUploadRemove"
               >
                 <i class="el-icon-upload"></i>
-                <div class="el-upload__text">Click to upload</div>
+                <div class="el-upload__text">Click to upload or drag files here</div>
               </el-upload>
+              <el-dialog :visible.sync="dialogVisible" append-to-body>
+                <img width="100%" fit="contain" :src="dialogImageUrl" alt="">
+              </el-dialog>
             </el-form-item>
           </el-col>
           </div>

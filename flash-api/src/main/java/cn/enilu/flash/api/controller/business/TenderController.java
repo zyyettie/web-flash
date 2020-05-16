@@ -58,8 +58,7 @@ public class TenderController extends BaseController {
             tenderDto.setColorNote(tender.getColorNote());
             tenderDto.setClarity(tender.getClarity());
             tenderDto.setQuantity(tender.getQuantity());
-            tenderDto.setWeight(tender.getWeight());
-            tenderDto.setUnitOfWeight(tender.getUnitOfWeight());
+            tenderDto.setUnitOfQuantity(tender.getUnitOfQuantity());
             tenderDto.setEnhance(tender.getEnhance());
             tenderDto.setMaterial(tender.getMaterial());
             tenderDto.setStatus(tender.getStatus());
@@ -69,6 +68,7 @@ public class TenderController extends BaseController {
             tenderDto.setIsDelete(tender.getIsDelete());
             tenderDto.setStoneUseFor(tender.getStoneUseFor());
             tenderDto.setNote(tender.getNote());
+            tenderDto.setUnitOfNote(tender.getUnitOfNote());
             tenderList.add(tenderDto);
         }
         return Rets.success(tenderList);

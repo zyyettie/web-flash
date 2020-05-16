@@ -1,4 +1,4 @@
-import { getBidByTenderId, moveBidToNextStatusStep3, approveBid, denyBid } from '@/api/business/bid'
+import { getBidByTenderId, moveBidToNextStatusStep3, moveBidBackToStep2, approveBid, denyBid } from '@/api/business/bid'
 import { moveBidToNextStatusWithQuantityPrice } from '@/api/business/bid'
 import { getToken } from '@/utils/auth'
 import { Loading } from 'element-ui'
@@ -7,6 +7,7 @@ import { getApiUrl } from '@/utils/utils'
 export default {
   data() {
     return {
+      labelPosition: 'left',
       loadingInstance: '',
       uploadUrl: '',
       uploadFileId: '',
@@ -24,12 +25,14 @@ export default {
         shape: '',
         size: '',
         color: '',
+        colorNote: '',
         clarity: '',
         quantity: '',
-        weight: '',
-        unitOfWeight: '',
+        unitOfQuantity: '',
         enhance: '',
         material: '',
+        note: '',
+        unitOfNote: '',
         status: '',
         dueDate: '',
         count: '',
@@ -58,9 +61,17 @@ export default {
         confirmedQuantityUnit: '',
         confirmedUnitPrice: ''
       },
+      isDeliverQuantityCorrectOptions: [
+        { value: 'yes', label: 'yes' },
+        { value: 'no', label: 'no' }
+      ],
       confirmedQuantityUnitOptions: [
-        { value: 'pieces', label: 'pieces' },
-        { value: 'weight', label: 'weight' }
+        { value: 'piece', label: 'piece' },
+        { value: 'carat', label: 'carat' }
+      ],
+      confirmedPriceUnitOptions: [
+        { value: 'piece', label: 'piece' },
+        { value: 'carat', label: 'carat' }
       ],
       statusData: [{
         host: '1. Purchase confirm supplier',
@@ -139,8 +150,9 @@ export default {
       this.bidForm.color = routerParams.color
       this.bidForm.clarity = routerParams.clarity
       this.bidForm.quantity = routerParams.quantity
-      this.bidForm.weight = routerParams.weight
-      this.bidForm.unitOfWeight = routerParams.unitOfWeight
+      this.bidForm.unitOfQuantity = routerParams.unitOfQuantity
+      this.bidForm.note = routerParams.note
+      this.bidForm.unitOfNote = routerParams.unitOfNote
       this.bidForm.enhance = routerParams.enhance
       this.bidForm.material = routerParams.material
       this.bidForm.dueDate = routerParams.dueDate
@@ -284,7 +296,57 @@ export default {
     //   })
     // },
     nextStepWithAdditionalInfo(id) {
-      if (this.statusForm.status === 3) {
+      if (this.statusForm.status === 2) {
+        if (this.statusForm.isDeliverQuantityCorrect === 'yes') {
+          // 添加loading页面
+          const loadingOption = this.$loading({
+            lock: true,
+            text: 'Loading',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          })
+          const loadingInstance2 = Loading.service(loadingOption)
+          moveBidToNextStatusStep3(id).then(response => {
+            loadingInstance2.close()
+            console.log(response)
+            this.$message({
+              message: 'Status modification succeeded',
+              type: 'success'
+            })
+            this.fetchData()
+            this.statusFormVisible = false
+          })
+        } else if (this.statusForm.isDeliverQuantityCorrect === 'no') {
+          // 添加loading页面
+          const loadingOption = this.$loading({
+            lock: true,
+            text: 'Loading',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          })
+          const loadingInstance2 = Loading.service(loadingOption)
+          moveBidBackToStep2(id).then(response => {
+            loadingInstance2.close()
+            console.log(response)
+            this.$message({
+              message: 'Status modification succeeded',
+              type: 'success'
+            })
+            this.fetchData()
+            this.statusFormVisible = false
+          })
+        } else {
+          this.$alert('Please select whether the deliver quantity is correct or not', 'warning', {
+            confirmButtonText: 'OK',
+            callback: action => {
+              this.$message({
+                type: 'info',
+                message: ``
+              })
+            }
+          })
+        }
+      } else if (this.statusForm.status === 3) {
         this.$refs['statusForm'].validate((valid) => {
           if (valid) {
             // 添加loading页面

@@ -104,7 +104,7 @@ public class BidController extends BaseController{
             throw new GunsException(BizExceptionEnum.BID_HAS_BEEN_APPROVED_ERROR);
         }
         //供应商更新bid的数量和价格
-        bidService.updateQuantityAndPrice(bid.getId(), bid.getQuantity(), bid.getPrice());
+        bidService.updateQuantityAndPrice(bid.getId(), bid.getQuantity(), bid.getUnitOfBidQuantity(), bid.getPrice(), bid.getUnitOfBidPrice());
         return Rets.success();
     }
 
@@ -149,9 +149,9 @@ public class BidController extends BaseController{
                 bidtenderVO.setBidId(bid.getId());
                 bidtenderVO.setNo(bid.getNo());
                 bidtenderVO.setQuantity(bid.getQuantity());
+                bidtenderVO.setUnitOfBidQuantity(bid.getUnitOfBidQuantity());
                 bidtenderVO.setPrice(bid.getPrice());
-                bidtenderVO.setWeight(bid.getWeight());
-                bidtenderVO.setUnitOfWeight(bid.getUnitOfWeight());
+                bidtenderVO.setUnitOfBidPrice(bid.getUnitOfBidPrice());
                 bidtenderVO.setIsApproved(bid.getIsApproved());
                 bidtenderVO.setBidStatus(bid.getStatus());
                 if(bid.getDeliverType()!=null)
@@ -177,8 +177,6 @@ public class BidController extends BaseController{
                 bidtenderVO.setColorNote(tender.getColorNote());
                 bidtenderVO.setClarity(tender.getClarity());
                 bidtenderVO.setTenderQuantity(tender.getQuantity());
-                bidtenderVO.setTenderWeight(tender.getWeight());
-                bidtenderVO.setTenderUnitOfWeight(tender.getUnitOfWeight());
                 bidtenderVO.setEnhance(tender.getEnhance());
                 bidtenderVO.setMaterial(tender.getMaterial());
                 bidtenderVO.setNote(tender.getNote());
@@ -213,10 +211,17 @@ public class BidController extends BaseController{
         return Rets.success();
     }
 
+    @RequestMapping(value = "/moveBackToStep2/{id}",method = RequestMethod.GET)
+    @BussinessLog(value = "移到上一步状态step2 ", key = "name", dict = BidDict.class)
+    public Object moveBackToStep2(@PathVariable Long id){
+        bidService.moveBackToStatus1(id);
+        return Rets.success();
+    }
+
     @RequestMapping(value = "/moveToNextStatusWithDeliverInfo",method = RequestMethod.POST)
     @BussinessLog(value = "移到供应商发货状态step2", key = "name", dict = BidDict.class)
     public Object moveToNextStatusWithDeliverInfo(@ModelAttribute Bid bid){
-        bidService.moveToNextStatusWithDeliverInfo(bid.getId(), bid.getDeliverType(),bid.getDeliverNo());
+        bidService.moveToNextStatusWithDeliverInfo(bid.getId(), bid.getDeliverType(),bid.getDeliverNo(), bid.getMemoNo());
         Bid bidFromDB = bidService.get(bid.getId());
         String bidNo = bidFromDB.getNo();
         //供货商货物发出后需要给Nam（人名）发邮件
@@ -237,7 +242,7 @@ public class BidController extends BaseController{
     @RequestMapping(value = "/moveToNextStatusWithQuantityPrice",method = RequestMethod.POST)
     @BussinessLog(value = "移到确认数量价格状态step4", key = "name", dict = BidDict.class)
     public Object moveToNextStatusWithQuantityPrice(@ModelAttribute Bid bidDto){
-        bidService.moveToNextStatusWithQuantityPrice(bidDto.getId(), bidDto.getConfirmedQuantity(), bidDto.getConfirmedPrice(),bidDto.getConfirmedQuantityUnit(), bidDto.getConfirmedUnitPrice());
+        bidService.moveToNextStatusWithQuantityPrice(bidDto.getId(), bidDto.getConfirmedQuantity(), bidDto.getConfirmedPrice(),bidDto.getConfirmedQuantityUnit(), bidDto.getConfirmedPriceUnit());
 
         //准备邮件信息
         Long bidId =bidDto.getId();
@@ -269,7 +274,6 @@ public class BidController extends BaseController{
         Context context = new Context();
         context.setVariable("bidNo",bidNo);
         context.setVariable("name",tender.getName());
-        context.setVariable("weight",tender.getWeight());
         context.setVariable("pieces",realBid.getConfirmedQuantity());
         context.setVariable("price",realBid.getConfirmedPrice());
         context.setVariable("totalPrice", realBid.getConfirmedPrice());
@@ -360,8 +364,6 @@ public class BidController extends BaseController{
                 bidtenderVO.setNo(bid.getNo());
                 bidtenderVO.setQuantity(bid.getQuantity());
                 bidtenderVO.setPrice(bid.getPrice());
-                bidtenderVO.setWeight(bid.getWeight());
-                bidtenderVO.setUnitOfWeight(bid.getUnitOfWeight());
                 bidtenderVO.setIsApproved(bid.getIsApproved());
                 bidtenderVO.setBidStatus(bid.getStatus());
                 if(bid.getDeliverType()!=null)
@@ -387,8 +389,6 @@ public class BidController extends BaseController{
                 bidtenderVO.setColorNote(tender.getColorNote());
                 bidtenderVO.setClarity(tender.getClarity());
                 bidtenderVO.setTenderQuantity(tender.getQuantity());
-                bidtenderVO.setTenderWeight(tender.getWeight());
-                bidtenderVO.setTenderUnitOfWeight(tender.getUnitOfWeight());
                 bidtenderVO.setEnhance(tender.getEnhance());
                 bidtenderVO.setMaterial(tender.getMaterial());
                 bidtenderVO.setNote(tender.getNote());

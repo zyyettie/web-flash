@@ -57,12 +57,16 @@ public class BidService {
         bidRepository.moveToNextStatus(id);
     }
 
-    public void moveToNextStatusWithDeliverInfo(Long id, Integer deliverType, String deliverNo){
-        bidRepository.moveToNextStatusWithDeliverInfo(id, deliverType, deliverNo);
+    public void moveBackToStatus1(Long id){
+        bidRepository.moveBackToStatus1(id);
     }
 
-    public void moveToNextStatusWithQuantityPrice(Long id, Integer confirmedQuantity, Float confirmedPrice, String confirmedQuantityUnit, Float confirmedUnitPrice){
-        bidRepository.moveToNextStatusWithQuantityPrice(id, confirmedQuantity, confirmedPrice, confirmedQuantityUnit, confirmedUnitPrice);
+    public void moveToNextStatusWithDeliverInfo(Long id, Integer deliverType, String deliverNo, String memoNo){
+        bidRepository.moveToNextStatusWithDeliverInfo(id, deliverType, deliverNo, memoNo);
+    }
+
+    public void moveToNextStatusWithQuantityPrice(Long id, Integer confirmedQuantity, Float confirmedPrice, String confirmedQuantityUnit, String confirmedPriceUnit){
+        bidRepository.moveToNextStatusWithQuantityPrice(id, confirmedQuantity, confirmedPrice, confirmedQuantityUnit, confirmedPriceUnit);
     }
 
     public void moveToNextStatusWithInvoice(Long id, Long invoiceIdFile, String invoiceNo){
@@ -81,8 +85,8 @@ public class BidService {
         bidRepository.deny(id);
     }
 
-    public void updateQuantityAndPrice(Long id, Integer quantity, Float price){
-        bidRepository.updateQuantityAndPrice(id, quantity, price);
+    public void updateQuantityAndPrice(Long id, Integer quantity, String unitOfBidQuantity, Float price, String unitOfBidPrice){
+        bidRepository.updateQuantityAndPrice(id, quantity, unitOfBidQuantity, price, unitOfBidPrice);
     }
 
     public Bid get(Long id){

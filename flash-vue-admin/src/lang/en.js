@@ -53,7 +53,7 @@ export default {
     edit: 'Edit',
     delete: 'Delete',
     search: 'Search',
-    reset: 'Reset',
+    reset: 'Update',
     submit: 'Submit',
     cancel: 'Cancel',
     clear: 'Clear',
