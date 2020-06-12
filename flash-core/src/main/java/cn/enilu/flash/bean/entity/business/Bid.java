@@ -1,10 +1,9 @@
 package cn.enilu.flash.bean.entity.business;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
+import javax.persistence.*;
 
 import cn.enilu.flash.bean.entity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.hibernate.annotations.Table;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -50,6 +49,9 @@ public class Bid extends BaseEntity {
     private String invoiceNo;
     @Column
     private Long invoiceIdFile;
-    @Column
-    private Long tenderId;
+
+    @JoinColumn(name="tender_id", referencedColumnName = "id",  columnDefinition = "bigint comment '发标ID'")
+    @ManyToOne
+    private Tender tender;
+
 }

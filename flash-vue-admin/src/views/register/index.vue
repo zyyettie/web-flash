@@ -108,10 +108,15 @@
             :headers="uploadHeaders"
             :before-upload="handleBeforeUpload"
             :on-success="handleUploadSuccess"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleUploadRemove"
           >
             <i class="el-icon-upload"></i>
-            <div class="el-upload__text">Click to upload</div>
+            <div class="el-upload__text">Click to upload or drag files here</div>
           </el-upload>
+          <el-dialog :visible.sync="dialogVisible" append-to-body>
+              <img width="100%" fit="contain" :src="dialogImageUrl" alt="">
+          </el-dialog>
         </el-form-item>
       </el-col>
 

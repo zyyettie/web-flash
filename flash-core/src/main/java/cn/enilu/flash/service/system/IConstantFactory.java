@@ -160,4 +160,15 @@ public interface IConstantFactory {
     Menu getMenu(Long id) ;
 
     Notice getNotice(Long id);
+
+    /**
+     * 根据用户id获取用户PaymentTerms
+     */
+    String getPaymentTermsById(Long userId);
+
+    /**
+     * 根据用户id获取用户PaymentType
+     */
+    String getPaymentTypeById(Long userId);
+
 }

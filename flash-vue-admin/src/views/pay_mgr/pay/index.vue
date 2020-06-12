@@ -2,8 +2,11 @@
   <div class="app-container">
     <div class="block">
       <el-row :gutter="20">
-        <el-col :span="6">
-          <el-input v-model="listQuery.name" placeholder="please input name"></el-input>
+        <el-col :span="3">
+          <el-input v-model="listQuery.name" placeholder="GEMSTONE"></el-input>
+        </el-col>
+        <el-col :span="3">
+          <el-input v-model="listQuery.colorNote" placeholder="COLOR"></el-input>
         </el-col>
         <el-col :span="6">
           <el-button type="success" icon="el-icon-search" @click.native="search">{{ $t('button.search') }}</el-button>
@@ -39,7 +42,7 @@
             <el-button type="button" @click="editBid(scope.row)">EDIT</el-button>
           </div>
           <div v-else>
-            <div v-if="scope.row.bidStatus === 6">
+            <div v-if="scope.row.status === 6">
               <el-button type="button" @click="changeVendorStatus(scope.row)">{{$t('business.nextStep')}}</el-button>
             </div>
             <div v-else>
@@ -50,7 +53,7 @@
       </el-table-column>
       <el-table-column label="投标id" v-if="false">
         <template slot-scope="scope">
-          {{scope.row.bidId}}
+          {{scope.row.id}}
         </template>
       </el-table-column>
       <el-table-column label="BID REF.NO.">
@@ -71,6 +74,16 @@
       <el-table-column label="COLOR">
         <template slot-scope="scope">
           <el-tag :color="scope.row.color"></el-tag>{{scope.row.colorNote}}
+        </template>
+      </el-table-column>
+      <el-table-column label="PAYMENT TERMS">
+        <template slot-scope="scope">
+          {{scope.row.paymentTerms}}
+        </template>
+      </el-table-column>
+      <el-table-column label="PAYMENT TYPE">
+        <template slot-scope="scope">
+          {{scope.row.paymentType}}
         </template>
       </el-table-column>
       
@@ -102,7 +115,7 @@
       </el-table-column>
       <el-table-column label="ORDER STEP">
         <template slot-scope="scope">
-          {{scope.row.bidStatus}}
+          {{scope.row.status}}
         </template>
       </el-table-column>
     </el-table>
@@ -133,7 +146,7 @@
           </el-col>
         </el-row>
         <el-row>
-        <el-steps :sapce="200" :active="statusForm.bidStatus" finish-status="success">
+        <el-steps :sapce="200" :active="statusForm.status" finish-status="success">
           <el-step title="1. Purchase confirm supplier"></el-step>
           <el-step title="2. Supplier ship gemstone"></el-step>
           <el-step title="3. Receipted gemstone and in checking process"></el-step>
@@ -162,7 +175,7 @@
         <br>
         <el-row>
           <!-- 上传付款凭证-->
-          <div v-if="statusForm.bidStatus === 6">
+          <div v-if="statusForm.status === 6">
           <el-col :span="12">
             <el-form-item label="EVIDENCE OF PAYMENT">
               <el-upload
@@ -188,7 +201,7 @@
           <!-- 上传付款凭证结束-->
         </el-row>
         <el-form-item>
-          <el-button type="primary" @click="nextStepWithAdditionalInfo(statusForm.bidId)">{{ $t('button.submit') }}</el-button>
+          <el-button type="primary" @click="nextStepWithAdditionalInfo(statusForm.id)">{{ $t('button.submit') }}</el-button>
           <el-button @click.native="statusFormVisible = false">{{ $t('button.cancel') }}</el-button>
         </el-form-item>
       </el-form>

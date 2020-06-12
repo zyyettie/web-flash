@@ -43,8 +43,8 @@
         </span>
       </el-form-item>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">{{ $t('login.logIn') }}</el-button>
-
-      <div style="position:relative">
+      <div>
+      <div style="float:left">
         <div class="tips">
           <span>{{ $t('login.tip') }}</span>
           <router-link to="/register">
@@ -53,6 +53,16 @@
             </div>
           </router-link>
         </div>
+      </div>
+      <div style="float:right">
+        <div class="tips">
+          <router-link to="/forgotPassword">
+            <div class="underline">
+              {{ $t('login.forgotPassword') }}
+            </div>
+          </router-link>
+        </div>
+      </div>
       </div>
     </el-form>
 

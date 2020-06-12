@@ -2,8 +2,20 @@
   <div class="app-container">
     <div class="block">
       <el-row :gutter="20">
-        <el-col :span="6">
-          <el-input v-model="listQuery.name" placeholder="please input name"></el-input>
+        <el-col :span="3">
+          <el-input v-model="listQuery.name" placeholder="GEMSTONE"></el-input>
+        </el-col>
+        <el-col :span="3">
+          <el-input v-model="listQuery.colorNote" placeholder="COLOR"></el-input>
+        </el-col>
+        <el-col :span="3">
+          <el-input v-model="listQuery.shape" placeholder="SHAPE"></el-input>
+        </el-col>
+        <el-col :span="3">
+          <el-input v-model="listQuery.size" placeholder="SIZE"></el-input>
+        </el-col>
+        <el-col :span="3">
+          <el-input v-model="listQuery.memoNo" placeholder="MEMONo"></el-input>
         </el-col>
         <el-col :span="6">
           <el-button type="success" icon="el-icon-search" @click.native="search">{{ $t('button.search') }}</el-button>
@@ -33,87 +45,87 @@
     <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
               @current-change="handleCurrentChange">
 
-      <el-table-column label="EDIT">
+      <el-table-column label="EDIT" width="140px">
         <template slot-scope="scope">
           <div v-if="scope.row.isApproved === 0">
             <el-button type="button" @click="editBid(scope.row)">EDIT</el-button>
           </div>
           <div v-else>
-            <div v-if="scope.row.bidStatus === 1 || scope.row.bidStatus === 4">
-              <el-button type="button" @click="changeVendorStatus(scope.row)">{{$t('business.nextStep')}}</el-button>
+            <div v-if="scope.row.status === 1 || scope.row.status === 4">
+              <el-button size="mini" type="button" @click="changeVendorStatus(scope.row)">{{$t('business.nextStep')}}</el-button>
             </div>
             <div v-else>
-              <el-button type="button" :disabled="true">{{$t('business.nextStep')}}</el-button>
+              <el-button size="mini" type="button" :disabled="true">{{$t('business.nextStep')}}</el-button>
             </div>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="投标id" v-if="false">
+      <el-table-column label="投标id" v-if="false" >
         <template slot-scope="scope">
-          {{scope.row.bidId}}
+          {{scope.row.id}}
         </template>
       </el-table-column>
-      <el-table-column label="ORDER NO.">
+      <el-table-column label="ORDER NO." :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.no}}
         </template>
       </el-table-column>
-      <el-table-column label="ORDER REF.NO.">
+      <el-table-column label="ORDER REF.NO." :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.tenderNo}}
         </template>
       </el-table-column>
-      <el-table-column label="GEMSTONE">
+      <el-table-column label="GEMSTONE" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.name}}
         </template>
       </el-table-column>
-      <el-table-column label="COLOR">
+      <el-table-column label="COLOR" >
         <template slot-scope="scope">
           <el-tag :color="scope.row.color"></el-tag>{{scope.row.colorNote}}
         </template>
       </el-table-column>
-      <el-table-column label="SHAPE">
+      <el-table-column label="SHAPE" >
         <template slot-scope="scope">
           {{scope.row.shape}}
         </template>
       </el-table-column>
-      <el-table-column label="SIZE(mm)">
+      <el-table-column label="SIZE(mm)" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.size}}
         </template>
       </el-table-column>
-      <el-table-column label="QUANTITY">
+      <el-table-column label="QUANTITY" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.quantity}}
         </template>
       </el-table-column>
-      <el-table-column label="CLARITY">
+      <el-table-column label="CLARITY" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.clarity}}
         </template>
       </el-table-column>
-      <el-table-column label="TREATMENT">
+      <el-table-column label="TREATMENT" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.enhance}}
         </template>
       </el-table-column>
-      <el-table-column label="MATERIAL">
+      <el-table-column label="MATERIAL" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.material}}
         </template>
       </el-table-column>
-      <el-table-column label="PRICE RANGE">
+      <el-table-column label="PRICE RANGE" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.note}}
         </template>
       </el-table-column>
-      <el-table-column label="PRICE">
+      <el-table-column label="PRICE" >
         <template slot-scope="scope">
           {{scope.row.price}}
         </template>
       </el-table-column>
-      <el-table-column label="DELIVER TYPE">
+      <el-table-column label="DELIVER TYPE" :render-header="labelHead">
         <template slot-scope="scope">
           <p v-if="scope.row.deliverType === 1">Sent By Messenger</p>
           <p v-else-if="scope.row.deliverType === 2">Express</p>
@@ -121,31 +133,36 @@
           <p v-else></p>
         </template>
       </el-table-column>
-      <el-table-column label="DELIVER NO.">
+      <el-table-column label="DELIVER NO." :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.deliverNo}}
         </template>
       </el-table-column>
-      <el-table-column label="CONFIRMED QUANTITY">
+      <el-table-column label="MEMO NO." :render-header="labelHead">
+        <template slot-scope="scope">
+          {{scope.row.memoNo}}
+        </template>
+      </el-table-column>
+      <el-table-column label="CONFIRMED QUANTITY" :render-header="labelHead">
         <template slot-scope="scope">
           <p v-if="scope.row.confirmedQuantity===0"></p>
           <p v-else>{{scope.row.confirmedQuantity}}</p>
         </template>
       </el-table-column>
-      <el-table-column label="CONFIRMED PRICE">
+      <el-table-column label="CONFIRMED PRICE" :render-header="labelHead">
         <template slot-scope="scope">
           <p v-if="scope.row.confirmedPrice===0"></p>
           <p v-else>{{scope.row.confirmedPrice}}</p>
         </template>
       </el-table-column>
-      <el-table-column label="ORDER ACCEPT STATE">
+      <el-table-column label="ORDER ACCEPT STATE" :render-header="labelHead">
         <template slot-scope="scope">
           <p v-if="scope.row.isApproved===1">Approved</p>
           <p v-else-if="scope.row.isApproved===-1">Denied</p>
           <p v-else>Undecided</p>
         </template>
       </el-table-column>
-      <el-table-column label="INVOICE">
+      <el-table-column label="INVOICE" :render-header="labelHead">
         <template slot-scope="scope">
         <div v-if="scope.row.invoiceIdFile!=='' && scope.row.invoiceIdFile!==null && scope.row.invoiceIdFile!==undefined">
           <el-popover
@@ -158,7 +175,7 @@
         </div>
         </template>
       </el-table-column>
-      <el-table-column label="ATTACHMENT">
+      <el-table-column label="ATTACHMENT" :render-header="labelHead">
         <template slot-scope="scope">
         <div v-if="scope.row.idFile!=='' && scope.row.idFile!==null && scope.row.idFile!==undefined">
           <el-popover
@@ -171,9 +188,9 @@
         </div>
         </template>
       </el-table-column>
-      <el-table-column label="ORDER STATE">
+      <el-table-column label="ORDER STATE" :render-header="labelHead">
         <template slot-scope="scope">
-          {{scope.row.bidStatus}}
+          {{scope.row.status}}
         </template>
       </el-table-column>
     </el-table>
@@ -281,7 +298,10 @@
           </el-col>
         </el-row>
         <!-- 分隔线 -->
-        <el-divider></el-divider>
+        <div class="hello">
+          <div class="line-left-right">
+          </div>
+        </div>
         <br>
         <br>
 
@@ -290,7 +310,7 @@
           <el-col :span="12">
             <el-form-item label="SUPPLIER AVAILABLE QUANTITY" prop="bidQuantity">
               <el-col :span="12">
-              <el-input v-model="form.bidQuantity" ></el-input>
+              <el-input v-model="form.quantity" ></el-input>
               </el-col>
               <el-col :span="12">
               <el-select v-model="form.unitOfBidQuantity" style="width:60%" placeholder="please select">
@@ -307,7 +327,7 @@
           <el-col :span="12">
             <el-form-item label="UNIT PRICE (THB)" prop="bidPrice">
                <el-col :span="12">
-              <el-input v-model="form.bidPrice" ></el-input>
+              <el-input v-model="form.price" ></el-input>
               </el-col>
               <el-col :span="12">
               <el-select v-model="form.unitOfBidPrice" style="width:60%" placeholder="please select">
@@ -343,7 +363,7 @@
           </el-col>
         </el-row>
         <el-row>
-        <el-steps :sapce="200" :active="statusForm.bidStatus" finish-status="success">
+        <el-steps :sapce="200" :active="statusForm.status" finish-status="success">
           <el-step title="1. Purchase confirm supplier"></el-step>
           <el-step title="2. Supplier ship gemstone"></el-step>
           <el-step title="3. Receipted gemstone and in checking process"></el-step>
@@ -372,7 +392,7 @@
         <br>
         <el-row>
           <!-- 确认快递方式-->
-          <div v-if="statusForm.bidStatus === 1">
+          <div v-if="statusForm.status === 1">
           <el-col :span="12">
             <el-form-item label="DELIVER TYPE" prop="deliverType">
               <el-select v-model="statusForm.deliverType" placeholder="please select" >
@@ -401,7 +421,7 @@
           </el-col>
           </div>
           <!-- 上传发票-->
-          <div v-else-if="statusForm.bidStatus === 4">
+          <div v-else-if="statusForm.status === 4">
           <el-row>
             <el-col :span="12">
               <el-form-item label="INVOICE NO" prop="invoiceNo">
@@ -434,7 +454,7 @@
           <!-- 上传发票结束-->
         </el-row>
         <el-form-item>
-          <el-button type="primary" @click="nextStepWithAdditionalInfo(statusForm.bidId)">{{ $t('button.submit') }}</el-button>
+          <el-button type="primary" @click="nextStepWithAdditionalInfo(statusForm.id)">{{ $t('button.submit') }}</el-button>
           <el-button @click.native="statusFormVisible = false">{{ $t('button.cancel') }}</el-button>
         </el-form-item>
       </el-form>

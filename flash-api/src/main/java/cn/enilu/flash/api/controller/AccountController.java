@@ -1,5 +1,7 @@
 package cn.enilu.flash.api.controller;
 
+import cn.enilu.flash.api.mail.MailService;
+import cn.enilu.flash.api.utils.RandomPassword;
 import cn.enilu.flash.utils.*;
 import cn.enilu.flash.bean.core.ShiroUser;
 import cn.enilu.flash.bean.entity.system.User;
@@ -20,12 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.thymeleaf.context.Context;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * AccountController
@@ -49,6 +50,8 @@ public class AccountController extends BaseController{
     private TokenCache tokenCache;
     @Autowired
     private MenuRepository menuRepository;
+    @Autowired
+    private MailService mailService;
     /**
      * 用户登录<br>
      * 1，验证没有注册<br>
@@ -66,12 +69,12 @@ public class AccountController extends BaseController{
             //1,
             User user = userRepository.findByAccount(userName);
             if (user == null) {
-                return Rets.failure("该用户不存在");
+                return Rets.failure("The user does not exist");
             }
             String passwdMd5 = MD5.md5(password, user.getSalt());
             //2,
             if (!user.getPassword().equals(passwdMd5)) {
-                return Rets.failure("输入的密码错误");
+                return Rets.failure("The password entered is incorrect");
             }
 
             String token = accountService.login(Long.valueOf(user.getId()));
@@ -83,7 +86,7 @@ public class AccountController extends BaseController{
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-        return Rets.failure("登录时失败");
+        return Rets.failure("Login failed");
     }
 
     /**
@@ -150,6 +153,27 @@ public class AccountController extends BaseController{
             logger.error(e.getMessage(), e);
         }
         return Rets.failure("更改密码失败");
+    }
+
+    @RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
+    public Object forgotPassword(@RequestParam("accountName") String accountName) {
+        User user = userRepository.findByAccount(accountName);
+        if (user == null) {
+            return Rets.failure("The email account does not register");
+        }
+        //产生一个随机密码
+        RandomPassword rp = new RandomPassword();
+        String password = rp.getRamdomPassword();
+        user.setPassword(MD5.md5(password, user.getSalt()));
+        userRepository.save(user);
+        //TODO 发送邮件
+        String subject = "Your password in https://bms.chinastonefind.com has been reset";
+        String templateName = "forgotPassword";
+        Context context = new Context();
+        context.setVariable("password",password);
+        String vendorEmail = user.getEmail();
+        mailService.sendTemplateMail(vendorEmail,subject,templateName,context);
+        return Rets.success();
     }
 
     private List<String> generatePermissions(List<Long> roleList) {

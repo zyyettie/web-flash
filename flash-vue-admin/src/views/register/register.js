@@ -46,6 +46,8 @@ export default{
       }
     }
     return {
+      dialogImageUrl: '',
+      dialogVisible: false,
       uploadUrl: '',
       uploadFileId: '',
       uploadHeaders: {
@@ -178,6 +180,13 @@ export default{
           type: 'error'
         })
       }
+    },
+    handleUploadRemove(file) {
+      this.uploadFileId = ''
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
     }
   }
 }

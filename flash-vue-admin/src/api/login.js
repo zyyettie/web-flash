@@ -5,8 +5,8 @@ export function login(username, password) {
     url: '/account/login',
     method: 'post',
     params: {
-      "username": username,
-      "password": password
+      'username': username,
+      'password': password
     }
   })
 }
@@ -29,6 +29,14 @@ export function logout() {
 export function updatePwd(params) {
   return request({
     url: '/account/updatePwd',
+    method: 'post',
+    params
+  })
+}
+
+export function forgotPassword(params) {
+  return request({
+    url: '/account/forgotPassword',
     method: 'post',
     params
   })

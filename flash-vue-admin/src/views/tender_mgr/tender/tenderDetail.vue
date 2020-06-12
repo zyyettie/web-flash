@@ -116,18 +116,22 @@
     <!-- 投标列表 -->
     <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
               @current-change="handleCurrentChange">
-      <el-table-column label="EDIT">
+      <el-table-column label="EDIT" width="160px">
         <template slot-scope="scope">
           <div v-if="scope.row.isApproved === 0">
-          <el-button type="button" @click="approve(scope.row.id)">{{$t('business.accept')}}</el-button>
-          <el-button type="button" @click="deny(scope.row.id)">{{$t('business.deny')}}</el-button>
+          <div style="float:left">
+          <el-button size="mini" type="button" @click="approve(scope.row.id)">{{$t('business.accept')}}</el-button>
+          </div>
+          <div style="float:right">
+          <el-button size="mini" type="button" @click="deny(scope.row.id)">{{$t('business.deny')}}</el-button>
+          </div>
           </div>
           <div v-else>
             <div v-if="scope.row.status === 2 || scope.row.status === 3 || scope.row.status === 5">
-              <el-button type="button" @click="changeStatus(scope.row)">{{$t('business.nextStep')}}</el-button>
+              <el-button size="mini" type="button" @click="changeStatus(scope.row)">{{$t('business.nextStep')}}</el-button>
             </div>
             <div v-else>
-              <el-button type="button" :disabled="true">{{$t('business.nextStep')}}</el-button>
+              <el-button size="mini" type="button" :disabled="true">{{$t('business.nextStep')}}</el-button>
             </div>
           </div>
         </template>
@@ -137,12 +141,12 @@
           {{scope.row.id}}
         </template>
       </el-table-column>
-      <el-table-column label="ORDER REF.NO.">
+      <el-table-column label="ORDER REF.NO." :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.no}}
         </template>
       </el-table-column>
-      <el-table-column label="QUANTITY">
+      <el-table-column label="QUANTITY" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.quantity}}
         </template>
@@ -152,7 +156,7 @@
           {{scope.row.price}}/{{scope.row.unitOfBidPrice}}
         </template>
       </el-table-column>
-      <el-table-column label="DELIVER TYPE">
+      <el-table-column label="DELIVER TYPE" :render-header="labelHead">
         <template slot-scope="scope">
           <p v-if="scope.row.deliverType === 1">Sent By Messenger</p>
           <p v-else-if="scope.row.deliverType === 2">Express</p>
@@ -160,32 +164,27 @@
           <p v-else></p>
         </template>
       </el-table-column>
-      <el-table-column label="DELIVER NO.">
+      <el-table-column label="DELIVER NO." :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.deliverNo}}
         </template>
       </el-table-column>
-      <el-table-column label="CONFIRMED QUANTITY">
+      <el-table-column label="CONFIRMED QUANTITY" :render-header="labelHead">
         <template slot-scope="scope">
-          {{scope.row.confirmedQuantity}}
+          {{scope.row.confirmedQuantity}} {{scope.row.confirmedQuantityUnit}}s
         </template>
       </el-table-column>
-      <el-table-column label="CONFIRMED UNIT">
+      <el-table-column label="CONFIRMED PRICE" :render-header="labelHead">
         <template slot-scope="scope">
-          {{scope.row.confirmedQuantityUnit}}
+          {{scope.row.confirmedPrice}} THB/{{scope.row.confirmedPriceUnit}}
         </template>
       </el-table-column>
-      <el-table-column label="CONFIRMED PRICE">
-        <template slot-scope="scope">
-          {{scope.row.confirmedPrice}} THB/{{scope.row.confirmedQuantityUnit}}
-        </template>
-      </el-table-column>
-      <el-table-column label="SUPPLIER">
+      <el-table-column label="SUPPLIER" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.contact}}
         </template>
       </el-table-column>
-      <el-table-column label="ORDER ACCEPT STATE">
+      <el-table-column label="ORDER ACCEPT STATE" :render-header="labelHead">
         <template slot-scope="scope">
           <p v-if="scope.row.isApproved===1">Approved</p>
           <p v-else-if="scope.row.isApproved===-1">Denied</p>
@@ -205,7 +204,7 @@
         </div>
         </template>
       </el-table-column>
-      <el-table-column label="PAYMENT">
+      <el-table-column label="PAYMENT" :render-header="labelHead">
         <template slot-scope="scope">
         <div v-if="scope.row.idFile!=='' && scope.row.idFile!==null && scope.row.idFile!==undefined">
           <el-popover
@@ -218,7 +217,7 @@
         </div>
         </template>
       </el-table-column>
-      <el-table-column label="ORDER STEP">
+      <el-table-column label="ORDER STEP" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.status}}
         </template>
@@ -226,17 +225,6 @@
 
     </el-table>
 
-    <el-pagination
-      background
-      layout="total, sizes, prev, pager, next, jumper"
-      :page-sizes="[10, 20, 50, 100,500]"
-      :page-size="listQuery.limit"
-      :total="total"
-      @size-change="changeSize"
-      @current-change="fetchPage"
-      @prev-click="fetchPrev"
-      @next-click="fetchNext">
-    </el-pagination>
     <!-- =============================================================================================-->
     <!-- UPDATE STATE 弹出框-->
     <el-dialog

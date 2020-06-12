@@ -10,3 +10,17 @@
   margin-bottom: 0;
   width: 50%;
 }
+
+.table-head{
+  font-size:14px!important;//设置固定的字体大小
+}
+
+.line-left-right {
+  padding: 0 0px 0px;
+  margin: 20px 0px;
+  line-height: 1px;
+  border-left: 60% solid rgb(221, 221, 221);
+  border-right: 60% solid rgb(221, 221, 221);
+  text-align: center;
+  height: 2px;
+  }

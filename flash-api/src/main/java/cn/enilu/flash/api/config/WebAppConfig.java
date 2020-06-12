@@ -22,7 +22,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
             "/offcialSite","/offcialSite/*",//h5端的api，建议生产中将前端h5和后端h5使用的api分拆成两个服务，
             "/druid/**",//druid监控请求
             "/validate/*",//验证码地址
-            "/account/register", "/account/login",//用户注册和登陆
+            "/account/register", "/account/login","/account/forgotPassword",//用户注册和登陆, 忘记密码
             "/error",//错误资源
             "/user/register",//注册请求
             "/swagger-resources","/v2/api-docs","/swagger-ui.html","/webjars/**"//swagger在线api文档资源

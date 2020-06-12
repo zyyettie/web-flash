@@ -118,6 +118,9 @@ export default {
         ],
         confirmedQuantityUnit: [
           { required: true, message: 'confirmedQuantityUnit' + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
+        confirmedPriceUnit: [
+          { required: true, message: 'confirmedPriceUnit' + this.$t('common.isRequired'), trigger: 'blur' }
         ]
       }
     }
@@ -127,6 +130,13 @@ export default {
     this.getParams()
   },
   methods: {
+    labelHead(h, { column, index }) {
+      const l = column.label.length
+      const f = 16 // 每个字大小，其实是每个字的比例值，大概会比字体大小差不多大一点，
+      column.minWidth = f * l // 字大小乘个数即长度 ,注意不要加px像素，这里minWidth只是一个比例值，不是真正的长度
+      // 然后将列标题放在一个div块中，注意块的宽度一定要100%，否则表格显示不完全
+      return h('div', { class: 'table-head', style: { width: '100%' }}, [column.label])
+    },
     init() {
       this.uploadUrl = getApiUrl() + '/file'
       this.uploadHeaders['Authorization'] = getToken()
@@ -148,6 +158,7 @@ export default {
       this.bidForm.shape = routerParams.shape
       this.bidForm.size = routerParams.size
       this.bidForm.color = routerParams.color
+      this.bidForm.colorNote = routerParams.colorNote
       this.bidForm.clarity = routerParams.clarity
       this.bidForm.quantity = routerParams.quantity
       this.bidForm.unitOfQuantity = routerParams.unitOfQuantity
@@ -362,7 +373,7 @@ export default {
               confirmedQuantity: this.statusForm.confirmedQuantity,
               confirmedPrice: this.statusForm.confirmedPrice,
               confirmedQuantityUnit: this.statusForm.confirmedQuantityUnit,
-              confirmedUnitPrice: this.statusForm.confirmedUnitPrice
+              confirmedPriceUnit: this.statusForm.confirmedPriceUnit
             }).then(response => {
               loadingInstance2.close()
               this.$message({

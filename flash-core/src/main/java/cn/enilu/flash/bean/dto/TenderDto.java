@@ -27,5 +27,5 @@ public class TenderDto {
     private String note;
     private String unitOfNote;
 
-    private String UserName;
+    private String userName;
 }

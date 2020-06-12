@@ -1,6 +1,5 @@
 import { delTenderBid, saveTenderBid } from '@/api/business/tenderbid'
-import { getTenderList } from '@/api/business/tender'
-import { getBidList } from '@/api/business/bid'
+import { getTenderList2 } from '@/api/business/tender'
 import { Loading } from 'element-ui'
 
 export default {
@@ -34,8 +33,10 @@ export default {
       listQuery: {
         page: 1,
         limit: 20,
-        name: undefined,
-        type: undefined
+        name: '',
+        colorNote: '',
+        shape: '',
+        size: ''
       },
       total: 0,
       list: null,
@@ -78,18 +79,22 @@ export default {
     this.init()
   },
   methods: {
+    labelHead(h, { column, index }) {
+      const l = column.label.length
+      const f = 16 // 每个字大小，其实是每个字的比例值，大概会比字体大小差不多大一点，
+      column.minWidth = f * l // 字大小乘个数即长度 ,注意不要加px像素，这里minWidth只是一个比例值，不是真正的长度
+      // 然后将列标题放在一个div块中，注意块的宽度一定要100%，否则表格显示不完全
+      return h('div', { class: 'table-head', style: { width: '100%' }}, [column.label])
+    },
     init() {
       this.fetchData()
     },
     fetchData() {
       this.listLoading = true
-      getTenderList(this.listQuery).then(response => {
-        this.list = response.data
+      getTenderList2(this.listQuery).then(response => {
+        this.list = response.data.records
         this.listLoading = false
         this.total = response.data.total
-      })
-      getBidList(this.listQuery).then(response => {
-        this.bidListForCurrentUser = response.data
       })
     },
     search() {
@@ -98,6 +103,8 @@ export default {
     reset() {
       this.listQuery.name = ''
       this.listQuery.type = ''
+      this.listQuery.shape = ''
+      this.listQuery.size = ''
       this.fetchData()
     },
     handleFilter() {
@@ -149,7 +156,7 @@ export default {
             unitOfBidQuantity: this.bidForm.unitOfBidQuantity,
             price: this.bidForm.bidPrice,
             unitOfBidPrice: this.bidForm.unitOfBidPrice,
-            tenderId: this.bidForm.id
+            'Tender.id': this.bidForm.id
           }).then(response => {
             loadingInstance.close()
             this.$message({

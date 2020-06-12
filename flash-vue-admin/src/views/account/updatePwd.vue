@@ -3,19 +3,19 @@
       <el-form ref="form" :model="form"  :rules="rules" label-width="150px">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="原密码">
+            <el-form-item label="old password">
               <el-input type="password" v-model="form.oldPassword"  ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="新密码" prop="password">
+            <el-form-item label="new password" prop="password">
               <el-input type="password" v-model="form.password"  minlength=5  ></el-input>
             </el-form-item>
           </el-col>
 
 
           <el-col :span="24">
-            <el-form-item label="重复密码">
+            <el-form-item label="new password again">
               <el-input type="password" v-model="form.rePassword"  ></el-input>
             </el-form-item>
           </el-col>

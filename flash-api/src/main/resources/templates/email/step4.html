@@ -48,11 +48,11 @@
             <h3>Dear Vendor,</h3>
             <p>We confirmed the following purchase</p>
             <p>Order: <span th:text="${tenderNo}">tenderNo</span></p>
-            <p><code style="color: #d57e13;"><span th:text="${name}">name</span></code> ,
-                <code style="color: #d57e13;"><span th:text="${weight}">weight</span></code> ,
-                <code style="color: #d57e13;"><span th:text="${pieces}">pieces</span></code> ,
-                <code style="color: #d57e13;"><span th:text="${price}">price</span></code> ,
-                <code style="color: #d57e13;"><span th:text="${totalPrice}">totalPrice</span></code> ,<br>
+            <p>1) Gemstone: <code style="color: #d57e13;"><span th:text="${name}">name</span></code><br>
+               2) Confirmed Quantity:  <code style="color: #d57e13;"><span th:text="${confirmedQuantity}">confirmedQuantity</span></code><br>
+               3) Confirmed Quantity Unit:  <code style="color: #d57e13;"><span th:text="${confirmedQuantityUnit}">confirmedQuantityUnit</span></code><br>
+               4) Confirmed Price: <code style="color: #d57e13;"><span th:text="${confirmedPrice}">confirmedPrice</span></code><br>
+               5) Confirmed Price Unit: <code style="color: #d57e13;"><span th:text="${confirmedPriceUnit}">confirmedPriceUnit</span></code> <br>
             </p>
             <br>
             <p>payment due date is: <code style="color: #d57e13;"><span th:text="${dueDate}">dueDate</span></code></p>

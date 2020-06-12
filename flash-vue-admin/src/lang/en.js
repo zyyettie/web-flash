@@ -46,7 +46,8 @@ export default {
     password: 'Password',
     register: 'Register',
     tip: 'No account?',
-    emailTip: 'Please login with your email'
+    emailTip: 'Please login with your email',
+    forgotPassword: 'Forgot Passowrd?'
   },
   button: {
     add: 'Add',
@@ -110,7 +111,8 @@ export default {
     register: 'Register',
     returnLogin: 'Retrun to Login',
     successMsg: 'Register successfully, please contact Administrator to activate your account.',
-    failMsg: 'Register failed, please try again.'
+    failMsg: 'Register failed, please try again.',
+    forgotPwdMsg: 'Reset password successfully, please go to your email box to check new password'
   },
   business: {
     bid: 'SUPPLY',
@@ -119,6 +121,8 @@ export default {
     addTender: 'ORDER INFORMATION',
     statusChange: 'UPDATE STATE',
     nextStep: 'UPDATE STATE',
-    modify: 'Modify Order'
+    modify: 'Modify Order',
+    close: 'Close',
+    closeConfirm: 'Are you sure to close this order?'
   }
 }

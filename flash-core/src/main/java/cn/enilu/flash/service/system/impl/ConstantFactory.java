@@ -3,9 +3,11 @@ package cn.enilu.flash.service.system.impl;
 import cn.enilu.flash.bean.constant.cache.CacheKey;
 import cn.enilu.flash.bean.constant.state.ManagerStatus;
 import cn.enilu.flash.bean.constant.state.MenuStatus;
+import cn.enilu.flash.bean.entity.business.Tender;
 import cn.enilu.flash.bean.entity.system.*;
 import cn.enilu.flash.bean.vo.DictVo;
 import cn.enilu.flash.bean.vo.SpringContextHolder;
+import cn.enilu.flash.dao.business.TenderRepository;
 import cn.enilu.flash.dao.cache.ConfigCache;
 import cn.enilu.flash.dao.cache.DictCache;
 import cn.enilu.flash.dao.system.*;
@@ -43,6 +45,7 @@ public class ConstantFactory implements IConstantFactory {
     private MenuRepository menuRepository = SpringContextHolder.getBean(MenuRepository.class);
     private SysNoticeRepository sysNoticeRepository = SpringContextHolder.getBean(SysNoticeRepository.class);
     private ConfigCache configCache = SpringContextHolder.getBean(ConfigCache.class);
+    private TenderRepository tenderRepository = SpringContextHolder.getBean(TenderRepository.class);
 
     public static IConstantFactory me() {
         return SpringContextHolder.getBean("constantFactory");
@@ -428,6 +431,31 @@ public class ConstantFactory implements IConstantFactory {
             return optional.get();
         }
         return null;
+    }
+
+    /**
+     * 根据用户id获取用户PaymentTerms
+     */
+    @Override
+    public String getPaymentTermsById(Long userId) {
+        User user = getUser(userId);
+        if (user != null) {
+            return user.getPaymentTerms();
+        } else {
+            return "--";
+        }
+    }
+    /**
+     * 根据用户id获取用户PaymentType
+     */
+    @Override
+    public String getPaymentTypeById(Long userId) {
+        User user = getUser(userId);
+        if (user != null) {
+            return user.getPaymentType();
+        } else {
+            return "--";
+        }
     }
 
 }

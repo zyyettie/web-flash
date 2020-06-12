@@ -2,17 +2,20 @@ package cn.enilu.flash.api.controller.business;
 
 import cn.enilu.flash.api.controller.BaseController;
 import cn.enilu.flash.api.mail.MailService;
+import cn.enilu.flash.bean.constant.factory.PageFactory;
 import cn.enilu.flash.bean.core.BussinessLog;
 import cn.enilu.flash.bean.dictmap.TenderDict;
-import cn.enilu.flash.bean.dto.TenderDto;
 import cn.enilu.flash.bean.entity.business.Tender;
-import cn.enilu.flash.bean.entity.system.User;
 import cn.enilu.flash.bean.enumeration.BizExceptionEnum;
 import cn.enilu.flash.bean.exception.GunsException;
 import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.service.business.TenderService;
+import cn.enilu.flash.service.system.OperationLogService;
 import cn.enilu.flash.service.system.UserService;
+import cn.enilu.flash.utils.BeanUtil;
 import cn.enilu.flash.utils.ToolUtil;
+import cn.enilu.flash.utils.factory.Page;
+import cn.enilu.flash.warpper.TenderWarpper;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.context.Context;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,42 +38,30 @@ public class TenderController extends BaseController {
     private UserService userService;
     @Autowired
     private MailService mailService;
+    @Autowired
+    private OperationLogService operationLogService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public Object List() {
-        List<Tender> list = (List<Tender>)tenderService.queryAll();
-        //add userName field and then send to frontend
-        List<TenderDto> tenderList = new ArrayList<>();
-        for(Tender tender: list){
-            Long userId = tender.getCreateBy();
-            User user = userService.get(userId);
-            String userName = user.getName();
-            TenderDto tenderDto = new TenderDto();
-            tenderDto.setUserName(userName);
-            //set other properties
-            tenderDto.setId(tender.getId());
-            tenderDto.setNo(tender.getNo());
-            tenderDto.setName(tender.getName());
-            tenderDto.setShape(tender.getShape());
-            tenderDto.setSize(tender.getSize());
-            tenderDto.setColor(tender.getColor());
-            tenderDto.setColorNote(tender.getColorNote());
-            tenderDto.setClarity(tender.getClarity());
-            tenderDto.setQuantity(tender.getQuantity());
-            tenderDto.setUnitOfQuantity(tender.getUnitOfQuantity());
-            tenderDto.setEnhance(tender.getEnhance());
-            tenderDto.setMaterial(tender.getMaterial());
-            tenderDto.setStatus(tender.getStatus());
-            tenderDto.setDueDate(tender.getDueDate());
-            tenderDto.setCount(tender.getCount());
-            tenderDto.setVersion(tender.getVersion());
-            tenderDto.setIsDelete(tender.getIsDelete());
-            tenderDto.setStoneUseFor(tender.getStoneUseFor());
-            tenderDto.setNote(tender.getNote());
-            tenderDto.setUnitOfNote(tender.getUnitOfNote());
-            tenderList.add(tenderDto);
-        }
-        return Rets.success(tenderList);
+    @ResponseBody
+    public Object List(@RequestParam String name,@RequestParam String colorNote,@RequestParam String shape,@RequestParam String size) {
+        Page<Tender> page = new PageFactory<Tender>().defaultPage();
+
+        page = tenderService.getTenders(page, name, colorNote, shape, size);
+//        page.setRecords((List<Tender>) new TenderWarpper(BeanUtil.objectsToMaps(page.getRecords())).warp());
+
+        return Rets.success(page);
+    }
+
+    //Supplier Order List page
+    @RequestMapping(value = "/list2", method = RequestMethod.GET)
+    @ResponseBody
+    public Object List2(@RequestParam String name,@RequestParam String colorNote,@RequestParam String shape,@RequestParam String size) {
+        Page<Tender> page = new PageFactory<Tender>().defaultPage();
+
+        page = tenderService.getTenders(page, name, colorNote, shape, size);
+        page.setRecords((List<Tender>) new TenderWarpper(BeanUtil.objectsToMaps(page.getRecords())).warp());
+
+        return Rets.success(page);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -124,5 +114,12 @@ public class TenderController extends BaseController {
     public Object getDetails(@RequestParam Long tenderId) {
         Tender tender = tenderService.get(tenderId);
         return tender;
+    }
+
+    @RequestMapping(value = "/closeTender", method = RequestMethod.POST)
+    @BussinessLog(value = "关闭投标", key = "id", dict = TenderDict.class)
+    public Object closeTender(@RequestParam Long id) {
+        tenderService.close(id);
+        return Rets.success();
     }
 }

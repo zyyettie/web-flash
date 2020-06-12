@@ -36,7 +36,7 @@ CREATE TABLE `t_biz_tender` (
   `unit_of_quantity` varchar(255) DEFAULT 0 COMMENT '数量单位',
   `enhance` varchar(255) DEFAULT NULL COMMENT '处理方式',
   `material` varchar(255) DEFAULT NULL COMMENT '材料',
-  `status` varchar(255) DEFAULT NULL COMMENT '发标状态(OPEN,CLOSE)',
+  `status` varchar(255) DEFAULT NULL COMMENT '发标状态(OPEN,CLOSED)',
   `due_date` datetime DEFAULT NULL COMMENT '到期时间,',
   `count` int(20) DEFAULT 0 COMMENT '已投标数',
   `version` int(20) DEFAULT 0 COMMENT '版本号',

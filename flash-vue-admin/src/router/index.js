@@ -24,6 +24,7 @@ import Layout from '../views/layout/Layout'
 export const constantRouterMap = [
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
   { path: '/register', component: () => import('@/views/register/index'), hidden: true },
+  { path: '/forgotPassword', component: () => import('@/views/forgotPassword/index'), hidden: true },
   {
     path: '/',
     component: Layout,
@@ -37,10 +38,10 @@ export const constantRouterMap = [
     },
     {
       path: '/account/updatePwd',
-      name: '修改密码',
+      name: 'Modify Password',
       component: () => import('@/views/account/updatePwd.vue'),
       hidden: true,
-      meta: { title: '修改密码' }
+      meta: { title: 'Modify Password' }
 
     }
     ]

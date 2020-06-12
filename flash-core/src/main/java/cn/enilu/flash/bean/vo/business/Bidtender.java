@@ -43,4 +43,8 @@ public class Bidtender {
     private Integer count;
     private Long version;
     private Integer isDelete;
+
+    //user info
+    private String paymentTerms;
+    private String paymentType;
 }

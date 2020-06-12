@@ -2,8 +2,17 @@
   <div class="app-container">
     <div class="block">
       <el-row :gutter="20">
-        <el-col :span="6">
-          <el-input v-model="listQuery.name" placeholder="please input tender name"></el-input>
+        <el-col :span="3">
+          <el-input v-model="listQuery.name" placeholder="GEMSTONE"></el-input>
+        </el-col>
+        <el-col :span="3">
+          <el-input v-model="listQuery.colorNote" placeholder="COLOR"></el-input>
+        </el-col>
+        <el-col :span="3">
+          <el-input v-model="listQuery.shape" placeholder="SHAPE"></el-input>
+        </el-col>
+        <el-col :span="3">
+          <el-input v-model="listQuery.size" placeholder="SIZE"></el-input>
         </el-col>
         <el-col :span="6">
           <el-button type="success" icon="el-icon-search" @click.native="search">{{ $t('button.search') }}</el-button>
@@ -19,7 +28,7 @@
 
       <el-table-column label="EDIT" >
         <template slot-scope="scope">
-          <el-button type="button" @click="addBid(scope.row)" :disabled="isBidAlready(scope.row)">{{$t('business.bid')}}</el-button>
+          <el-button size="mini" type="button" @click="addBid(scope.row)" :disabled="isBidAlready(scope.row)">{{$t('business.bid')}}</el-button>
         </template>
       </el-table-column>
       <el-table-column label="发标ID" v-if="false">
@@ -27,12 +36,12 @@
           {{scope.row.id}}
         </template>
       </el-table-column>
-      <el-table-column label="ORDER REF.NO.">
+      <el-table-column label="ORDER REF.NO." :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.no}}
         </template>
       </el-table-column>
-      <el-table-column label="GEMSTONE">
+      <el-table-column label="GEMSTONE" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.name}}
         </template>
@@ -52,42 +61,42 @@
           {{scope.row.size}}
         </template>
       </el-table-column>
-      <el-table-column label="PIECES">
+      <el-table-column label="PIECES" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.quantity}}
         </template>
       </el-table-column>
-      <el-table-column label="CLARITY">
+      <el-table-column label="CLARITY" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.clarity}}
         </template>
       </el-table-column>
-      <el-table-column label="TREATMENT">
+      <el-table-column label="TREATMENT" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.enhance}}
         </template>
       </el-table-column>
-      <el-table-column label="MATERIAL">
+      <el-table-column label="MATERIAL" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.material}}
         </template>
       </el-table-column>
-      <el-table-column label="PRICE RANGE">
+      <el-table-column label="PRICE RANGE" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.note}}
         </template>
       </el-table-column>
-      <el-table-column label="CLOSE DATE">
+      <el-table-column label="CLOSE DATE" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.dueDate}}
         </template>
       </el-table-column>
-      <el-table-column label="ORDER STATE">
+      <el-table-column label="ORDER STATE" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.status}}
         </template>
       </el-table-column>
-      <el-table-column label="Purchase User">
+      <el-table-column label="Purchase User" :render-header="labelHead">
         <template slot-scope="scope">
           {{scope.row.userName}}
         </template>

@@ -8,6 +8,14 @@ export function getTenderList(params) {
   })
 }
 
+export function getTenderList2(params) {
+  return request({
+    url: '/tender/list2',
+    method: 'get',
+    params
+  })
+}
+
 export function saveTender(params) {
   return request({
     url: '/tender',
@@ -31,5 +39,15 @@ export function getTenderDetails(id) {
     url: '/tender',
     method: 'get',
     params: id
+  })
+}
+
+export function closeTender(id) {
+  return request({
+    url: '/tender/closeTender',
+    method: 'post',
+    params: {
+      id: id
+    }
   })
 }

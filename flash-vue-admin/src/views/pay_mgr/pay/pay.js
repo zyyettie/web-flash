@@ -7,6 +7,7 @@ import { getToken } from '@/utils/auth'
 export default {
   data() {
     return {
+      dialogImageUrl: '',
       dialogVisible: false,
       uploadUrl: '',
       uploadFileId: '',
@@ -35,8 +36,8 @@ export default {
       listQuery: {
         page: 1,
         limit: 20,
-        name: undefined,
-        type: undefined
+        name: '',
+        colorNote: ''
       },
       total: 0,
       list: null,
@@ -107,7 +108,7 @@ export default {
     fetchData() {
       this.listLoading = true
       getBidListForPayment(this.listQuery).then(response => {
-        this.list = response.data
+        this.list = response.data.records
         for (var index in this.list) {
           const item = this.list[index]
           item.img = getApiUrl() + '/file/getImgStream?idFile=' + item.idFile
@@ -123,7 +124,7 @@ export default {
     },
     reset() {
       this.listQuery.name = ''
-      this.listQuery.type = ''
+      this.listQuery.colorNote = ''
       this.fetchData()
     },
     handleFilter() {
@@ -186,7 +187,7 @@ export default {
       }
     },
     editBid(row) {
-      this.form.bidId = row.bidId
+      this.form.id = row.id
       this.form = row
       this.formVisible = true
     },
@@ -261,7 +262,7 @@ export default {
     //   })
     // },
     nextStepWithAdditionalInfo(id) {
-      if (this.statusForm.bidStatus === 6) {
+      if (this.statusForm.status === 6) {
         this.$refs['statusForm'].validate((valid) => {
           if (valid) {
             // 添加loading页面

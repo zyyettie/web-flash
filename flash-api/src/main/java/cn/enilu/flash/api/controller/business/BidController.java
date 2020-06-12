@@ -2,6 +2,7 @@ package cn.enilu.flash.api.controller.business;
 
 import cn.enilu.flash.api.controller.BaseController;
 import cn.enilu.flash.api.mail.MailService;
+import cn.enilu.flash.bean.constant.factory.PageFactory;
 import cn.enilu.flash.bean.core.BussinessLog;
 import cn.enilu.flash.bean.dictmap.BidDict;
 import cn.enilu.flash.bean.entity.business.Bid;
@@ -9,13 +10,14 @@ import cn.enilu.flash.bean.entity.business.Tender;
 import cn.enilu.flash.bean.entity.system.User;
 import cn.enilu.flash.bean.enumeration.BizExceptionEnum;
 import cn.enilu.flash.bean.exception.GunsException;
-import cn.enilu.flash.bean.vo.business.Bidtender;
 import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.service.business.BidService;
 import cn.enilu.flash.service.business.TenderService;
 import cn.enilu.flash.service.system.UserService;
-import cn.enilu.flash.utils.DateTime;
+import cn.enilu.flash.utils.BeanUtil;
 import cn.enilu.flash.utils.ToolUtil;
+import cn.enilu.flash.utils.factory.Page;
+import cn.enilu.flash.warpper.BidWarpper;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +28,6 @@ import org.thymeleaf.context.Context;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import cn.enilu.flash.utils.DateTimeKit;
@@ -59,19 +60,20 @@ public class BidController extends BaseController{
      */
     @RequestMapping(method = RequestMethod.POST)
     @BussinessLog(value = "投标", key = "name", dict = BidDict.class)
-    public Object save(@ModelAttribute Bid bid){
+    public Object save(@ModelAttribute("bid") Bid bid){
         logger.info(JSON.toJSONString(bid));
-        if(ToolUtil.isOneEmpty(bid, bid.getTenderId())){
+//        if(ToolUtil.isOneEmpty(bid, bid.getTenderId())){
+        if(ToolUtil.isOneEmpty(bid, bid.getTender().getId())){
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
         }
-
-        Tender tender = tenderService.get(bid.getTenderId());
+        Tender tender = tenderService.get(bid.getTender().getId());
         tender.setCount(tender.getCount()+1);
         tenderService.save(tender);
         //根据bid id的最大号码加1生成编号
         String bidNo = tender.getNo() + String.format("%04d", tender.getCount()+1);
         bid.setNo(bidNo);
         bid.setStatus(0);//设置初始投标状态为0
+        bid.setTender(tender);
         bidService.save(bid);
 
         //根据createBy获取Account
@@ -81,7 +83,8 @@ public class BidController extends BaseController{
         bidService.save(newlyCreatedBid);
 
         //发邮件给tenderadmin
-        Long tenderId = bid.getTenderId();
+//        Long tenderId = bid.getTenderId();
+        Long tenderId = bid.getTender().getId();
         String tenderAdminEmail = userService.getEmailByTenderId(tenderId);
         mailService.sendSimpleMail(tenderAdminEmail,"A new bid <"+ bidNo +"> has been created","Please login to Bid Management System to check");
         return Rets.success();
@@ -126,67 +129,26 @@ public class BidController extends BaseController{
     }
 
     /**
-     * 我的投标
-     * @param request
+     * 查询我的投标
+     * @param name, colorNote, shape, size, memoNo
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public Object list(HttpServletRequest request){
+    public Object list(HttpServletRequest request,@RequestParam String name,@RequestParam String colorNote,@RequestParam String shape,@RequestParam String size,@RequestParam String memoNo){
         Long idUser;
         try {
             idUser = getIdUser(request);
         }catch (Exception e){
             return Rets.expire();
         }
-        List<Bidtender> list = new ArrayList();
-        if(idUser!=null){
-            List<Bid> bidList = (List<Bid>)bidService.getListByUser(idUser);
-            for(Bid bid: bidList){
-                Long tenderId = bid.getTenderId();
-                Tender tender = tenderService.get(tenderId);
-                Bidtender bidtenderVO = new Bidtender();
-                //bid info
-                bidtenderVO.setBidId(bid.getId());
-                bidtenderVO.setNo(bid.getNo());
-                bidtenderVO.setQuantity(bid.getQuantity());
-                bidtenderVO.setUnitOfBidQuantity(bid.getUnitOfBidQuantity());
-                bidtenderVO.setPrice(bid.getPrice());
-                bidtenderVO.setUnitOfBidPrice(bid.getUnitOfBidPrice());
-                bidtenderVO.setIsApproved(bid.getIsApproved());
-                bidtenderVO.setBidStatus(bid.getStatus());
-                if(bid.getDeliverType()!=null)
-                  bidtenderVO.setDeliverType(bid.getDeliverType());
-                if(bid.getDeliverNo()!=null)
-                  bidtenderVO.setDeliverNo(bid.getDeliverNo());
-                if(bid.getConfirmedQuantity()!=null)
-                  bidtenderVO.setConfirmedQuantity(bid.getConfirmedQuantity());
-                if(bid.getConfirmedPrice()!=null)
-                  bidtenderVO.setConfirmedPrice(bid.getConfirmedPrice());
-                bidtenderVO.setTenderId(bid.getTenderId());
-                bidtenderVO.setIdFile(bid.getIdFile());
-                bidtenderVO.setInvoiceNo(bid.getInvoiceNo());
-                bidtenderVO.setInvoiceIdFile(bid.getInvoiceIdFile());
-
-                //tender info
-                bidtenderVO.setTenderId(tenderId);
-                bidtenderVO.setTenderNo(tender.getNo());
-                bidtenderVO.setName(tender.getName());
-                bidtenderVO.setShape(tender.getShape());
-                bidtenderVO.setSize(tender.getSize());
-                bidtenderVO.setColor(tender.getColor());
-                bidtenderVO.setColorNote(tender.getColorNote());
-                bidtenderVO.setClarity(tender.getClarity());
-                bidtenderVO.setTenderQuantity(tender.getQuantity());
-                bidtenderVO.setEnhance(tender.getEnhance());
-                bidtenderVO.setMaterial(tender.getMaterial());
-                bidtenderVO.setNote(tender.getNote());
-                bidtenderVO.setTenderStatus(tender.getStatus());
-                bidtenderVO.setDueDate(tender.getDueDate());
-                bidtenderVO.setCount(tender.getCount());
-                list.add(bidtenderVO);
-            }
+        Page<Bid> page = new PageFactory<Bid>().defaultPage();
+        if(idUser!=null) {
+            page = bidService.getBids(page, name, colorNote, shape, size, memoNo, idUser);
         }
-        return Rets.success(list);
+        page.setRecords((List<Bid>) new BidWarpper(BeanUtil.objectsToMaps(page.getRecords())).warp());
+
+        return Rets.success(page);
+
     }
 
     @RequestMapping(value = "/moveToNextStatusStep3/{id}",method = RequestMethod.GET)
@@ -229,11 +191,23 @@ public class BidController extends BaseController{
         String templateName = "nam";
         Context context = new Context();
         context.setVariable("bidNo",bid.getNo());
-        //查询nam的邮件, 暂定nam用户的id不会变，初始化时为50
+        //查询nam的邮件, 暂定nam用户的id不会变，初始化时user id为50
         User nam = userService.get(50L);
         String namEmail = nam.getEmail();
         context.setVariable("bidNo",bidNo);
-        context.setVariable("deliverType",bid.getDeliverType());
+        int deliverTypeInt = bid.getDeliverType().intValue();
+        String deliverType;
+        switch(deliverTypeInt) {
+            case 1: deliverType = "Sent By Messenger";
+                    break;
+            case 2: deliverType = "Express";
+                break;
+            case 3: deliverType = "Other Way";
+                break;
+            default: deliverType = "";
+                break;
+        }
+        context.setVariable("deliverType",deliverType);
         context.setVariable("deliverNo",bid.getDeliverNo());
         mailService.sendTemplateMail(namEmail,subject,templateName,context);
         return Rets.success();
@@ -247,7 +221,8 @@ public class BidController extends BaseController{
         //准备邮件信息
         Long bidId =bidDto.getId();
         Bid realBid = bidService.get(bidId);
-        Tender tender = tenderService.get(realBid.getTenderId());
+//        Tender tender = tenderService.get(realBid.getTenderId());
+        Tender tender = tenderService.get(realBid.getTender().getId());
         String bidNo = realBid.getNo();
         Long bidCreateBy = realBid.getCreateBy();
         User user = userService.get(bidCreateBy);
@@ -274,9 +249,10 @@ public class BidController extends BaseController{
         Context context = new Context();
         context.setVariable("bidNo",bidNo);
         context.setVariable("name",tender.getName());
-        context.setVariable("pieces",realBid.getConfirmedQuantity());
-        context.setVariable("price",realBid.getConfirmedPrice());
-        context.setVariable("totalPrice", realBid.getConfirmedPrice());
+        context.setVariable("confirmedQuantity",realBid.getConfirmedQuantity());
+        context.setVariable("confirmedQuantityUnit",realBid.getConfirmedQuantityUnit());
+        context.setVariable("confirmedPrice",realBid.getConfirmedPrice());
+        context.setVariable("confirmedPriceUnit",realBid.getConfirmedPriceUnit());
         context.setVariable("dueDate", dueDate);
         String vendorEmail = userService.getVendorEmailByBidId(bidId);
         mailService.sendTemplateMail(vendorEmail,subject,templateName,context);
@@ -329,7 +305,8 @@ public class BidController extends BaseController{
         //准备邮件信息
         Bid bid = bidService.get(id);
         String bidNo = bid.getNo();
-        Tender tender = tenderService.get(bid.getTenderId());
+//        Tender tender = tenderService.get(bid.getTenderId());
+        Tender tender = tenderService.get(bid.getTender().getId());
         String tenderName = tender.getName();
         //发送step1 邮件
         String subject = "Delivery Confirmation "+tenderName;
@@ -352,52 +329,12 @@ public class BidController extends BaseController{
     }
 
     @RequestMapping(value = "/listForPayment", method = RequestMethod.GET)
-    public Object listForPayment(HttpServletRequest request){
-        List<Bidtender> list = new ArrayList();
-            List<Bid> bidList = (List<Bid>)bidService.getListForPayment();
-            for(Bid bid: bidList){
-                Long tenderId = bid.getTenderId();
-                Tender tender = tenderService.get(tenderId);
-                Bidtender bidtenderVO = new Bidtender();
-                //bid info
-                bidtenderVO.setBidId(bid.getId());
-                bidtenderVO.setNo(bid.getNo());
-                bidtenderVO.setQuantity(bid.getQuantity());
-                bidtenderVO.setPrice(bid.getPrice());
-                bidtenderVO.setIsApproved(bid.getIsApproved());
-                bidtenderVO.setBidStatus(bid.getStatus());
-                if(bid.getDeliverType()!=null)
-                    bidtenderVO.setDeliverType(bid.getDeliverType());
-                if(bid.getDeliverNo()!=null)
-                    bidtenderVO.setDeliverNo(bid.getDeliverNo());
-                if(bid.getConfirmedQuantity()!=null)
-                    bidtenderVO.setConfirmedQuantity(bid.getConfirmedQuantity());
-                if(bid.getConfirmedPrice()!=null)
-                    bidtenderVO.setConfirmedPrice(bid.getConfirmedPrice());
-                bidtenderVO.setTenderId(bid.getTenderId());
-                bidtenderVO.setIdFile(bid.getIdFile());
-                bidtenderVO.setInvoiceNo(bid.getInvoiceNo());
-                bidtenderVO.setInvoiceIdFile(bid.getInvoiceIdFile());
+    public Object listForPayment(@RequestParam String name,@RequestParam String colorNote){
+        Page<Bid> page = new PageFactory<Bid>().defaultPage();
+        page = bidService.getPaymentBids(page, name, colorNote);
+        page.setRecords((List<Bid>) new BidWarpper(BeanUtil.objectsToMaps(page.getRecords())).warp());
 
-                //tender info
-                bidtenderVO.setTenderId(tenderId);
-                bidtenderVO.setTenderNo(tender.getNo());
-                bidtenderVO.setName(tender.getName());
-                bidtenderVO.setShape(tender.getShape());
-                bidtenderVO.setSize(tender.getSize());
-                bidtenderVO.setColor(tender.getColor());
-                bidtenderVO.setColorNote(tender.getColorNote());
-                bidtenderVO.setClarity(tender.getClarity());
-                bidtenderVO.setTenderQuantity(tender.getQuantity());
-                bidtenderVO.setEnhance(tender.getEnhance());
-                bidtenderVO.setMaterial(tender.getMaterial());
-                bidtenderVO.setNote(tender.getNote());
-                bidtenderVO.setTenderStatus(tender.getStatus());
-                bidtenderVO.setDueDate(tender.getDueDate());
-                bidtenderVO.setCount(tender.getCount());
-                list.add(bidtenderVO);
-            }
-        return Rets.success(list);
+        return Rets.success(page);
     }
 
 

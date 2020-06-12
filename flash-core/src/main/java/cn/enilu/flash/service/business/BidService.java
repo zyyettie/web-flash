@@ -2,12 +2,19 @@ package cn.enilu.flash.service.business;
 
 import cn.enilu.flash.bean.entity.business.Bid;
 import cn.enilu.flash.dao.business.BidRepository;
+import cn.enilu.flash.utils.factory.Page;
+import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -96,4 +103,73 @@ public class BidService {
         }
         return null;
     }
+
+    public Page getBids(Page<Bid> page, final String name, final String colorNote, final String shape, final String size, final String memoNo, final Long createBy) {
+        Pageable pageable = null;
+        if(page.isOpenSort()) {
+            pageable = new PageRequest(page.getCurrent()-1, page.getSize(), page.isAsc() ? Sort.Direction.ASC : Sort.Direction.DESC, page.getOrderByField());
+        }else{
+            pageable = new PageRequest(page.getCurrent()-1,page.getSize(),Sort.Direction.DESC,"id");
+        }
+
+        org.springframework.data.domain.Page<Bid> bidPage = bidRepository.findAll(new Specification<Bid>(){
+
+            @Override
+            public Predicate toPredicate(Root<Bid> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> list = new ArrayList<Predicate>();
+                list.add(criteriaBuilder.equal(root.get("createBy").as(Long.class),createBy));
+                if(!Strings.isNullOrEmpty(memoNo)){{
+                    list.add(criteriaBuilder.like(root.get("memoNo").as(String.class),"%"+memoNo+"%"));
+                }}
+                //跨表查询
+                if(!Strings.isNullOrEmpty(name)){{
+                    list.add(criteriaBuilder.like(root.get("tender").get("name").as(String.class),"%"+name+"%"));
+                }}
+                if(!Strings.isNullOrEmpty(colorNote)){{
+                    list.add(criteriaBuilder.like(root.get("tender").get("colorNote").as(String.class),"%"+colorNote+"%"));
+                }}
+                if(!Strings.isNullOrEmpty(shape)){{
+                    list.add(criteriaBuilder.like(root.get("tender").get("shape").as(String.class),"%"+shape+"%"));
+                }}
+                if(!Strings.isNullOrEmpty(size)){{
+                    list.add(criteriaBuilder.like(root.get("tender").get("size").as(String.class),"%"+size+"%"));
+                }}
+                Predicate[] p = new Predicate[list.size()];
+                return criteriaBuilder.and(list.toArray(p));
+            }
+        },pageable);
+        page.setTotal(Integer.valueOf(bidPage.getTotalElements()+""));
+        page.setRecords(bidPage.getContent());
+        return page;
+    }
+
+    public Page getPaymentBids(Page<Bid> page, final String name, final String colorNote) {
+        Pageable pageable = null;
+        if(page.isOpenSort()) {
+            pageable = new PageRequest(page.getCurrent()-1, page.getSize(), page.isAsc() ? Sort.Direction.ASC : Sort.Direction.DESC, page.getOrderByField());
+        }else{
+            pageable = new PageRequest(page.getCurrent()-1,page.getSize(),Sort.Direction.DESC,"id");
+        }
+
+        org.springframework.data.domain.Page<Bid> bidPage = bidRepository.findAll(new Specification<Bid>(){
+
+            @Override
+            public Predicate toPredicate(Root<Bid> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> list = new ArrayList<Predicate>();
+                //跨表查询
+                if(!Strings.isNullOrEmpty(name)){{
+                    list.add(criteriaBuilder.like(root.get("tender").get("name").as(String.class),"%"+name+"%"));
+                }}
+                if(!Strings.isNullOrEmpty(colorNote)){{
+                    list.add(criteriaBuilder.like(root.get("tender").get("colorNote").as(String.class),"%"+colorNote+"%"));
+                }}
+                Predicate[] p = new Predicate[list.size()];
+                return criteriaBuilder.and(list.toArray(p));
+            }
+        },pageable);
+        page.setTotal(Integer.valueOf(bidPage.getTotalElements()+""));
+        page.setRecords(bidPage.getContent());
+        return page;
+    }
+
 }

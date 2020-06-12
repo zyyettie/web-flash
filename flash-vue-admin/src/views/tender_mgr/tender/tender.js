@@ -1,9 +1,10 @@
-import { delTender, getTenderList, saveTender } from '@/api/business/tender'
+import { delTender, getTenderList, saveTender, closeTender } from '@/api/business/tender'
 import { Loading } from 'element-ui'
 
 export default {
   data() {
     return {
+      intervalId: null,
       labelPosition: 'left',
       formVisible: false,
       formTitle: this.$t('business.addTender'),
@@ -26,8 +27,10 @@ export default {
       listQuery: {
         page: 1,
         limit: 20,
-        name: undefined,
-        type: undefined
+        name: '',
+        colorNote: '',
+        shape: '',
+        size: ''
       },
       total: 0,
       list: null,
@@ -164,15 +167,27 @@ export default {
   },
   created() {
     this.init()
+    this.dataRefreh()
+  },
+  destroyed() {
+    // 在页面销毁后，清除计时器
+    this.clear()
   },
   methods: {
+    labelHead(h, { column, index }) {
+      const l = column.label.length
+      const f = 16 // 每个字大小，其实是每个字的比例值，大概会比字体大小差不多大一点，
+      column.minWidth = f * l // 字大小乘个数即长度 ,注意不要加px像素，这里minWidth只是一个比例值，不是真正的长度
+      // 然后将列标题放在一个div块中，注意块的宽度一定要100%，否则表格显示不完全
+      return h('div', { class: 'table-head', style: { width: '100%' }}, [column.label])
+    },
     init() {
       this.fetchData()
     },
     fetchData() {
       this.listLoading = true
       getTenderList(this.listQuery).then(response => {
-        this.list = response.data
+        this.list = response.data.records
         this.listLoading = false
         this.total = response.data.total
       })
@@ -182,7 +197,9 @@ export default {
     },
     reset() {
       this.listQuery.name = ''
-      this.listQuery.type = ''
+      this.listQuery.colorNote = ''
+      this.listQuery.shape = ''
+      this.listQuery.size = ''
       this.fetchData()
     },
     handleFilter() {
@@ -291,6 +308,26 @@ export default {
         this.formVisible = true
       }
     },
+    closeTender(row) {
+      this.selRow = row
+      if (this.checkSel()) {
+        var id = this.selRow.id
+        this.$confirm(this.$t('business.closeConfirm'), this.$t('common.tooltip'), {
+          confirmButtonText: this.$t('button.submit'),
+          cancelButtonText: this.$t('button.cancel'),
+          type: 'warning'
+        }).then(() => {
+          closeTender(id).then(response => {
+            this.$message({
+              message: this.$t('common.optionSuccess'),
+              type: 'success'
+            })
+            this.fetchData()
+          })
+        }).catch(() => {
+        })
+      }
+    },
     remove() {
       if (this.checkSel()) {
         var id = this.selRow.id
@@ -333,7 +370,23 @@ export default {
           status: rowData.status
         }
       })
+    },
+    // 定时刷新数据函数
+    dataRefreh() {
+    // 计时器正在进行中，退出函数
+      if (this.intervalId != null) {
+        return
+      }
+      // 计时器为空，操作
+      this.intervalId = setInterval(() => {
+        console.log('refresh ' + new Date())
+        this.init() // 加载数据函数
+      }, 60000)
+    },
+    // 停止定时器
+    clear() {
+      clearInterval(this.intervalId) // 清除计时器
+      this.intervalId = null // 设置为null
     }
-
   }
 }

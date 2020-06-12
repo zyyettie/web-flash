@@ -3,9 +3,7 @@ package cn.enilu.flash.bean.entity.business;
 import cn.enilu.flash.bean.entity.BaseEntity;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
+import javax.persistence.*;
 
 
 import org.hibernate.annotations.Table;
@@ -14,9 +12,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "t_biz_tender")
-@Table(appliesTo = "t_biz_tender",comment = "投标")
+@Table(appliesTo = "t_biz_tender",comment = "发标")
 @Data
 @EntityListeners(AuditingEntityListener.class)
 public class Tender extends BaseEntity {
@@ -60,4 +59,9 @@ public class Tender extends BaseEntity {
     private String note;
     @Column
     private String unitOfNote;
+
+    //仅仅在多的那一方单向关联， 没必要双向关联
+//    @OneToMany(mappedBy = "tender", cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+//    private List<Bid> bidList;
+
 }

@@ -1,7 +1,10 @@
 package cn.enilu.flash.dao.business;
 
 import cn.enilu.flash.bean.entity.business.Bid;
+import cn.enilu.flash.bean.entity.business.Tender;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -9,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface BidRepository extends PagingAndSortingRepository<Bid, Long> {
+public interface BidRepository extends PagingAndSortingRepository<Bid, Long>, JpaSpecificationExecutor<Bid>, JpaRepository<Bid,Long> {
     List<Bid> findBidsByTenderId(Long tenderId, Sort sort);
 
     Bid findBidByNo(String no);
