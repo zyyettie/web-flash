@@ -116,7 +116,7 @@
     <!-- 投标列表 -->
     <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
               @current-change="handleCurrentChange">
-      <el-table-column label="EDIT" width="160px">
+      <el-table-column label="EDIT" width="160px" header-align="center" align="center">
         <template slot-scope="scope">
           <div v-if="scope.row.isApproved === 0">
           <div style="float:left">
@@ -136,27 +136,27 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="ORDER NO." v-if=false>
+      <el-table-column label="ORDER NO." width="160px" header-align="center" align="center" v-if=false>
         <template slot-scope="scope">
           {{scope.row.id}}
         </template>
       </el-table-column>
-      <el-table-column label="ORDER REF.NO." :render-header="labelHead">
+      <el-table-column label="ORDER REF.NO." width="160px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.no}}
         </template>
       </el-table-column>
-      <el-table-column label="QUANTITY" :render-header="labelHead">
+      <el-table-column label="QUANTITY" width="120px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.quantity}} {{scope.row.unitOfBidQuantity}}
         </template>
       </el-table-column>
-      <el-table-column label="PRICE">
+      <el-table-column label="PRICE" width="120px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.price}}/{{scope.row.unitOfBidPrice}}
         </template>
       </el-table-column>
-      <el-table-column label="DELIVER TYPE" :render-header="labelHead">
+      <el-table-column label="DELIVER TYPE" width="160px" header-align="center" align="center">
         <template slot-scope="scope">
           <p v-if="scope.row.deliverType === 1">Sent By Messenger</p>
           <p v-else-if="scope.row.deliverType === 2">Express</p>
@@ -164,34 +164,34 @@
           <p v-else></p>
         </template>
       </el-table-column>
-      <el-table-column label="DELIVER NO." :render-header="labelHead">
+      <el-table-column label="DELIVER NO." width="140px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.deliverNo}}
         </template>
       </el-table-column>
-      <el-table-column label="CONFIRMED QUANTITY" :render-header="labelHead">
+      <el-table-column label="CONFIRMED QUANTITY" width="190px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.confirmedQuantity}} {{scope.row.confirmedQuantityUnit}}
         </template>
       </el-table-column>
-      <el-table-column label="CONFIRMED PRICE" :render-header="labelHead">
+      <el-table-column label="CONFIRMED PRICE" width="160px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.confirmedPrice}} THB/{{scope.row.confirmedPriceUnit}}
         </template>
       </el-table-column>
-      <el-table-column label="SUPPLIER" width="200px">
+      <el-table-column label="SUPPLIER" width="200px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.contact}}
         </template>
       </el-table-column>
-      <el-table-column label="ORDER ACCEPT STATE" :render-header="labelHead">
+      <el-table-column label="ORDER ACCEPT STATE" width="200px" header-align="center" align="center">
         <template slot-scope="scope">
           <p v-if="scope.row.isApproved===1">Approved</p>
           <p v-else-if="scope.row.isApproved===-1">Denied</p>
           <p v-else>Undecided</p>
         </template>
       </el-table-column>
-      <el-table-column label="INVOICE">
+      <el-table-column label="INVOICE" width="140px" header-align="center" align="center">
         <template slot-scope="scope">
         <div v-if="scope.row.invoiceIdFile!=='' && scope.row.invoiceIdFile!==null && scope.row.invoiceIdFile!==undefined">
           <el-popover
@@ -204,7 +204,7 @@
         </div>
         </template>
       </el-table-column>
-      <el-table-column label="PAYMENT" :render-header="labelHead">
+      <el-table-column label="PAYMENT" width="140px" header-align="center" align="center">
         <template slot-scope="scope">
         <div v-if="scope.row.idFile!=='' && scope.row.idFile!==null && scope.row.idFile!==undefined">
           <el-popover
@@ -217,7 +217,7 @@
         </div>
         </template>
       </el-table-column>
-      <el-table-column label="ORDER STEP" :render-header="labelHead">
+      <el-table-column label="ORDER STEP" width="120px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.status}}
         </template>
