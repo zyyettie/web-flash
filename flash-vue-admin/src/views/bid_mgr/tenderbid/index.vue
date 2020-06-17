@@ -23,10 +23,10 @@
       <br>
     </div>
 
-    <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
+    <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row 
               @current-change="handleCurrentChange">
 
-      <el-table-column label="EDIT" >
+      <el-table-column label="EDIT" width="100px" header-align="center" align="center">
         <template slot-scope="scope">
           <el-button size="mini" type="button" @click="addBid(scope.row)" :disabled="isBidAlready(scope.row)">{{$t('business.bid')}}</el-button>
         </template>
@@ -36,17 +36,17 @@
           {{scope.row.id}}
         </template>
       </el-table-column>
-      <el-table-column label="ORDER REF.NO." :render-header="labelHead">
+      <el-table-column label="ORDER REF.NO." width="160px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.no}}
         </template>
       </el-table-column>
-      <el-table-column label="GEMSTONE" :render-header="labelHead">
+      <el-table-column label="GEMSTONE" width="180px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.name}}
         </template>
       </el-table-column>
-      <el-table-column label="COLOR">
+      <el-table-column label="COLOR" width="120px" header-align="center" align="center">
         <template slot-scope="scope">
           <el-tag :color="scope.row.color"></el-tag>{{scope.row.colorNote}}
         </template>
@@ -56,47 +56,47 @@
           {{scope.row.shape}}
         </template>
       </el-table-column>
-      <el-table-column label="SIZE">
+      <el-table-column label="SIZE(mm)" width="130px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.size}}
         </template>
       </el-table-column>
-      <el-table-column label="PIECES" :render-header="labelHead">
+      <el-table-column label="QUANTITY" width="120px" header-align="center" align="center">
         <template slot-scope="scope">
-          {{scope.row.quantity}}
+          {{scope.row.quantity}} {{scope.row.unitOfQuantity}}
         </template>
       </el-table-column>
-      <el-table-column label="CLARITY" :render-header="labelHead">
+      <el-table-column label="CLARITY" width="110px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.clarity}}
         </template>
       </el-table-column>
-      <el-table-column label="TREATMENT" :render-header="labelHead">
+      <el-table-column label="TREATMENT" width="130px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.enhance}}
         </template>
       </el-table-column>
-      <el-table-column label="MATERIAL" :render-header="labelHead">
+      <el-table-column label="MATERIAL" width="120px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.material}}
         </template>
       </el-table-column>
-      <el-table-column label="PRICE RANGE" :render-header="labelHead">
+      <el-table-column label="PRICE RANGE" width="140px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.note}}
         </template>
       </el-table-column>
-      <el-table-column label="CLOSE DATE" :render-header="labelHead">
+      <el-table-column label="CLOSE DATE" width="160px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.dueDate}}
         </template>
       </el-table-column>
-      <el-table-column label="ORDER STATE" :render-header="labelHead">
+      <el-table-column label="ORDER STATE" width="140px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.status}}
         </template>
       </el-table-column>
-      <el-table-column label="Purchase User" :render-header="labelHead">
+      <el-table-column label="Purchase User" width="160px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.userName}}
         </template>
@@ -218,6 +218,7 @@
               <el-input v-model="bidForm.bidQuantity" ></el-input>
               </el-col>
               <el-col :span="12">
+              <el-form-item prop="unitOfBidQuantity" >
               <el-select v-model="bidForm.unitOfBidQuantity" style="width:60%" placeholder="please select">
                 <el-option
                   v-for="item in unitOfBidQuantityOptions"
@@ -226,6 +227,7 @@
                   :value="item.value">
                 </el-option>
               </el-select>
+              </el-form-item>
               </el-col>
             </el-form-item>
           </el-col>
@@ -235,6 +237,7 @@
               <el-input v-model="bidForm.bidPrice" ></el-input>
               </el-col>
               <el-col :span="12">
+              <el-form-item prop="unitOfBidPrice" >
               <el-select v-model="bidForm.unitOfBidPrice" style="width:60%" placeholder="please select">
                 <el-option
                   v-for="item in unitOfBidPriceOptions"
@@ -243,6 +246,7 @@
                   :value="item.value">
                 </el-option>
               </el-select>
+              </el-form-item>
               </el-col>
             </el-form-item>
           </el-col>

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * ApiApplication
@@ -24,6 +25,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableJpaRepositories(basePackages= "cn.enilu.flash.dao")
 @EnableJpaAuditing
 @EnableAsync
+@EnableScheduling
 public class ApiApplication extends SpringBootServletInitializer {
 
     @Override

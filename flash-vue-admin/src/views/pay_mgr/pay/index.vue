@@ -36,17 +36,17 @@
     <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
               @current-change="handleCurrentChange">
 
-      <el-table-column label="EDIT">
+      <el-table-column label="EDIT" width="140px" header-align="center" align="center">
         <template slot-scope="scope">
           <div v-if="scope.row.isApproved === 0">
-            <el-button type="button" @click="editBid(scope.row)">EDIT</el-button>
+            <el-button size="mini" type="button" @click="editBid(scope.row)">EDIT</el-button>
           </div>
           <div v-else>
             <div v-if="scope.row.status === 6">
-              <el-button type="button" @click="changeVendorStatus(scope.row)">{{$t('business.nextStep')}}</el-button>
+              <el-button size="mini" type="button" @click="changeVendorStatus(scope.row)">{{$t('business.nextStep')}}</el-button>
             </div>
             <div v-else>
-              <el-button type="button" :disabled="true">{{$t('business.nextStep')}}</el-button>
+              <el-button size="mini" type="button" :disabled="true">{{$t('business.nextStep')}}</el-button>
             </div>
           </div>
         </template>
@@ -56,38 +56,38 @@
           {{scope.row.id}}
         </template>
       </el-table-column>
-      <el-table-column label="BID REF.NO.">
+      <el-table-column label="BID REF.NO." width="180px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.no}}
         </template>
       </el-table-column>
-      <el-table-column label="ORDER REF.NO.">
+      <el-table-column label="ORDER REF.NO." width="180px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.tenderNo}}
         </template>
       </el-table-column>
-      <el-table-column label="GEMSTONE">
+      <el-table-column label="GEMSTONE" width="200px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.name}}
         </template>
       </el-table-column>
-      <el-table-column label="COLOR">
+      <el-table-column label="COLOR" width="140px" header-align="center" align="center">
         <template slot-scope="scope">
           <el-tag :color="scope.row.color"></el-tag>{{scope.row.colorNote}}
         </template>
       </el-table-column>
-      <el-table-column label="PAYMENT TERMS">
+      <el-table-column label="PAYMENT TERMS" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.paymentTerms}}
         </template>
       </el-table-column>
-      <el-table-column label="PAYMENT TYPE">
+      <el-table-column label="PAYMENT TYPE" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.paymentType}}
         </template>
       </el-table-column>
       
-      <el-table-column label="INVOICE">
+      <el-table-column label="INVOICE" header-align="center" align="center">
         <template slot-scope="scope">
         <div v-if="scope.row.invoiceIdFile!=='' && scope.row.invoiceIdFile!==null && scope.row.invoiceIdFile!==undefined">
           <el-popover
@@ -100,7 +100,7 @@
         </div>
         </template>
       </el-table-column>
-      <el-table-column label="PAYMENT">
+      <el-table-column label="PAYMENT" header-align="center" align="center">
         <template slot-scope="scope">
         <div v-if="scope.row.idFile!=='' && scope.row.idFile!==null && scope.row.idFile!==undefined">
           <el-popover
@@ -113,7 +113,7 @@
         </div>
         </template>
       </el-table-column>
-      <el-table-column label="ORDER STEP">
+      <el-table-column label="ORDER STEP" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.status}}
         </template>

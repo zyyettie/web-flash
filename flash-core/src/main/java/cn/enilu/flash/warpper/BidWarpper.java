@@ -18,7 +18,8 @@ public class BidWarpper extends BaseControllerWarpper{
         map.put("colorNote", tender.getColorNote());
         map.put("shape", tender.getShape());
         map.put("size", tender.getSize());
-        map.put("quantity", tender.getQuantity());
+        map.put("tenderQuantity", tender.getQuantity());
+        map.put("unitOfQuantity", tender.getUnitOfQuantity());
         map.put("clarity", tender.getClarity());
         map.put("enhance", tender.getEnhance());
         map.put("material", tender.getMaterial());

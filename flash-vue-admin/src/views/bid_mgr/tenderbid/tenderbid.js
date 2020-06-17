@@ -27,8 +27,10 @@ export default {
         dueDate: '',
         count: '',
         bidQuantity: '',
+        unitOfBidQuantity: '',
         bidWeight: '',
-        bidPrice: ''
+        bidPrice: '',
+        unitOfBidPrice: ''
       },
       listQuery: {
         page: 1,
@@ -69,8 +71,14 @@ export default {
         bidQuantity: [
           { required: true, message: 'SUPPLIER AVAILABLE PIECE is required', trigger: 'blur' }
         ],
+        unitOfBidQuantity: [
+          { required: true, message: 'SUPPLIER AVAILABLE PIECE UNIT is required', trigger: 'blur' }
+        ],
         bidPrice: [
-          { required: true, message: 'PRICE is required', trigger: 'blur' }
+          { required: true, message: 'UNIT PRICE is required', trigger: 'blur' }
+        ],
+        unitOfBidPrice: [
+          { required: true, message: 'UNIT PRICE UNIT is required', trigger: 'blur' }
         ]
       }
     }

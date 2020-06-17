@@ -31,77 +31,77 @@
     <el-table :data="list" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row
               @current-change="handleCurrentChange">
 
-      <el-table-column label="REF.NO." :render-header="labelHead">
+      <el-table-column label="REF.NO." width="120px" header-align="center" align="center">
         <template slot-scope="scope">
           <el-button type="text" @click.native="viewTender(scope.row)"> {{scope.row.no}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="GEMSTONE" :render-header="labelHead">
+      <el-table-column label="GEMSTONE" width="180px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.name}}
         </template>
       </el-table-column>
-      <el-table-column label="COLOR" >
+      <el-table-column label="COLOR" width="120px" header-align="center" align="center">
         <template slot-scope="scope">
           <el-tag :color="scope.row.color"></el-tag>{{scope.row.colorNote}}
         </template>
       </el-table-column>
-      <el-table-column label="SHAPE">
+      <el-table-column label="SHAPE" width="80px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.shape}}
         </template>
       </el-table-column>
-      <el-table-column label="SIZE(mm)" :render-header="labelHead">
+      <el-table-column label="SIZE(mm)" width="140px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.size}}
         </template>
       </el-table-column>
-      <el-table-column label="QUANTITY" :render-header="labelHead">
+      <el-table-column label="QUANTITY" width="120px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.quantity}} {{scope.row.unitOfQuantity}}
         </template>
       </el-table-column>
-      <el-table-column label="CLARITY" :render-header="labelHead">
+      <el-table-column label="CLARITY" width="120px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.clarity}}
         </template>
       </el-table-column>
-      <el-table-column label="TREATMENT" :render-header="labelHead">
+      <el-table-column label="TREATMENT" width="130px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.enhance}}
         </template>
       </el-table-column>
-      <el-table-column label="MATERIAL" :render-header="labelHead">
+      <el-table-column label="MATERIAL" width="120px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.material}}
         </template>
       </el-table-column>
-      <el-table-column label="PRICE RANGE(THB)" :render-header="labelHead">
+      <el-table-column label="PRICE RANGE(THB)" width="180px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.note}}/{{scope.row.unitOfNote}}
         </template>
       </el-table-column>
-      <el-table-column label="CLOSE DATE" :render-header="labelHead">
+      <el-table-column label="CLOSE DATE" width="160px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.dueDate}}
         </template>
       </el-table-column>
-      <el-table-column label="USE FOR" :render-header="labelHead">
+      <el-table-column label="USE FOR" width="150px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.stoneUseFor}}
         </template>
       </el-table-column>
-      <el-table-column label="ORDER STATE" :render-header="labelHead">
+      <el-table-column label="ORDER STATE" width="140px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.status}}
         </template>
       </el-table-column>
-      <el-table-column label="SUPPLIER" :render-header="labelHead">
+      <el-table-column label="SUPPLIER" width="120px" header-align="center" align="center">
         <template slot-scope="scope">
           {{scope.row.count}}
         </template>
       </el-table-column>
-      <el-table-column label="ACTION">
+      <el-table-column label="ACTION" width="100px" header-align="center" align="center">
         <template slot-scope="scope">
           <div v-if="scope.row.status == 'OPEN'">
             <el-button size="mini" type="button" @click="closeTender(scope.row)" >{{$t('business.close')}}</el-button>

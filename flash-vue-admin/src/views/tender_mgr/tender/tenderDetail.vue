@@ -148,7 +148,7 @@
       </el-table-column>
       <el-table-column label="QUANTITY" :render-header="labelHead">
         <template slot-scope="scope">
-          {{scope.row.quantity}}
+          {{scope.row.quantity}} {{scope.row.unitOfBidQuantity}}
         </template>
       </el-table-column>
       <el-table-column label="PRICE">
@@ -171,7 +171,7 @@
       </el-table-column>
       <el-table-column label="CONFIRMED QUANTITY" :render-header="labelHead">
         <template slot-scope="scope">
-          {{scope.row.confirmedQuantity}} {{scope.row.confirmedQuantityUnit}}s
+          {{scope.row.confirmedQuantity}} {{scope.row.confirmedQuantityUnit}}
         </template>
       </el-table-column>
       <el-table-column label="CONFIRMED PRICE" :render-header="labelHead">
@@ -179,7 +179,7 @@
           {{scope.row.confirmedPrice}} THB/{{scope.row.confirmedPriceUnit}}
         </template>
       </el-table-column>
-      <el-table-column label="SUPPLIER" :render-header="labelHead">
+      <el-table-column label="SUPPLIER" width="200px">
         <template slot-scope="scope">
           {{scope.row.contact}}
         </template>

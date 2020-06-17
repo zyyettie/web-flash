@@ -61,6 +61,10 @@ public class TenderService {
         return null;
     }
 
+    public void closeDueTender() {
+        tenderRepository.closeDueTender();
+    }
+
     public void close(Long id) {
         tenderRepository.closeTender(id);
     }

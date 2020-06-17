@@ -20,4 +20,9 @@ public interface TenderRepository extends PagingAndSortingRepository<Tender, Lon
     @Modifying
     @Query(nativeQuery = true, value = "update t_biz_tender set status = 'CLOSED' where id=?1")
     void closeTender(Long id);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value ="update t_biz_tender set status = 'CLOSED' where CURDATE() >= due_date ")
+    void closeDueTender();
 }
