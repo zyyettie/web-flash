@@ -129,8 +129,8 @@ export default {
         size: [
           { required: true, message: 'SIZE' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
-        color: [
-          { required: true, message: 'COLORNOTE' + this.$t('common.isRequired'), trigger: 'blur' }
+        colorNote: [
+          { required: true, message: 'COLOR NOTE' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         clarity: [
           { required: true, message: 'CLARITY' + this.$t('common.isRequired'), trigger: 'blur' }
@@ -139,11 +139,8 @@ export default {
           { required: true, message: 'QUANTITY' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         unitOfQuantity: [
-          { required: true, message: 'UnitOfQuantity' + this.$t('common.isRequired'), trigger: 'change' }
+          { required: true, message: 'Unit of quantity' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
-        // weight: [
-        //  { required: true, message: 'WEIGHT' + this.$t('common.isRequired'), trigger: 'blur' }
-        // ],
         enhance: [
           { required: true, message: 'TREATMENT' + this.$t('common.isRequired'), trigger: 'blur' }
         ],

@@ -146,7 +146,9 @@
             <el-form-item label="COLOR" prop="color">
               <el-color-picker v-model="form.color"></el-color-picker>
               <el-col :span="12">
+              <el-form-item prop="colorNote">
               <el-input v-model="form.colorNote"  minlength=1></el-input>
+              </el-form-item>
               </el-col>
             </el-form-item>
           </el-col>
@@ -177,6 +179,7 @@
               <el-input v-model="form.quantity"></el-input>
               </el-col>
               <el-col :span="12">
+              <el-form-item prop="unitOfQuantity">
               <el-select v-model="form.unitOfQuantity" style="width:60%" placeholder="please select">
                 <el-option
                   v-for="item in unitOfQuantityOptions"
@@ -185,6 +188,7 @@
                   :value="item.value">
                 </el-option>
               </el-select>
+              </el-form-item>
               </el-col>
             </el-form-item>
           </el-col>
@@ -236,6 +240,7 @@
               <el-input v-model="form.note"  minlength=1></el-input>
               </el-col>
               <el-col :span="12">
+              <el-form-item prop="unitOfNote">
               <el-select v-model="form.unitOfNote" style="width:60%" placeholder="please select" prop="unitOfNote">
                 <el-option
                   v-for="item in unitOfNoteOptions"
@@ -244,6 +249,7 @@
                   :value="item.value">
                 </el-option>
               </el-select>
+              </el-form-item>
               </el-col>
             </el-form-item>
           </el-col>
