@@ -242,10 +242,15 @@ export default {
       }
     },
     add() {
+      this.clear()
       this.resetForm()
       this.formTitle = this.$t('business.addTender')
       this.formVisible = true
       this.isAdd = true
+    },
+    cancel() {
+      this.formVisible = false
+      this.dataRefreh()
     },
     save() {
       this.$refs['form'].validate((valid) => {
@@ -279,6 +284,7 @@ export default {
               message: this.$t('common.optionSuccess'),
               type: 'success'
             })
+            this.dataRefreh()
             this.fetchData()
             this.formVisible = false
           })

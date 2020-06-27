@@ -54,7 +54,7 @@ export default {
     edit: 'Edit',
     delete: 'Delete',
     search: 'Search',
-    reset: 'Update',
+    reset: 'Refresh',
     submit: 'Submit',
     cancel: 'Cancel',
     clear: 'Clear',

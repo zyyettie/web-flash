@@ -1,4 +1,4 @@
-import { getBidByTenderId, moveBidToNextStatusStep3, moveBidBackToStep2, approveBid, denyBid } from '@/api/business/bid'
+import { getBidByTenderId, moveBidToNextStatus, moveBidToNextStatusStep3, moveBidBackToStep2, approveBid, denyBid } from '@/api/business/bid'
 import { moveBidToNextStatusWithQuantityPrice } from '@/api/business/bid'
 import { getToken } from '@/utils/auth'
 import { Loading } from 'element-ui'
@@ -396,7 +396,7 @@ export default {
           background: 'rgba(0, 0, 0, 0.7)'
         })
         const loadingInstance2 = Loading.service(loadingOption)
-        moveBidToNextStatusStep3(id).then(response => {
+        moveBidToNextStatus(id).then(response => {
           loadingInstance2.close()
           console.log(response)
           this.$message({
