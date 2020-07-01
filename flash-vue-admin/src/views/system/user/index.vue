@@ -185,7 +185,7 @@
           <el-col :span="12">
             <el-form-item label="Department" >
               <el-input
-                placeholder="请选择所属部门"
+                placeholder="please select department"
                 v-model="form.deptName"
                 readonly="readonly"
                 @click.native="deptTree.show  = !deptTree.show">

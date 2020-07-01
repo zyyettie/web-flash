@@ -71,6 +71,9 @@ public class AccountController extends BaseController{
             if (user == null) {
                 return Rets.failure("The user does not exist");
             }
+            if (1 != user.getStatus()) {
+                return Rets.failure("The user is inactive, please ask admin to activate it");
+            }
             String passwdMd5 = MD5.md5(password, user.getSalt());
             //2,
             if (!user.getPassword().equals(passwdMd5)) {
