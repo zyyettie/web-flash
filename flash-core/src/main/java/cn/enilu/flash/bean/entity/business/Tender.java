@@ -34,7 +34,7 @@ public class Tender extends BaseEntity {
     @Column
     private String clarity;
     @Column
-    private Integer quantity;
+    private Double quantity;
     @Column
     private String unitOfQuantity;
     @Column

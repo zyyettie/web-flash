@@ -72,7 +72,7 @@ public class BidService {
         bidRepository.moveToNextStatusWithDeliverInfo(id, deliverType, deliverNo, memoNo);
     }
 
-    public void moveToNextStatusWithQuantityPrice(Long id, Integer confirmedQuantity, Float confirmedPrice, String confirmedQuantityUnit, String confirmedPriceUnit){
+    public void moveToNextStatusWithQuantityPrice(Long id, Double confirmedQuantity, Double confirmedPrice, String confirmedQuantityUnit, String confirmedPriceUnit){
         bidRepository.moveToNextStatusWithQuantityPrice(id, confirmedQuantity, confirmedPrice, confirmedQuantityUnit, confirmedPriceUnit);
     }
 
@@ -92,7 +92,7 @@ public class BidService {
         bidRepository.deny(id);
     }
 
-    public void updateQuantityAndPrice(Long id, Integer quantity, String unitOfBidQuantity, Float price, String unitOfBidPrice){
+    public void updateQuantityAndPrice(Long id, Double quantity, String unitOfBidQuantity, Double price, String unitOfBidPrice){
         bidRepository.updateQuantityAndPrice(id, quantity, unitOfBidQuantity, price, unitOfBidPrice);
     }
 

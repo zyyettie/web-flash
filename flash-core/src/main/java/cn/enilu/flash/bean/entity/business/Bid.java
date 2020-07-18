@@ -16,11 +16,11 @@ public class Bid extends BaseEntity {
     @Column
     private String no;
     @Column
-    private Integer quantity;
+    private Double quantity;
     @Column
     private String unitOfBidQuantity;
     @Column
-    private Float price;
+    private Double price;
     @Column
     private String unitOfBidPrice;
     @Column
@@ -36,11 +36,11 @@ public class Bid extends BaseEntity {
     @Column
     private String memoNo;
     @Column
-    private Integer confirmedQuantity;
+    private Double confirmedQuantity;
     @Column
     private String confirmedQuantityUnit;
     @Column
-    private Float confirmedPrice;
+    private Double confirmedPrice;
     @Column
     private String confirmedPriceUnit;
     @Column
