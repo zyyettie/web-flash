@@ -2,6 +2,7 @@
 server {
     listen 444 ssl;    # listening port
     server_name bms.chinastonefind.com;    # domain configuration, can be multiple domains here
+    client_max_body_size 5M;
 
     ssl_certificate /etc/letsencrypt/live/bms.chinastonefind.com/fullchain.pem;            # certificate directory
     ssl_certificate_key /etc/letsencrypt/live/bms.chinastonefind.com/privkey.pem;       # certificate directory
