@@ -222,7 +222,7 @@
         <el-input v-model="form.no" :disabled="true" style="width:300px"></el-input>
         <span style="float:right; margin-right:25px; color:green" >OPEN ORDER</span>
       </div>
-      <el-form ref="form" :model="form" :rules="rules" :label-position="labelPosition" label-width="160px">
+      <el-form ref="form" :model="form"  :label-position="labelPosition" label-width="160px">
         <el-row>
           <el-col :span="12">
             <el-form-item label="GEMSTONE" prop="name">
@@ -359,7 +359,7 @@
           :title="statusFormTitle"
           :visible.sync="statusFormVisible"
           width="70%">
-      <el-form ref="statusForm" :model="statusForm" :rules="rules" :label-position="labelPosition" label-width="160px">
+      <el-form ref="statusForm" :model="statusForm" :rules="(statusForm.status==4 || statusForm.status==1)?rules:[{ required: false, trigger: 'blur' }]" :label-position="labelPosition" label-width="160px">
         <el-row>
           <el-col :span="12">
             <el-form-item label="ORDER REF.NO." prop="no">
@@ -435,7 +435,7 @@
             </el-col>
           </el-row>
           <el-col :span="12">
-            <el-form-item label="INVOICE">
+            <el-form-item label="INVOICE" ref="image" prop="fileName">
               <el-upload
                 class="upload-demo"
                 drag

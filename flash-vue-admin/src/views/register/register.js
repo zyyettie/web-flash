@@ -69,7 +69,8 @@ export default{
         paymentType: '',
         regType: '',
         idFile: '',
-        idNo: ''
+        idNo: '',
+        fileName: ''
       },
       paymentTermsOptions: [
         { value: 'cash', label: 'cash' },
@@ -92,6 +93,9 @@ export default{
         ],
         account: [
           { validator: checkAccount, trigger: 'blur' }
+        ],
+        fileName: [
+          { required: true, message: 'Please upload your ID/License picture', trigger: 'blur' }
         ]
       }
     }
@@ -136,16 +140,6 @@ export default{
         }
       })
     },
-    // submitForm(formName) {
-    //   this.$refs.registerForm.validate((valid) => {
-    //     if (valid) {
-    //       alert('submit!')
-    //     } else {
-    //       console.log('error submit!!')
-    //       return false
-    //     }
-    //   })
-    // },
     resetForm(formName) {
       this.$refs.registerForm.resetFields()
     },
@@ -153,7 +147,15 @@ export default{
       this.$router.push('/login')
     },
     // upload file
-    handleBeforeUpload() {
+    handleBeforeUpload(file) {
+      const isLt5M = file.size / 1024 / 1024 < 5 // 这里做文件大小限制
+      if (!isLt5M) {
+        this.$message({
+          message: 'Cannot upload file larger than 5MB!',
+          type: 'warning'
+        })
+        return false
+      }
       if (this.uploadFileId !== '') {
         this.$message({
           message: this.$t('common.mustSelectOne'),
@@ -174,6 +176,7 @@ export default{
         console.log(response.data)
         this.uploadFileId = response.data.id
         this.registerForm.fileName = response.data.originalFileName
+        this.$refs.registerForm.validateField('fileName')
       } else {
         this.$message({
           message: this.$t('common.uploadError'),
@@ -183,6 +186,9 @@ export default{
     },
     handleUploadRemove(file) {
       this.uploadFileId = ''
+      this.registerForm.fileName = ''
+      // 文件删除后也要触发验证,validateField是触发部分验证的方法,参数是prop设置的值
+      this.$refs.registerForm.validateField('fileName')
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url

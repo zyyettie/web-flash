@@ -137,7 +137,7 @@
           :title="statusFormTitle"
           :visible.sync="statusFormVisible"
           width="70%">
-      <el-form ref="statusForm" :model="statusForm" :rules="rules" label-width="80px">
+      <el-form :model="statusForm" status-icon :rules="(statusForm.status==6)?rules:[{ required: false, trigger: 'blur' }]" ref="statusForm" label-width="80px">
         <el-row>
           <el-col :span="12">
             <el-form-item label="ORDER REF.NO." prop="no">
@@ -177,7 +177,7 @@
           <!-- 上传付款凭证-->
           <div v-if="statusForm.status === 6">
           <el-col :span="12">
-            <el-form-item label="EVIDENCE OF PAYMENT">
+            <el-form-item label="EVIDENCE OF PAYMENT" ref="image" prop="fileName">
               <el-upload
                 class="upload-demo"
                 drag

@@ -290,7 +290,6 @@
           <el-col :span="12">
             <el-form-item label="CONFIRMED QUANTITY" prop="confirmedQuantity">
             <el-col :span="9">
-              <!--<el-input v-model="statusForm.confirmedQuantity" v-on:blur="calculateUnitPrice"></el-input>-->
               <el-input v-model="statusForm.confirmedQuantity" ></el-input>
             </el-col>
             <el-col :span="9">
@@ -321,25 +320,6 @@
                   </el-option>
               </el-select>
               </el-col>
-            </el-form-item>
-          </el-col>
-          </div>
-          <!-- 上传付款凭证-->
-          <div v-else-if="statusForm.status === 6">
-          <el-col :span="12">
-            <el-form-item label="EVIDENCE OF PAYMENT">
-              <el-upload
-                class="upload-demo"
-                drag
-                :multiple=false
-                :action="uploadUrl"
-                :headers="uploadHeaders"
-                :before-upload="handleBeforeUpload"
-                :on-success="handleUploadSuccess"
-              >
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">Click to upload</div>
-              </el-upload>
             </el-form-item>
           </el-col>
           </div>

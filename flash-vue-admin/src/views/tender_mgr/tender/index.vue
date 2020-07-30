@@ -256,7 +256,7 @@
           <el-col :span="12">
             <el-form-item label="CLOSE DATE" prop="dueDate">
               <el-col :span="12">
-              <el-date-picker type="date" placeholder="CLOSE DATE" v-model="form.dueDate" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" placeholder="CLOSE DATE" v-model="form.dueDate" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
               </el-col>
             </el-form-item>
           </el-col>

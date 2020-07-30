@@ -6,6 +6,13 @@ import { getToken } from '@/utils/auth'
 
 export default {
   data() {
+    var validateFileName = (rule, value, callback) => {
+      if (!this.statusForm.fileName) {
+        callback(new Error('Please upload EVIDENCE OF PAYMENT'))
+      } else {
+        callback()
+      }
+    }
     return {
       dialogImageUrl: '',
       dialogVisible: false,
@@ -17,13 +24,6 @@ export default {
       formVisible: false,
       formTitle: this.$t('business.modify'),
       isAdd: true,
-      form: {
-        quantity: '',
-        unit: '',
-        contact: '',
-        isApproved: '',
-        tenderNo: ''
-      },
       deliverTypeOptions: [
         { value: '1', label: 'Sent By Messenger' },
         { value: '2', label: 'Express' },
@@ -33,6 +33,11 @@ export default {
         { value: 'carat', label: 'carat' },
         { value: 'piece', label: 'piece' }
       ],
+      rules: {
+        fileName: [
+          { required: true, validator: validateFileName, trigger: 'blur' }
+        ]
+      },
       listQuery: {
         page: 1,
         limit: 10,
@@ -46,7 +51,8 @@ export default {
       statusForm: {
         id: '',
         no: '',
-        status: ''
+        status: '',
+        fileName: ''
       },
       statusFormTitle: 'business.statusChange',
       statusFormVisible: false,
@@ -84,18 +90,18 @@ export default {
       return statusMap[status]
     }
   },
-  computed: {
-    rules() {
-      return {
-        name: [
-          { required: true, message: 'SUPPLIER AVAILABLE PIECE is required', trigger: 'blur' }
-        ],
-        type: [
-          { required: true, message: 'PRICE is required', trigger: 'blur' }
-        ]
-      }
-    }
-  },
+  // computed: {
+  //   rules() {
+  //     return {
+  //       name: [
+  //         { required: true, message: 'SUPPLIER AVAILABLE PIECE is required', trigger: 'blur' }
+  //       ],
+  //       type: [
+  //         { required: true, message: 'PRICE is required', trigger: 'blur' }
+  //       ]
+  //     }
+  //   }
+  // },
   created() {
     this.init()
   },
@@ -215,7 +221,15 @@ export default {
       this.statusFormTitle = this.$t('business.statusChange')
       this.statusFormVisible = true
     },
-    handleBeforeUpload() {
+    handleBeforeUpload(file) {
+      const isLt5M = file.size / 1024 / 1024 < 5 // 这里做文件大小限制
+      if (!isLt5M) {
+        this.$message({
+          message: 'Cannot upload file larger than 5MB!',
+          type: 'warning'
+        })
+        return false
+      }
       if (this.uploadFileId !== '') {
         this.$message({
           message: this.$t('common.mustSelectOne'),
@@ -236,6 +250,7 @@ export default {
         console.log(response.data)
         this.uploadFileId = response.data.id
         this.statusForm.fileName = response.data.originalFileName
+        this.$refs.statusForm.validateField('fileName')
       } else {
         this.$message({
           message: this.$t('common.uploadError'),
@@ -245,6 +260,9 @@ export default {
     },
     handleUploadRemove(file) {
       this.uploadFileId = ''
+      this.statusForm.fileName = ''
+      // 文件删除后也要触发验证,validateField是触发部分验证的方法,参数是prop设置的值
+      this.$refs.statusForm.validateField('fileName')
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url

@@ -99,7 +99,7 @@
 
       <!-- 上传身份图片-->
       <el-col :span="12">
-        <el-form-item label="ID/LICENCE PICTURE">
+        <el-form-item label="ID/LICENCE PICTURE" ref="image" prop="fileName">
           <el-upload
             class="upload-demo"
             drag

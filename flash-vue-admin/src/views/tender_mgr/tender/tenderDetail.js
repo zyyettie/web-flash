@@ -111,16 +111,19 @@ export default {
     rules() {
       return {
         confirmedQuantity: [
-          { required: true, message: 'confirmedQuantity' + this.$t('common.isRequired'), trigger: 'blur' }
+          { required: true, message: 'CONFIRMED QUANTITY' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         confirmedPrice: [
-          { required: true, message: 'confirmedPrice' + this.$t('common.isRequired'), trigger: 'blur' }
+          { required: true, message: 'CONFIRMED PRICE' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         confirmedQuantityUnit: [
           { required: true, message: 'confirmedQuantityUnit' + this.$t('common.isRequired'), trigger: 'blur' }
         ],
         confirmedPriceUnit: [
           { required: true, message: 'confirmedPriceUnit' + this.$t('common.isRequired'), trigger: 'blur' }
+        ],
+        isDeliverQuantityCorrect: [
+          { required: true, message: 'isDeliverQuantityCorrect' + this.$t('common.isRequired'), trigger: 'blur' }
         ]
       }
     }
@@ -266,34 +269,6 @@ export default {
       this.statusForm = row
       this.statusFormTitle = this.$t('business.statusChange')
       this.statusFormVisible = true
-    },
-    handleBeforeUpload() {
-      if (this.uploadFileId !== '') {
-        this.$message({
-          message: this.$t('common.mustSelectOne'),
-          type: 'warning'
-        })
-        return false
-      }
-      this.loadingInstance = Loading.service({
-        lock: true,
-        text: this.$t('common.uploading'),
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
-    },
-    handleUploadSuccess(response, raw) {
-      this.loadingInstance.close()
-      if (response.code === 20000) {
-        console.log(response.data)
-        this.uploadFileId = response.data.id
-        this.statusForm.fileName = response.data.originalFileName
-      } else {
-        this.$message({
-          message: this.$t('common.uploadError'),
-          type: 'error'
-        })
-      }
     },
     // nextStep(id) {
     //   moveBidToNextStatus(id).then(response => {

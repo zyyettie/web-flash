@@ -13,6 +13,8 @@ import cn.enilu.flash.service.business.TenderService;
 import cn.enilu.flash.service.system.OperationLogService;
 import cn.enilu.flash.service.system.UserService;
 import cn.enilu.flash.utils.BeanUtil;
+import cn.enilu.flash.utils.DateTime;
+import cn.enilu.flash.utils.DateTimeKit;
 import cn.enilu.flash.utils.ToolUtil;
 import cn.enilu.flash.utils.factory.Page;
 import cn.enilu.flash.warpper.TenderWarpper;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.context.Context;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -79,6 +82,12 @@ public class TenderController extends BaseController {
         if (ToolUtil.isOneEmpty(tender, tender.getName())){
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
         }
+        //Date加上23:59:00
+        Date dueDate = tender.getDueDate();
+        DateTime tmpDateTime = DateTime.parse(dueDate);
+        DateTime tmpDT1 = DateTimeKit.offsiteDate(tmpDateTime, Calendar.HOUR, 23);
+        DateTime tmpDT2= DateTimeKit.offsiteDate(tmpDT1, Calendar.MINUTE, 59);
+        tender.setDueDate(tmpDT2.toDate());
         tenderService.save(tender);
         //群发邮件 step0
         String subject = "New Order";
