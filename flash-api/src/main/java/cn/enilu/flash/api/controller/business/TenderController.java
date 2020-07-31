@@ -61,7 +61,7 @@ public class TenderController extends BaseController {
     public Object List2(@RequestParam String name,@RequestParam String colorNote,@RequestParam String shape,@RequestParam String size) {
         Page<Tender> page = new PageFactory<Tender>().defaultPage();
 
-        page = tenderService.getTenders(page, name, colorNote, shape, size);
+        page = tenderService.getOpenTenders(page, name, colorNote, shape, size);
         page.setRecords((List<Tender>) new TenderWarpper(BeanUtil.objectsToMaps(page.getRecords())).warp());
 
         return Rets.success(page);
