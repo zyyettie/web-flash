@@ -274,6 +274,8 @@ public class BidController extends BaseController{
         bidService.moveToNextStatusWithInvoice(bid.getId(), bid.getInvoiceIdFile(), bid.getInvoiceNo());
 
         //准备邮件信息
+        /**
+         * 暂时停止发送此封邮件 以免因倒计时引起误解
         Long bidId =bid.getId();
         Bid realBid = bidService.get(bidId);
 
@@ -284,6 +286,7 @@ public class BidController extends BaseController{
         context.setVariable("invoiceNo",realBid.getInvoiceNo());
         String vendorEmail = userService.getVendorEmailByBidId(bidId);
         mailService.sendTemplateMail(vendorEmail,subject,templateName,context);
+         */
 //        sendEmail(bid.getId());
         return Rets.success();
     }
