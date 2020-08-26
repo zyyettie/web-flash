@@ -181,6 +181,7 @@
               <el-upload
                 class="upload-demo"
                 drag
+                :limit="1"
                 :multiple=false
                 :action="uploadUrl"
                 :headers="uploadHeaders"

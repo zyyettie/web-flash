@@ -222,7 +222,14 @@ export default {
       this.statusFormVisible = true
     },
     handleBeforeUpload(file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isPNG = file.type === 'image/png'
+      const isPG = (isJPG || isPNG) // 限制图片格式为jpg / png
       const isLt5M = file.size / 1024 / 1024 < 5 // 这里做文件大小限制
+      if (!isPG) {
+        this.$message.error('The uploaded picture can only be in JPG or PNG format!')
+        return false
+      }
       if (!isLt5M) {
         this.$message({
           message: 'Cannot upload file larger than 5MB!',
