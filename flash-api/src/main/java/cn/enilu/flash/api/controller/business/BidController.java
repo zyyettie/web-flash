@@ -86,7 +86,7 @@ public class BidController extends BaseController{
 //        Long tenderId = bid.getTenderId();
         Long tenderId = bid.getTender().getId();
         String tenderAdminEmail = userService.getEmailByTenderId(tenderId);
-        mailService.sendSimpleMail(tenderAdminEmail,"A new bid <"+ bidNo +"> has been created","Please login to Bid Management System to check");
+        mailService.sendSimpleMail(tenderAdminEmail,"A new offer <"+ bidNo +"> has been created","Please login to Purchase Management System to check");
         return Rets.success();
     }
 
@@ -344,9 +344,9 @@ public class BidController extends BaseController{
     private void sendEmail(Long id) {
         //发送邮件给tenderadmin
         String tenderAdminEmail = userService.getTenderAdminEmailByBidId(id);
-        mailService.sendSimpleMail(tenderAdminEmail,"Your tender status has been changed","Please login to Bid Management System to check");
+        mailService.sendSimpleMail(tenderAdminEmail,"Your tender status has been changed","Please login to Purchase Management System to check");
         //发邮件给vendor
         String vendorEmail = userService.getVendorEmailByBidId(id);
-        mailService.sendSimpleMail(tenderAdminEmail,"Your bid status has been changed","Please login to Bid Management System to check");
+        mailService.sendSimpleMail(tenderAdminEmail,"Your bid status has been changed","Please login to Purchase Management System to check");
     }
 }
